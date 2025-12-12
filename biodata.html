@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biodata - Mission Specialist</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        nasa: {
+                            red: '#e11d29',
+                            dark: '#0b3d91', 
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-black text-white font-sans antialiased flex flex-col min-h-screen">
+
+    <header class="fixed top-0 inset-x-0 z-50 bg-black/90 backdrop-blur-sm border-b border-white/10">
+        <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="flex items-center gap-3">
+                    <img src="images/gambar1.svg" alt="NASA Logo" class="w-10 h-10 block">
+                    <div class="leading-tight font-bold text-sm tracking-widest text-gray-300">
+                        MISSION<br>PROFILE
+                    </div>
+                </a>
+            </div>
+
+            <ul class="hidden md:flex items-center gap-8 font-semibold text-sm">
+                <li><a href="index.html" class="text-gray-300 hover:text-white transition-colors">Home</a></li>
+                <li><a href="biodata.html" class="text-white border-b-2 border-nasa-red py-1">Biodata</a></li>
+                <li><a href="contact_us.html" class="text-gray-300 hover:text-white transition-colors">Contact Us</a>
+                </li>
+                <li><a href="posts.html" class="text-gray-300 hover:text-white transition-colors">Posts</a></li>
+                <li><a href="freepage.html" class="text-gray-300 hover:text-white transition-colors">Free Page</a></li>
+            </ul>
+
+            <button id="menu-btn" class="md:hidden text-white focus:outline-none">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
+                    </path>
+                </svg>
+            </button>
+        </nav>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-900 border-b border-white/10 absolute w-full">
+            <ul class="flex flex-col p-4 gap-4 font-semibold text-center">
+                <li><a href="index.html" class="block py-2 text-gray-300">Home</a></li>
+                <li><a href="biodata.html" class="block py-2 text-nasa-red">Biodata</a></li>
+                <li><a href="contact_us.html" class="block py-2 text-gray-300">Contact Us</a></li>
+                <li><a href="posts.html" class="block py-2 text-gray-300">Posts</a></li>
+                <li><a href="freepage.html" class="block py-2 text-gray-300">Free Page</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 pt-32 pb-16">
+
+        <div
+            class="max-w-4xl mx-auto bg-gray-900/50 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-sm shadow-2xl">
+
+            <div class="h-32 bg-gradient-to-r from-blue-900 via-purple-900 to-black relative">
+                <div
+                    class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-50">
+                </div>
+            </div>
+
+            <div class="px-8 pb-8">
+                <div class="relative group">
+                    <div
+                        class="w-36 h-36 md:w-44 md:h-44 rounded-full bg-gradient-to-br from-gray-600 via-gray-800 to-black p-1.5 shadow-2xl shadow-nasa-red/40 flex items-center justify-center">
+                        <img src="images/profile.jpeg" alt="Foto Profil Mahasiswa"
+                            class="w-full h-full rounded-full object-cover border-[3px] border-black/50 contrast-110 hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="absolute bottom-4 right-4 bg-green-500 w-5 h-5 rounded-full border-[3px] border-gray-900 z-10 animate-pulse"
+                        title="Status: Active Mission"></div>
+                    <div
+                        class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-nasa-red text-white text-[10px] font-bold px-3 py-1 rounded-full border-2 border-gray-900 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+                        Astro_Jeremy</div>
+
+                    <div class="mt-16 md:mt-18 flex-1 text-center md:text-left">
+                        <h1 class="text-3xl md:text-4xl font-bold mb-2">Jeremy F Partogu Nababan</h1>
+                        <p class="text-nasa-red font-bold text-lg tracking-wide mb-3">NIM: 2481040 <span
+                                class="text-gray-500 text-xs ml-2 hidden sm:inline-block">Faculty of Information
+                                Technology</span>
+                        </p>
+                    </div>
+                </div>
+
+                <hr class="border-gray-800 mb-8">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+
+                    <div class="space-y-8">
+                        <div>
+                            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                                <span class="text-nasa-red">#</span> Technical Skills
+                            </h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-sm font-medium text-gray-300">HTML & CSS Layout</span>
+                                        <span class="text-sm font-medium text-nasa-red">50%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-800 rounded-full h-2.5">
+                                        <div class="bg-nasa-red h-2.5 rounded-full" style="width: 50%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-sm font-medium text-gray-300">Tailwind CSS</span>
+                                        <span class="text-sm font-medium text-nasa-red">50%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-800 rounded-full h-2.5">
+                                        <div class="bg-nasa-red h-2.5 rounded-full" style="width: 50%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-sm font-medium text-gray-300">JavaScript Basics</span>
+                                        <span class="text-sm font-medium text-nasa-red">50%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-800 rounded-full h-2.5">
+                                        <div class="bg-nasa-red h-2.5 rounded-full" style="width: 50%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                                <span class="text-nasa-red">#</span> Hobbies
+                            </h2>
+                            <div class="flex flex-wrap gap-2">
+                                <span
+                                    class="bg-gray-800 text-gray-200 px-3 py-1 rounded-full text-sm border border-gray-700">Badminton</span>
+                                <span
+                                    class="bg-gray-800 text-gray-200 px-3 py-1 rounded-full text-sm border border-gray-700">Swim</span>
+                                <span
+                                    class="bg-gray-800 text-gray-200 px-3 py-1 rounded-full text-sm border border-gray-700">Astronomy</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                            <span class="text-nasa-red">#</span> Mission Report (Testimony)
+                        </h2>
+
+                        <div
+                            class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-xl border border-gray-700 relative">
+                            <div
+                                class="absolute -top-3 -left-3 bg-nasa-red text-white w-8 h-8 flex items-center justify-center rounded-full text-xl font-serif">
+                                "</div>
+
+                            <p class="text-gray-300 italic leading-relaxed mb-4">
+                                During this Web Programming course, I learned that building a website is not just about
+                                writing code, but about structuring information logically.
+                                <br><br>
+                                The most challenging part was understanding <strong>responsive design</strong> and
+                                making sure elements look good on mobile devices. However, using Tailwind CSS in this
+                                final project opened my eyes to how fast styling can be compared to traditional CSS.
+                            </p>
+
+                            <div class="flex items-center gap-3 mt-6">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center font-bold text-gray-400">
+                                    ME
+                                </div>
+                                <div>
+                                    <p class="text-sm font-bold text-white">Personal Reflection</p>
+                                    <p class="text-xs text-gray-500">Web 1 Class</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 p-4 bg-blue-900/20 border border-blue-500/30 rounded-lg">
+                            <h3 class="text-blue-400 font-bold text-sm mb-1">Status Report:</h3>
+                            <p class="text-gray-400 text-xs">Ready for the next semester's challenges and deeper
+                                exploration into Front-End Development.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-neutral-900 pt-16 pb-8 border-t border-white/10 mt-auto">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-gray-500 text-sm">&copy; 2025 Final Project Web 1. NIM: 2481040.</p>
+        </div>
+    </footer>
+
+    <script>
+        const btn = document.getElementById('menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+
+</html>

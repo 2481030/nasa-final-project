@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join The Mission - Contact Us</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        nasa: {
+                            red: '#e11d29',
+                            dark: '#0b3d91',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-black text-white font-sans antialiased flex flex-col min-h-screen">
+
+    <header class="fixed top-0 inset-x-0 z-50 bg-black/90 backdrop-blur-sm border-b border-white/10">
+        <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="flex items-center gap-3">
+                    <img src="https://www.nasa.gov/wp-content/themes/nasa/assets/images/nasa-logo.svg" alt="NASA Logo"
+                        class="w-10 h-10 block">
+                    <div class="leading-tight font-bold text-sm tracking-widest text-gray-300">
+                        MISSION<br>REGISTRATION
+                    </div>
+                </a>
+            </div>
+
+            <ul class="hidden md:flex items-center gap-8 font-semibold text-sm">
+                <li><a href="index.html" class="text-gray-300 hover:text-white transition-colors">Home</a></li>
+                <li><a href="biodata.html" class="text-gray-300 hover:text-white transition-colors">Biodata</a></li>
+                <li><a href="contact_us.html" class="text-white border-b-2 border-nasa-red py-1">Contact Us</a></li>
+                <li><a href="posts.html" class="text-gray-300 hover:text-white transition-colors">Posts</a></li>
+                <li><a href="freepage.html" class="text-gray-300 hover:text-white transition-colors">Free Page</a></li>
+            </ul>
+
+            <button id="menu-btn" class="md:hidden text-white focus:outline-none">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
+                    </path>
+                </svg>
+            </button>
+        </nav>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-900 border-b border-white/10 absolute w-full">
+            <ul class="flex flex-col p-4 gap-4 font-semibold text-center">
+                <li><a href="index.html" class="block py-2 text-gray-300">Home</a></li>
+                <li><a href="biodata.html" class="block py-2 text-gray-300">Biodata</a></li>
+                <li><a href="contact_us.html" class="block py-2 text-nasa-red">Contact Us</a></li>
+                <li><a href="posts.html" class="block py-2 text-gray-300">Posts</a></li>
+                <li><a href="freepage.html" class="block py-2 text-gray-300">Free Page</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 pt-32 pb-16 flex justify-center items-center">
+
+        <div class="w-full max-w-3xl">
+            <div class="text-center mb-10">
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Join the Exploration</h1>
+                <p class="text-gray-400">Submit your details to register for the upcoming student mission program.</p>
+            </div>
+
+            <div id="success-alert"
+                class="hidden mb-6 bg-green-900/30 border border-green-500 text-green-200 px-6 py-4 rounded-lg flex items-center gap-3">
+                <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <div>
+                    <strong class="font-bold">Registration Successful!</strong>
+                    <span class="block text-sm">Your data has been transmitted to Mission Control.</span>
+                </div>
+            </div>
+
+            <div class="bg-gray-900/80 border border-white/10 rounded-2xl p-6 md:p-10 shadow-2xl backdrop-blur-sm">
+
+                <form id="registrationForm" novalidate>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+
+                        <div>
+                            <label for="fullName" class="block text-sm font-bold text-gray-300 mb-2">Full Name</label>
+                            <input type="text" id="fullName" placeholder="astro..."
+                                class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:border-nasa-red focus:ring-1 focus:ring-nasa-red transition-all placeholder-gray-500">
+                            <p class="error-msg text-red-500 text-xs mt-1 hidden">Please enter your full name.</p>
+                        </div>
+
+                        <div>
+                            <label for="nim" class="block text-sm font-bold text-gray-300 mb-2">Student ID (NIM)</label>
+                            <input type="text" id="nim" placeholder="24810xx"
+                                class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:border-nasa-red focus:ring-1 focus:ring-nasa-red transition-all placeholder-gray-500">
+                            <p class="error-msg text-red-500 text-xs mt-1 hidden">Please enter your Student ID.</p>
+                        </div>
+
+                        <div>
+                            <label for="email" class="block text-sm font-bold text-gray-300 mb-2">Email Address</label>
+                            <input type="email" id="email" placeholder="astronaut@unai.edu"
+                                class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:border-nasa-red focus:ring-1 focus:ring-nasa-red transition-all placeholder-gray-500">
+                            <p class="error-msg text-red-500 text-xs mt-1 hidden">Please enter a valid email address.
+                            </p>
+                        </div>
+
+                        <div>
+                            <label for="phone" class="block text-sm font-bold text-gray-300 mb-2">Phone Number</label>
+                            <input type="text" id="phone" placeholder="0812..."
+                                class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:border-nasa-red focus:ring-1 focus:ring-nasa-red transition-all placeholder-gray-500">
+                            <p class="error-msg text-red-500 text-xs mt-1 hidden">Must be numeric and at least 10
+                                digits.</p>
+                        </div>
+
+                        <div>
+                            <label for="faculty" class="block text-sm font-bold text-gray-300 mb-2">Faculty /
+                                Major</label>
+                            <div class="relative">
+                                <select id="faculty"
+                                    class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 appearance-none focus:outline-none focus:border-nasa-red focus:ring-1 focus:ring-nasa-red transition-all cursor-pointer">
+                                    <option value="" disabled selected>Select your Department</option>
+                                    <option value="Philosophy">Philosophy</option>
+                                    <option value="Teaching and Education Science">Teaching and Education Science
+                                    </option>
+                                    <option value="Economy">Economy</option>
+                                    <option value="Nursing Science">Nursing Science</option>
+                                    <option value="Mathematics and Natural Sciences">Mathematics and Natural Sciences
+                                    </option>
+                                    <option value="Information Technology">Information Technology</option>
+                                </select>
+                                <div
+                                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-400">
+                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <p class="error-msg text-red-500 text-xs mt-1 hidden">Please select a faculty.</p>
+                        </div>
+
+                        <div>
+                            <label for="dob" class="block text-sm font-bold text-gray-300 mb-2">Date of Birth</label>
+                            <input type="date" id="dob"
+                                class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:border-nasa-red focus:ring-1 focus:ring-nasa-red transition-all [color-scheme:dark]">
+                            <p class="error-msg text-red-500 text-xs mt-1 hidden">Please select your date of birth.</p>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-bold text-gray-300 mb-2">Gender</label>
+                        <div class="flex gap-6">
+                            <label class="flex items-center cursor-pointer group">
+                                <input type="radio" name="gender" value="Male" class="hidden peer">
+                                <div
+                                    class="w-5 h-5 rounded-full border-2 border-gray-500 flex items-center justify-center peer-checked:border-nasa-red peer-checked:bg-nasa-red transition-all">
+                                    <div class="w-2 h-2 bg-white rounded-full opacity-0 peer-checked:opacity-100"></div>
+                                </div>
+                                <span class="ml-2 text-gray-400 peer-checked:text-white transition-colors">Male</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer group">
+                                <input type="radio" name="gender" value="Female" class="hidden peer">
+                                <div
+                                    class="w-5 h-5 rounded-full border-2 border-gray-500 flex items-center justify-center peer-checked:border-nasa-red peer-checked:bg-nasa-red transition-all">
+                                    <div class="w-2 h-2 bg-white rounded-full opacity-0 peer-checked:opacity-100"></div>
+                                </div>
+                                <span class="ml-2 text-gray-400 peer-checked:text-white transition-colors">Female</span>
+                            </label>
+                        </div>
+                        <p id="gender-error" class="error-msg text-red-500 text-xs mt-1 hidden">Please select your
+                            gender.</p>
+                    </div>
+
+                    <div class="mb-8">
+                        <label for="address" class="block text-sm font-bold text-gray-300 mb-2">Current Address</label>
+                        <textarea id="address" rows="3" placeholder="Enter your full address here..."
+                            class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:border-nasa-red focus:ring-1 focus:ring-nasa-red transition-all placeholder-gray-500"></textarea>
+                        <p class="error-msg text-red-500 text-xs mt-1 hidden">Please enter your address.</p>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-nasa-red hover:bg-red-700 text-white font-bold py-4 rounded-lg transition-all transform hover:-translate-y-1 shadow-lg shadow-red-900/50 flex justify-center items-center gap-2">
+                        <span>TRANSMIT DATA</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-neutral-900 pt-8 pb-8 border-t border-white/10 mt-auto">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-gray-500 text-sm">&copy; 2025 Final Project Web 1. NIM: 2481040.</p>
+        </div>
+    </footer>
+
+    <script>
+
+        document.getElementById('menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        const form = document.getElementById('registrationForm');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault(); 
+
+            let isValid = true;
+
+            const showError = (input, show) => {
+                const errorMsg = input.parentElement.querySelector('.error-msg');
+                if (errorMsg) {
+                    if (show) {
+                        errorMsg.classList.remove('hidden');
+                        input.classList.add('border-red-500');
+                        input.classList.remove('border-gray-700');
+                    } else {
+                        errorMsg.classList.add('hidden');
+                        input.classList.remove('border-red-500');
+                        input.classList.add('border-gray-700');
+                    }
+                }
+            };
+
+            const nameInput = document.getElementById('fullName');
+            if (nameInput.value.trim() === '') {
+                showError(nameInput, true);
+                isValid = false;
+            } else {
+                showError(nameInput, false);
+            }
+
+            const nimInput = document.getElementById('nim');
+            if (nimInput.value.trim() === '') {
+                showError(nimInput, true);
+                isValid = false;
+            } else {
+                showError(nimInput, false);
+            }
+
+            const emailInput = document.getElementById('email');
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(emailInput.value)) {
+                showError(emailInput, true);
+                isValid = false;
+            } else {
+                showError(emailInput, false);
+            }
+
+            const phoneInput = document.getElementById('phone');
+            const phonePattern = /^[0-9]+$/;
+            if (!phonePattern.test(phoneInput.value) || phoneInput.value.length < 10) {
+                showError(phoneInput, true);
+                isValid = false;
+            } else {
+                showError(phoneInput, false);
+            }
+
+            const facultyInput = document.getElementById('faculty');
+            if (facultyInput.value === '') {
+                showError(facultyInput, true);
+                isValid = false;
+            } else {
+                showError(facultyInput, false);
+            }
+
+            const dobInput = document.getElementById('dob');
+            if (dobInput.value === '') {
+                showError(dobInput, true);
+                isValid = false;
+            } else {
+                showError(dobInput, false);
+            }
+
+            const genderInputs = document.getElementsByName('gender');
+            let genderSelected = false;
+            for (let radio of genderInputs) {
+                if (radio.checked) genderSelected = true;
+            }
+            const genderError = document.getElementById('gender-error');
+            if (!genderSelected) {
+                genderError.classList.remove('hidden');
+                isValid = false;
+            } else {
+                genderError.classList.add('hidden');
+            }
+
+            const addressInput = document.getElementById('address');
+            if (addressInput.value.trim() === '') {
+                showError(addressInput, true);
+                isValid = false;
+            } else {
+                showError(addressInput, false);
+            }
+
+            if (isValid) {
+  
+                const successAlert = document.getElementById('success-alert');
+                successAlert.classList.remove('hidden');
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                form.reset();
+
+                setTimeout(() => {
+                    successAlert.classList.add('hidden');
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+
+</html>
