@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Share - Pathfinder DSKU</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        pathfinder: {
+                            orange: '#f59e0b',
+                            red: '#e11d29',
+                            dark: '#1a1a1a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .media-card:hover .overlay { opacity: 1; }
+        .bg-pattern {
+            background-color: #fef3c7;
+            background-image: radial-gradient(#fbbf24 0.5px, transparent 0.5px), radial-gradient(#fbbf24 0.5px, #fef3c7 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0,10px 10px;
+        }
+    </style>
+</head>
+
+<body class="bg-amber-50 text-gray-900 font-sans antialiased">
+
+    <!-- NAVBAR (Konsisten) -->
+    <header class="fixed top-0 inset-x-0 z-50 bg-amber-600/95 backdrop-blur-md shadow-lg">
+        <nav class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="flex items-center gap-3">
+                    <img src="images/DSKU-removebg-preview.png" alt="Logo" class="w-10 h-10">
+                    <div class="leading-tight font-bold text-xs tracking-widest text-white uppercase">
+                        Pathfinder DSKU<br><span class="text-amber-200">Media Gallery</span>
+                    </div>
+                </a>
+            </div>
+            <ul class="hidden md:flex items-center gap-6 font-semibold text-sm">
+                <li><a href="index.html" class="text-amber-100 hover:text-white transition">Home</a></li>
+                <li><a href="Media Share DSKU.html" class="text-white border-b-2 border-white pb-1">Media Share</a></li>
+                <li><a href="Pendaftaran.html" class="text-amber-100 hover:text-white transition">Pendaftaran</a></li>
+                <li><a href="posts.html" class="text-amber-100 hover:text-white transition">Posts</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION MEDIA -->
+    <section class="pt-32 pb-12 bg-pattern border-b border-amber-200">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-5xl md:text-7xl font-black text-gray-900 mb-4 tracking-tighter uppercase">
+                PATHFINDER DAERAH <span class="text-amber-600"> SUMATRA KAWASAN UTARA</span>
+            </h1>
+            <p class="text-gray-600 max-w-2xl mx-auto font-medium">Kumpulan momen terbaik, pelayanan, dan keceriaan seluruh club Pathfinder di Daerah Sumatra Kawasan Utara.</p>
+            
+            <!-- Category Filter -->
+            <div class="flex flex-wrap justify-center gap-3 mt-10">
+                <button class="px-6 py-2 rounded-full bg-amber-600 text-white font-bold text-sm shadow-lg shadow-amber-900/20">All Media</button>
+                <button class="px-6 py-2 rounded-full bg-white text-gray-600 font-bold text-sm hover:bg-amber-100 transition">Siantar</button>
+                <button class="px-6 py-2 rounded-full bg-white text-gray-600 font-bold text-sm hover:bg-amber-100 transition">Tanah Karo</button>
+                <button class="px-6 py-2 rounded-full bg-white text-gray-600 font-bold text-sm hover:bg-amber-100 transition">Samosir</button>
+                <button class="px-6 py-2 rounded-full bg-white text-gray-600 font-bold text-sm hover:bg-amber-100 transition">Toba</button>
+                <button class="px-6 py-2 rounded-full bg-white text-gray-600 font-bold text-sm hover:bg-amber-100 transition">Simalungun</button>
+                <button class="px-6 py-2 rounded-full bg-white text-gray-600 font-bold text-sm hover:bg-amber-100 transition">Tanah Jawa</button>
+                <button class="px-6 py-2 rounded-full bg-white text-gray-600 font-bold text-sm hover:bg-amber-100 transition">SLA PTASN</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- MEDIA GRID GALLERY -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+                
+                <!-- Foto 1 -->
+                <div class="relative group media-card overflow-hidden rounded-2xl shadow-lg bg-gray-200 break-inside-avoid">
+                    <img src="images/Akwila,Foto.jpg" alt="Media" class="w-full hover:scale-110 transition-transform duration-700">
+                    <div class="overlay absolute inset-0 bg-gradient-to-t from-amber-900/90 via-transparent to-transparent opacity-0 transition-opacity p-6 flex flex-col justify-end">
+                        <p class="text-amber-400 font-bold text-xs uppercase tracking-widest">Akwila Club</p>
+                        <h3 class="text-white font-bold text-lg">Pelayanan Masyarakat 2024</h3>
+                    </div>
+                </div>
+
+                <!-- Foto 2 -->
+                <div class="relative group media-card overflow-hidden rounded-2xl shadow-lg bg-gray-200 break-inside-avoid">
+                    <img src="images/PA SLA.png" alt="Media" class="w-full hover:scale-110 transition-transform duration-700">
+                    <div class="overlay absolute inset-0 bg-gradient-to-t from-amber-900/90 via-transparent to-transparent opacity-0 transition-opacity p-6 flex flex-col justify-end">
+                        <p class="text-amber-400 font-bold text-xs uppercase tracking-widest">SLA UASN</p>
+                        <h3 class="text-white font-bold text-lg">Kebersamaan MG & Dir PA</h3>
+                    </div>
+                </div>
+
+                <!-- Foto 3 -->
+                <div class="relative group media-card overflow-hidden rounded-2xl shadow-lg bg-gray-200 break-inside-avoid">
+                    <img src="images/Track n Trail.jpeg" alt="Media" class="w-full hover:scale-110 transition-transform duration-700">
+                    <div class="overlay absolute inset-0 bg-gradient-to-t from-amber-900/90 via-transparent to-transparent opacity-0 transition-opacity p-6 flex flex-col justify-end">
+                        <p class="text-amber-400 font-bold text-xs uppercase tracking-widest">Distrik Siantar</p>
+                        <h3 class="text-white font-bold text-lg">Track n Trail Adventure</h3>
+                    </div>
+                </div>
+
+                <!-- Foto 4 -->
+                <div class="relative group media-card overflow-hidden rounded-2xl shadow-lg bg-gray-200 break-inside-avoid">
+                    <img src="images/Foto Perkemahan Kelas Kemajuan Pathfinder SLA.JPG" alt="Media" class="w-full hover:scale-110 transition-transform duration-700">
+                    <div class="overlay absolute inset-0 bg-gradient-to-t from-amber-900/90 via-transparent to-transparent opacity-0 transition-opacity p-6 flex flex-col justify-end">
+                        <p class="text-amber-400 font-bold text-xs uppercase tracking-widest">Pathfinder SLA</p>
+                        <h3 class="text-white font-bold text-lg">Perkemahan Kelas Kemajuan</h3>
+                    </div>
+                </div>
+
+                <!-- Foto 5 (Contoh Placeholder jika gambar belum ada) -->
+                <div class="relative group media-card overflow-hidden rounded-2xl shadow-lg bg-amber-200 aspect-video break-inside-avoid flex items-center justify-center">
+                    <div class="text-center p-6">
+                        <svg class="w-12 h-12 text-amber-600 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        <p class="font-bold text-amber-800">Video Dokumentasi Segera Hadir</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Call to Action -->
+            <div class="mt-20 bg-amber-600 rounded-3xl p-10 text-center text-white shadow-2xl shadow-amber-900/30">
+                <h2 class="text-3xl font-black mb-4 uppercase">Ingin Foto Clubmu Tampil Disini?</h2>
+                <p class="mb-8 opacity-90 font-medium">Kirimkan dokumentasi terbaik kegiatan kalian melalui tombol pendaftaran atau upload ke Google Drive resmi DSKU.</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="https://drive.google.com/drive/folders/1oCRAMRaXiD2IztlxpRiEp9LYNCDrubSr?hl=ID" class="bg-white text-amber-600 font-black px-8 py-3 rounded-full hover:bg-amber-50 transition">Kirim Media</a>
+                    <a href="https://drive.google.com/drive/folders/1oCRAMRaXiD2IztlxpRiEp9LYNCDrubSr?hl=ID" target="_blank" class="bg-amber-700 text-white font-black px-8 py-3 rounded-full hover:bg-amber-800 transition">Google Drive</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER (Konsisten Abu-Abu) -->
+    <footer class="bg-gray-200 pt-16 pb-8 border-t border-gray-300">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="flex items-center gap-4">
+                    <img src="images/DSKU-removebg-preview.png" alt="DSKU" class="w-14">
+                    <div>
+                        <h4 class="font-bold text-gray-900 uppercase text-sm tracking-tighter">Pathfinder DSKU</h4>
+                        <p class="text-gray-500 text-xs font-medium">Daerah Sumatra Kawasan Utara</p>
+                    </div>
+                </div>
+                <div class="text-center md:text-right">
+                    <p class="text-gray-500 text-[10px] font-black uppercase tracking-widest">
+                        &copy; 2024 Visual Media Pathfinder DSKU
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

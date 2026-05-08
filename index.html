@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NASA</title>
+    <title>PATHFINDER DSKU</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,10 +24,11 @@
                             red: '#e11d29',
                             dark: '#000000',
                             gray: '#1a1a1a',
+                            amber: '#f59e0b'
                         }
                     },
                     backgroundImage: {
-                        'gradient-header': 'linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0))',
+                        'gradient-header': 'linear-gradient(to bottom, rgba(245, 158, 11, 0.95), rgba(0,0,0,0))',
                     }
                 }
             }
@@ -35,451 +36,312 @@
     </script>
 
     <style>
-        .moon {
-            position: absolute;
-            left: 50%;
-            top: 42%;
-            transform: translate(-50%, -50%);
-            width: min(40vw, 520px);
-            height: min(40vw, 520px);
-            background-image: url;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            border-radius: 50%;
-            filter: brightness(.9);
-            opacity: .9;
+        /* Animasi Background Bergerak */
+        @keyframes jalanBg {
+            0% { background-position: 0 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        .bg-gerak {
+            background-image: url('images/Foto Bener.webp');
+            background-repeat: repeat-x;
+            background-size: auto 100%;
+            animation: jalanBg 20s linear infinite;
+        }
+
+        .bg-sambutan-gerak {
+            background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url('images/Foto Bener.webp');
+            background-size: cover;
+            animation: moveBg 30s linear infinite;
+        }
+
+        @keyframes moveBg {
+            from { background-position: 0 0; }
+            to { background-position: 100% 100%; }
         }
     </style>
 </head>
 
-<body class="bg-black text-white font-sans antialiased selection:bg-nasa-red selection:text-white">
+<body class="bg-amber-50 text-gray-900 font-sans antialiased selection:bg-nasa-red selection:text-white">
 
-    <header class="fixed top-0 inset-x-0 z-50 bg-gradient-header transition-all duration-300" id="navbar">
-        <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
-
+    <!-- NAVBAR -->
+    <header class="fixed top-0 inset-x-0 z-50 bg-amber-600/90 backdrop-blur-md transition-all duration-300 shadow-md" id="navbar">
+        <nav class="container mx-auto px-4 py-3 flex items-center justify-between">
             <div class="flex items-center gap-4">
                 <a href="index.html" class="flex items-center gap-3 group">
-                    <img src="images/gambar1.svg" alt="NASA Logo"
-                        class="w-12 h-12 block group-hover:scale-105 transition-transform duration-300">
-                    <div class="hidden sm:block leading-tight font-bold text-sm tracking-widest text-gray-300">
-                        My Universe
+                    <img src="images/DSKU-removebg-preview.png" alt="DSKU Logo" class="w-10 h-10 group-hover:scale-105 transition-transform">
+                    <div class="hidden sm:block leading-tight font-bold text-xs tracking-widest text-white uppercase">
+                        Pathfinder DSKU
                     </div>
                 </a>
             </div>
 
-            <ul class="hidden md:flex items-center gap-8 font-semibold text-sm">
-                <li><a href="index.html"
-                        class="text-white hover:text-nasa-red transition-colors border-b-2 border-nasa-red py-1">Home</a>
-                </li>
-                <li><a href="biodata.html"
-                        class="text-gray-300 hover:text-white hover:border-b-2 border-white/50 transition-all py-1">Biodata</a>
-                </li>
-                <li><a href="contact_us.html"
-                        class="text-gray-300 hover:text-white hover:border-b-2 border-white/50 transition-all py-1">Contact
-                        Us</a></li>
-                <li><a href="posts.html"
-                        class="text-gray-300 hover:text-white hover:border-b-2 border-white/50 transition-all py-1">Posts
-                        (API)</a></li>
-                <li><a href="freepage.html"
-                        class="text-gray-300 hover:text-white hover:border-b-2 border-white/50 transition-all py-1">Free
-                        Page</a></li>
-
-                <li>
-                    <a href="#"
-                        class="flex items-center gap-2 px-3 py-1.5 rounded bg-white/10 hover:bg-white/20 transition text-white border border-white/20">
-                        <span>LIVE</span>
-                        <span class="w-2 h-2 rounded-full bg-nasa-red animate-pulse"></span>
-                    </a>
-                </li>
+            <ul class="hidden md:flex items-center gap-6 font-semibold text-sm">
+                <li><a href="index.html" class="text-white hover:text-amber-200 transition-colors border-b-2 border-white pb-1">Home</a></li>
+                <li><a href="Media Share DSKU.html" class="text-amber-100 hover:text-white transition-all">Media Share</a></li>
+                <li><a href="Pendaftaran.html" class="text-amber-100 hover:text-white transition-all">Pendaftaran</a></li>
+                <li><a href="posts.html" class="text-amber-100 hover:text-white transition-all">Posts</a></li>
+                <li><a href="Informasi.html" class="text-amber-100 hover:text-white transition-all">Informasi</a></li>
+                <li><a href="Adventurer.html" class="text-amber-100 hover:text-white transition-all">Adventurer</a></li>
+                <a href="https://www.youtube.com/@BeritaHariIni-TerbarudariDSKU/streams" target="_blank" rel="noopener noreferrer"
+                   class="flex items-center gap-2 px-3 py-1 rounded bg-red-600 hover:bg-red-700 transition text-white text-xs font-bold">
+                   <span>LIVE</span>
+                   <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+                </a>
             </ul>
 
-            <button id="menu-btn" class="md:hidden text-white focus:outline-none">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
-                    </path>
-                </svg>
+            <button id="menu-btn" class="md:hidden text-white">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
             </button>
         </nav>
 
-        <div id="mobile-menu"
-            class="hidden md:hidden bg-black/95 backdrop-blur-md border-b border-white/10 absolute w-full">
-            <ul class="flex flex-col p-4 gap-4 font-semibold text-center">
-                <li><a href="index.html" class="block py-2 text-nasa-red">Home</a></li>
-                <li><a href="biodata.html" class="block py-2 hover:text-gray-300">Biodata</a></li>
-                <li><a href="contact_us.html" class="block py-2 hover:text-gray-300">Contact Us</a></li>
-                <li><a href="posts.html" class="block py-2 hover:text-gray-300">Posts</a></li>
-                <li><a href="freepage.html" class="block py-2 hover:text-gray-300">Free Page</a></li>
+        <div id="mobile-menu" class="hidden md:hidden bg-amber-700 text-white absolute w-full shadow-xl">
+            <ul class="flex flex-col p-4 gap-3 font-semibold text-center">
+                <li><a href="index.html" class="block py-2">Home</a></li>
+                <li><a href="Media Share DSKU.html" class="block py-2">Media Share</a></li>
+                <li><a href="Pendaftaran.html" class="block py-2">Pendaftaran</a></li>
+                <li><a href="posts.html" class="block py-2">Posts</a></li>
+                <li><a href="Informasi.html" class="block py-2">Informasi</a></li>
+                <li><a href="Adventurer.html" class="block py-2">Adventurer</a></li>
             </ul>
         </div>
     </header>
 
-    <main class="relative min-h-screen flex items-center bg-black overflow-hidden pt-20">
-
-        <div class="absolute top-1/2 right-0 -translate-y-1/2 w-[80vw] md:w-[60vw] lg:w-[50vw] z-0 pointer-events-none">
-            <img src="images/gambar2.jpg" alt="Moon Background" class="w-full h-auto object-contain opacity-90">
-            <div class="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent"></div>
+    <!-- HERO SECTION -->
+    <main class="relative min-h-screen flex items-center bg-amber-500 overflow-hidden pt-20">
+        <div class="absolute top-1/2 right-0 -translate-y-1/2 w-[80vw] md:w-[50vw] z-0 opacity-80">
+            <img src="images/Pathfinder DSKU.jpg" alt="Background" class="w-full h-auto object-contain">
+            <div class="absolute inset-0 bg-gradient-to-r from-amber-500 via-transparent to-transparent"></div>
         </div>
 
-        <div class="container mx-auto px-4 relative z-10 w-full h-full flex flex-col justify-center">
-
+        <div class="container mx-auto px-4 relative z-10">
             <div class="max-w-4xl">
-                <h1
-                    class="text-6xl md:text-8xl lg:text-9xl font-extrabold leading-none tracking-tighter text-white mb-6 drop-shadow-2xl">
-                    Return to<br>the Moon
+                <h1 class="text-6xl md:text-8xl lg:text-9xl font-black leading-none tracking-tighter text-white mb-6 drop-shadow-xl">
+                    Pathfinder<br>DSKU
                 </h1>
-
-                <p
-                    class="text-lg md:text-xl text-gray-200 max-w-lg leading-relaxed mb-8 font-medium drop-shadow-md bg-black/30 backdrop-blur-sm p-2 rounded-lg">
-                    Artemis II, the first crewed flight under NASA’s Artemis campaign, is another step toward new
-                    U.S.-crewed missions on the Moon’s surface that will help the agency prepare to send astronauts to
-                    Mars.
+                <p class="text-lg md:text-xl text-amber-950 max-w-lg leading-relaxed mb-8 font-semibold bg-white/30 backdrop-blur-md p-4 rounded-xl shadow-lg">
+                    Punya kegiatan seru, kreatif, dan penuh kebersamaan di club Pathfinder kalian? Yuk bagikan dokumentasi terbaik berupa foto, video, atau cerita singkat kegiatan clubmu! 📸✨
+                    Setiap momen yang kalian kirim bisa menjadi inspirasi dan semangat bagi Pathfinder lainnya di seluruh Indonesia. Tunjukkan kekompakan, kreativitas, dan semangat pelayanan club kalian kepada semua orang! 📝🔥
                 </p>
-
                 <div class="flex flex-wrap gap-4">
-                    <a href="contact_us.html"
-                        class="bg-nasa-red hover:bg-red-700 text-white font-bold text-lg py-3 px-8 rounded transition-transform transform hover:-translate-y-1 shadow-lg shadow-nasa-red/50">
-                        Join the Missions
+                    <a href="https://drive.google.com/drive/folders/1oCRAMRaXiD2IztlxpRiEp9LYNCDrubSr?hl=ID" class="bg-red-600 hover:bg-red-700 text-white font-bold text-lg py-4 px-8 rounded-full transition-all transform hover:-translate-y-1 shadow-xl shadow-red-900/40">
+                        Yuk IsI Foto Dan Vidio Menarik Kalian
+                    </a>
+                </div>
                     </a>
                 </div>
             </div>
-
-            <div class="mt-16 md:mt-24 border-t border-white/20 pt-6 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl">
-                <a href="https://unai.edu" class="group block">
-                    <p class="text-[10px] font-bold tracking-[0.2em] text-gray-400 uppercase mb-1">UNIVERSITY</p>
-                    <div
-                        class="flex items-center gap-2 text-lg font-bold text-white group-hover:text-nasa-red transition-colors">
-                        UNAI Website <span>→</span>
-                    </div>
-                </a>
-
-                <a href="https://fti.unai.edu" class="group block">
-                    <p class="text-[11px] font-bold tracking-[0.2em] text-gray-400 uppercase mb-1">FACULTY</p>
-                    <div
-                        class="flex items-center gap-2 text-lg font-bold text-white group-hover:text-nasa-red transition-colors">
-                        FTI UNAI <span>→</span>
-                    </div>
-                </a>
-
-                <a href="biodata.html" class="group block">
-                    <p class="text-[11px] font-bold tracking-[0.2em] text-gray-400 uppercase mb-1">STUDENT ID</p>
-                    <div
-                        class="flex items-center gap-2 text-lg font-bold text-white group-hover:text-nasa-red transition-colors">
-                        2481040 <span>→</span>
-                    </div>
-                </a>
-            </div>
-
         </div>
     </main>
 
-    <section class="bg-black py-20 border-t border-white/10 relative z-30">
+    <!-- NEWS SECTION -->
+    <section class="bg-amber-50 py-20 border-t border-amber-200">
         <div class="container mx-auto px-4">
-
-            <div class="flex justify-between items-end mb-10">
-                <h2 class="text-3xl md:text-5xl font-bold text-white">Featured News</h2>
-                <a href="posts.html"
-                    class="hidden md:flex items-center gap-2 text-lg font-semibold text-gray-300 hover:text-nasa-red transition">
-                    View All Posts <span class="text-nasa-red">→</span>
-                </a>
+            <div class="flex justify-between items-end mb-12">
+                <h2 class="text-3xl md:text-5xl font-black text-gray-900">Pathfinder News</h2>
+                <a href="Pendaftaran.html" class="text-red-600 font-bold hover:underline">Join Kegiatan Pemuda DSKU →</a>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-                <article
-                    class="group cursor-pointer relative lg:col-span-2 lg:row-span-2 bg-gray-900 rounded-xl overflow-hidden shadow-2xl min-h-[400px] lg:min-h-[500px]">
-                    <img src="images/gambar3.webp" alt="News 1"
-                        class="w-full h-full object-cover absolute inset-0 group-hover:scale-105 transition-transform duration-700">
-
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
-
-                    <div class="absolute bottom-0 left-0 p-6 md:p-8 z-10">
-                        <span
-                            class="bg-white text-black text-xs font-bold px-2 py-1 rounded mb-3 inline-block">ARTICLE</span>
-                        <h3
-                            class="text-2xl md:text-3xl font-bold leading-tight text-white group-hover:text-nasa-red transition-colors">
-                            New NASA Sensor Goes Hunting for Critical Minerals
-                        </h3>
-                        <p class="text-gray-300 mt-2 text-sm line-clamp-2"></p>
+                <!-- News 1 -->
+                <article class="group relative lg:col-span-2 lg:row-span-2 rounded-2xl overflow-hidden shadow-2xl min-h-[400px]">
+                    <img src="images/Akwila,Foto.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-0 p-6">
+                        <span class="bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded mb-3 inline-block">AKWILA</span>
+                        <h3 class="text-2xl font-bold text-white leading-tight">Pelayanan Panti Jompo Campore 2025</h3>
+                    </div>
+                </article>
+                <!-- News 4 (Template News 1) -->
+                <article class="group relative lg:col-span-2 lg:row-span-2 rounded-2xl overflow-hidden shadow-2xl min-h-[400px]">
+                    <img src="images/Track n Trail.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-0 p-6">
+                        <span class="bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded mb-3 inline-block">KEGIATAN</span>
+                        <h3 class="text-2xl font-bold text-white leading-tight">Judul Berita Ke-4 Kamu Disini</h3>
                     </div>
                 </article>
 
-                <article
-                    class="group cursor-pointer relative lg:row-span-2 bg-gray-900 rounded-xl overflow-hidden min-h-[400px] lg:min-h-[500px]">
-                    <img src="images/gambar4.jpg" alt="News 2"
-                        class="w-full h-full object-cover absolute inset-0 group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                    <div class="absolute bottom-0 left-0 p-6 z-10">
-                        <span
-                            class="bg-white text-black text-xs font-bold px-2 py-1 rounded mb-3 inline-block">ARTICLE</span>
-                        <h3 class="text-xl font-bold leading-tight text-white">NASA Wins Second Emmy Award for 2024
-                            Total Solar Eclipse Broadcast</h3>
+                <!-- News 5 (Template News 1) -->
+                <article class="group relative lg:col-span-2 lg:row-span-2 rounded-2xl overflow-hidden shadow-2xl min-h-[400px]">
+                    <img src="images/PA SLA.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-0 p-6">
+                        <span class="bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded mb-3 inline-block">PATHFINDER</span>
+                        <h3 class="text-2xl font-bold text-white leading-tight">Judul Berita Ke-5 Kamu Disini</h3>
                     </div>
                 </article>
 
-                <article
-                    class="group cursor-pointer relative bg-gray-900 rounded-xl overflow-hidden h-60 min-h-[240px]">
-                    <img src="images/gambar5.jpg" alt="News 3"
-                        class="w-full h-full object-cover absolute inset-0 group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                    <div class="absolute bottom-0 left-0 p-5 z-10">
-                        <span
-                            class="bg-white text-black text-xs font-bold px-2 py-1 rounded mb-3 inline-block">BLOG</span>
-                        <h3 class="text-lg font-bold leading-tight text-white">Strong Flare Erupts from Sun</h3>
+                <!-- News 6 (Template News 1) -->
+                <article class="group relative lg:col-span-2 lg:row-span-2 rounded-2xl overflow-hidden shadow-2xl min-h-[400px]">
+                    <img src="images/Foto Perkemahan Kelas Kemajuan Pathfinder SLA.JPG" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-0 p-6">
+                        <span class="bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded mb-3 inline-block">DSKU</span>
+                        <h3 class="text-2xl font-bold text-white leading-tight">Judul Berita Ke-6 Kamu Disini</h3>
                     </div>
                 </article>
 
-                <article
-                    class="group cursor-pointer relative bg-gray-900 rounded-xl overflow-hidden h-60 min-h-[240px]">
-                    <img src="images/gambar6.jpg" alt="News 4"
-                        class="w-full h-full object-cover absolute inset-0 group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                    <div class="absolute bottom-0 left-0 p-5 z-10">
-                        <span
-                            class="bg-white text-black text-xs font-bold px-2 py-1 rounded mb-3 inline-block">ARTICLE</span>
-                        <h3 class="text-lg font-bold leading-tight text-white">Hubble Spots a Storm of New Stars</h3>
+                <!-- News 7 (Template News 1) -->
+                <article class="group relative lg:col-span-2 lg:row-span-2 rounded-2xl overflow-hidden shadow-2xl min-h-[400px]">
+                    <img src="images/gambar7.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-0 p-6">
+                        <span class="bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded mb-3 inline-block">CAMP</span>
+                        <h3 class="text-2xl font-bold text-white leading-tight">Judul Berita Ke-7 Kamu Disini</h3>
                     </div>
                 </article>
 
+                                <!-- News 8 (Template News 1) -->
+                <article class="group relative lg:col-span-2 lg:row-span-2 rounded-2xl overflow-hidden shadow-2xl min-h-[400px]">
+                    <img src="images/gambar6.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-0 p-6">
+                        <span class="bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded mb-3 inline-block">DSKU</span>
+                        <h3 class="text-2xl font-bold text-white leading-tight">Judul Berita Ke-6 Kamu Disini</h3>
+                    </div>
+                </article>
             </div>
         </div>
     </section>
 
-    <section class="relative py-32 bg-fixed bg-center bg-cover"
-        style="background-image: url('images/gambar4.png'), url('https://images-assets.nasa.gov/image/PIA24910/PIA24910~orig.jpg');">
-        <div class="absolute inset-0 bg-black/60"></div>
-        <div class="container mx-auto px-4 relative z-10 text-center lg:text-left">
-            <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-tight">
-                Launching<br>Humanity into<br>Deep Space
-            </h2>
-            <p class="text-lg md:text-xl text-gray-200 max-w-2xl mb-8 leading-relaxed">
-                As NASA prepares for Artemis missions to the Moon and sets sights on Mars, we continue to enable
-                groundbreaking research not possible on Earth.
-            </p>
-            <a href="#" class="inline-flex items-center gap-2 text-xl font-bold hover:text-nasa-red transition">
-                International Space Station <span class="text-nasa-red">→</span>
-            </a>
+    <!-- RUNNING BG SECTION -->
+    <section class="relative py-5 bg-gerak bg-center">
+        <div class="absolute inset-0 bg-amber-900/60"></div>
+        <div class="container mx-auto px-4 relative z-10 text-center text-white">
+            <h2 class="text-4xl md:text-7xl font-black mb-6 uppercase leading-tight">Membangun Karakter<br>Pemuda Advent</h2>
+            <p class="text-lg md:text-xl max-w-2xl mx-auto font-medium opacity-90">Pemuda Advent harus menjadi fondasi yang kuat bagi gereja, karena melalui semangat, iman, dan pelayanan mereka, gereja dapat terus bertumbuh dan berkembang dengan baik. Pemuda bukan hanya penerus gereja di masa depan, tetapi juga bagian penting dalam pelayanan saat ini. Oleh sebab itu, setiap pemuda Advent perlu memiliki iman yang teguh, karakter yang baik, serta tetap setia kepada Tuhan agar tidak mudah goyah oleh tantangan, pergaulan, maupun perkembangan dunia yang semakin berubah. Dengan hati yang melayani dan kehidupan yang menjadi teladan, pemuda Advent dapat membawa pengaruh positif bagi gereja, keluarga, dan lingkungan sekitarnya.</p>
         </div>
     </section>
 
-
-    <section class="bg-gray-100 text-black py-20">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-
-                <div class="space-y-6">
-                    <span class="font-bold text-gray-500 uppercase tracking-wide text-sm">Artemis</span>
-
-                    <h2 class="text-4xl md:text-5xl font-extrabold leading-tight text-gray-900">
-                        Send Your Name <br>Around the Moon
-                    </h2>
-
-                    <p class="text-lg text-gray-700 leading-relaxed">
-                        Artemis II will test NASA’s deep space capabilities as humans fly on the Space Launch System
-                        rocket and Orion spacecraft for the first time.
-                        Join the mission by launching your name around the moon alongside NASA astronauts Reid Wiseman,
-                        Victor Glover, Christina Koch, and Canadian Space Agency astronaut Jeremy Hansen.
-                    </p>
-
-                    <a href="contact_us.html"
-                        class="inline-flex items-center gap-2 text-nasa-red font-bold text-xl hover:gap-4 transition-all duration-300 group">
-                        Artemis II Boarding Pass
-                        <span
-                            class="bg-nasa-red text-white rounded-full w-6 h-6 flex items-center justify-center text-sm group-hover:bg-red-700">→</span>
+    <!-- KATA SAMBUTAN SECTION (PRO) -->
+    <section class="bg-sambutan-gerak py-16 md:py-24 border-b border-amber-200">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                
+                <div class="lg:col-span-7 order-2 lg:order-1 space-y-6">
+                    <div class="flex items-center gap-3">
+                        <span class="w-10 h-[2px] bg-red-600"></span>
+                        <span class="font-bold text-red-800 uppercase text-xs tracking-widest">Kata Sambutan</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-black text-gray-900">MG.Pdt Rudianjaya Purba.MFil</h2>
+                    <p class="text-gray-600 font-bold italic">Direktur Pemuda & Komunikasi DSKU</p>
+                    <div class="relative bg-white/50 p-6 rounded-2xl shadow-inner border border-white">
+                        <span class="absolute -top-4 -left-2 text-6xl text-amber-300 font-serif opacity-50">“</span>
+                        <p class="text-gray-700 leading-relaxed italic text-sm md:text-base">
+                            Syalom Pemuda dan Pemudi Pathfinder Daerah Sumatra Kawasan Utara.
+                            Salam semangat untuk seluruh adik-adik Pathfinder serta kakak-kakak pembina di setiap club yang ada di daerah kita. Mari terus melayani Tuhan dengan hati yang penuh sukacita, semangat, dan kasih. Jadikan setiap pelayanan sebagai kesempatan untuk bertumbuh dalam iman, membangun persaudaraan, serta menjadi terang dan teladan bagi banyak orang di mana pun kita berada.
+                            Walaupun dalam perjalanan pelayanan terkadang ada tantangan, kesibukan, maupun rasa lelah, tetaplah kuat dan setia dalam panggilan yang Tuhan percayakan. Kehadiran setiap pembina, pengurus, dan anggota Pathfinder sangat berarti dalam membentuk generasi muda yang takut akan Tuhan, disiplin, mandiri, dan memiliki karakter Kristus.
+                            Mari kita terus bekerja sama, saling mendukung, dan menjaga kekompakan di setiap club agar pelayanan Pathfinder di Daerah Sumatra Kawasan Utara semakin bertumbuh, aktif, dan menjadi berkat bagi gereja maupun masyarakat. Tetaplah membawa semangat “Maranatha”, terus maju dalam iman, dan lakukan setiap pelayanan dengan ketulusan hati untuk kemuliaan nama Tuhan.
+                            Tuhan memberkati seluruh Pemuda Pemudi Pathfinder Daerah Sumatra Kawasan Utara. Semangat melayani, semangat berkarya, dan tetap setia sampai akhir.
+                        </p>
+                    </div>
+                    <a href="https://wa.me/message/NELI6QVUTSFEP1" class="inline-flex items-center gap-3 bg-red-600 text-white px-6 py-3 rounded-full font-bold hover:bg-red-700 transition shadow-lg">
+                        Hubungi Admin Kami →
                     </a>
                 </div>
 
-                <div class="relative">
-                    <div class="overflow-hidden rounded-lg shadow-2xl group cursor-pointer">
-                        <img src="images/gambar7.jpg" alt="Artemis II Crew Poster"
-                            class="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-500">
-                    </div>
-
-                    <div class="mt-3 text-xs text-gray-500 font-mono">
-                        <p class="font-bold text-gray-700">Artemis II Crew Poster</p>
-                        <p>NASA</p>
+                <div class="lg:col-span-5 order-1 lg:order-2 flex justify-center">
+                    <div class="relative w-full max-w-[340px]">
+                        <div class="absolute -top-4 -right-4 w-full h-full border-4 border-amber-400 rounded-3xl -z-10"></div>
+                        <div class="rounded-3xl overflow-hidden shadow-2xl bg-white border-4 border-white">
+                            <img src="images/Dir.new.png" alt="Director" class="w-full h-auto">
+                        </div>
+                        <div class="mt-4 bg-amber-600 p-3 rounded-xl text-white text-center shadow-lg">
+                            <p class="text-xs font-black uppercase">Direktur Pemuda DSKU</p>
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <section class="bg-white text-black py-20 pb-32">
+    <!-- CLUBS SECTION -->
+    <section class="bg-amber-500 py-20">
         <div class="container mx-auto px-4">
-
-            <h2 class="text-4xl md:text-5xl font-extrabold mb-12 text-gray-900 border-l-8 border-nasa-red pl-6">
-                More Topics from NASA
-            </h2>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-
-                <a href="#" class="group relative h-96 block overflow-hidden bg-black shadow-lg">
-                    <img src="images/gambar8.webp" alt="Missions"
-                        class="w-full h-full object-cover transition-transform duration-600 group-hover:scale-110 opacity-90">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
-                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
-                        <span class="text-white text-3xl font-bold">Missions</span>
-                        <div
-                            class="w-10 h-10 rounded-full bg-nasa-red flex items-center justify-center text-white text-xl transform group-hover:scale-110 transition-transform shadow-lg">
-                            →</div>
+            <h2 class="text-4xl font-black text-white mb-12 border-l-8 border-white pl-6 uppercase">Club Club Pathfinder DSKU</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <!-- Club Loop -->
+                <div class="group relative h-64 rounded-xl overflow-hidden shadow-lg bg-gray-900">
+                    <img src="images/gambar8.webp" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black p-4 flex flex-col justify-end">
+                        <span class="text-white font-bold text-sm uppercase">Dahkota Akwila</span>
                     </div>
-                </a>
-
-                <a href="#" class="group relative h-96 block overflow-hidden bg-black shadow-lg">
-                    <img src="images/gambar9.webp" alt="Humans In Space"
-                        class="w-full h-full object-cover transition-transform duration-600 group-hover:scale-110 opacity-90">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
-                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
-                        <span class="text-white text-3xl font-bold leading-tight">Humans In<br>Space</span>
-                        <div
-                            class="w-10 h-10 rounded-full bg-nasa-red flex items-center justify-center text-white text-xl transform group-hover:scale-110 transition-transform shadow-lg">
-                            →</div>
+                </div>
+                <div class="group relative h-64 rounded-xl overflow-hidden shadow-lg bg-gray-900">
+                    <img src="images/gambar9.webp" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black p-4 flex flex-col justify-end">
+                        <span class="text-white font-bold text-sm uppercase">Tanah Karo</span>
                     </div>
-                </a>
-
-                <a href="#" class="group relative h-96 block overflow-hidden bg-black shadow-lg">
-                    <img src="images/gambar10.jpg" alt="Earth"
-                        class="w-full h-full object-cover transition-transform duration-600 group-hover:scale-110 opacity-90">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
-                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
-                        <span class="text-white text-3xl font-bold">Earth</span>
-                        <div
-                            class="w-10 h-10 rounded-full bg-nasa-red flex items-center justify-center text-white text-xl transform group-hover:scale-110 transition-transform shadow-lg">
-                            →</div>
+                </div>
+                <div class="group relative h-64 rounded-xl overflow-hidden shadow-lg bg-gray-900">
+                    <img src="images/gambar10.jpg" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black p-4 flex flex-col justify-end">
+                        <span class="text-white font-bold text-sm uppercase">Siantar</span>
                     </div>
-                </a>
-
-                <a href="#" class="group relative h-96 block overflow-hidden bg-black shadow-lg">
-                    <img src="images/gambar11.webp" alt="Solar System"
-                        class="w-full h-full object-cover transition-transform duration-600 group-hover:scale-110 opacity-90">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
-                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
-                        <span class="text-white text-3xl font-bold leading-tight">Our Solar<br>System</span>
-                        <div
-                            class="w-10 h-10 rounded-full bg-nasa-red flex items-center justify-center text-white text-xl transform group-hover:scale-110 transition-transform shadow-lg">
-                            →</div>
+                </div>
+                <div class="group relative h-64 rounded-xl overflow-hidden shadow-lg bg-gray-900">
+                    <img src="images/gambar11.webp" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black p-4 flex flex-col justify-end">
+                        <span class="text-white font-bold text-sm uppercase">SLA PTASN</span>
                     </div>
-                </a>
-
-                <a href="#" class="group relative h-96 block overflow-hidden bg-black shadow-lg">
-                    <img src="images/gambar12.webp" alt="Universe"
-                        class="w-full h-full object-cover transition-transform duration-600 group-hover:scale-110 opacity-90">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
-                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
-                        <span class="text-white text-3xl font-bold">Universe</span>
-                        <div
-                            class="w-10 h-10 rounded-full bg-nasa-red flex items-center justify-center text-white text-xl transform group-hover:scale-110 transition-transform shadow-lg">
-                            →</div>
-                    </div>
-                </a>
-
-                <a href="#" class="group relative h-96 block overflow-hidden bg-black shadow-lg">
-                    <img src="images/gambar13.webp" alt="Science Missions"
-                        class="w-full h-full object-cover transition-transform duration-600 group-hover:scale-110 opacity-90">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
-                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
-                        <span class="text-white text-3xl font-bold leading-tight">Science<br>Missions</span>
-                        <div
-                            class="w-10 h-10 rounded-full bg-nasa-red flex items-center justify-center text-white text-xl transform group-hover:scale-110 transition-transform shadow-lg">
-                            →</div>
-                    </div>
-                </a>
-
-                <a href="#" class="group relative h-96 block overflow-hidden bg-black shadow-lg">
-                    <img src="images/gambar14.webp" alt="Aeronautics"
-                        class="w-full h-full object-cover transition-transform duration-600 group-hover:scale-110 opacity-90">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
-                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
-                        <span class="text-white text-3xl font-bold">Aeronautics</span>
-                        <div
-                            class="w-10 h-10 rounded-full bg-nasa-red flex items-center justify-center text-white text-xl transform group-hover:scale-110 transition-transform shadow-lg">
-                            →</div>
-                    </div>
-                </a>
-
-                <a href="#" class="group relative h-96 block overflow-hidden bg-black shadow-lg">
-                    <img src="images/gambar15.webp" alt="Technology"
-                        class="w-full h-full object-cover transition-transform duration-600 group-hover:scale-110 opacity-90">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
-                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
-                        <span class="text-white text-3xl font-bold">Technology</span>
-                        <div
-                            class="w-10 h-10 rounded-full bg-nasa-red flex items-center justify-center text-white text-xl transform group-hover:scale-110 transition-transform shadow-lg">
-                            →</div>
-                    </div>
-                </a>
-
+                </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-neutral-900 pt-16 pb-8 border-t border-white/10">
+    <!-- FOOTER (ABU-ABU MODERN) -->
+    <footer class="bg-gray-200 pt-16 pb-8 border-t border-gray-300">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
-                <div class="lg:col-span-1 space-y-6">
-                    <img src="images/gambar1.svg" alt="NASA" class="w-16">
-                    <h3 class="text-xl font-bold">National Aeronautics and Space Administration</h3>
-                    <p class="text-gray-400 text-sm">Innovates for the benefit of humanity, and inspires the world
-                        through discovery.</p>
+                <div class="space-y-6">
+                    <img src="images/DSKU-removebg-preview.png" alt="DSKU" class="w-16">
+                    <h3 class="text-xl font-bold text-gray-900">Pathfinder DSKU</h3>
+                    <p class="text-gray-600 text-sm">Melayani untuk kemanusiaan, membangun karakter yang kuat di dalam Kristus.</p>
                 </div>
 
                 <div>
-                    <h4 class="font-bold text-lg mb-4">Project Pages</h4>
-                    <ul class="space-y-3 text-gray-400 text-sm">
-                        <li><a href="index.html" class="hover:text-white hover:underline">Home</a></li>
-                        <li><a href="biodata.html" class="hover:text-white hover:underline">Biodata</a></li>
-                        <li><a href="contact_us.html" class="hover:text-white hover:underline">Contact Us</a></li>
-                        <li><a href="posts.html" class="hover:text-white hover:underline">Posts API</a></li>
+                    <h4 class="font-bold text-gray-900 mb-6 uppercase text-sm border-b-2 border-amber-500 inline-block">Information</h4>
+                    <ul class="space-y-3 text-gray-600 text-sm font-semibold">
+                        <li><a href="index.html" class="hover:text-amber-600">Home</a></li>
+                        <li><a href="Media Share DSKU.html" class="hover:text-amber-600">Media Share</a></li>
+                        <li><a href="Pendaftaran.html" class="hover:text-amber-600">Pendaftaran</a></li>
+                        <li><a href="posts.html" class="hover:text-amber-600">Posts API</a></li>
+                        <li><a href="Adventurer.html" class="hover:text-amber-600">Adventurer</a></li>
+                        <li><a href="Informasi.html" class="hover:text-amber-600">Adventurer</a></li>
                     </ul>
                 </div>
 
                 <div>
-                    <h4 class="font-bold text-lg mb-4">University Links</h4>
-                    <ul class="space-y-3 text-gray-400 text-sm">
-                        <li><a href="https://unai.edu" target="_blank"
-                                class="hover:text-white hover:underline">Universitas Advent Indonesia</a></li>
-                        <li><a href="https://fti.unai.edu" target="_blank"
-                                class="hover:text-white hover:underline">Fakultas Teknologi Informasi</a></li>
-                        <li><a href="#" class="hover:text-white hover:underline">Student Portal</a></li>
+                    <h4 class="font-bold text-gray-900 mb-6 uppercase text-sm border-b-2 border-amber-500 inline-block">DSKU Links</h4>
+                    <ul class="space-y-3 text-gray-600 text-sm font-semibold">
+                        <li><a href="https://www.adventdsku.org/" target="_blank" class="hover:text-amber-600">Advent DSKU Org</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1oCRAMRaXiD2IztlxpRiEp9LYNCDrubSr?hl=ID" target="_blank" class="hover:text-amber-600">Google Drive Kegiatan</a></li>
+                        <li><a href="https://wa.me/message/NELI6QVUTSFEP1" class="hover:text-amber-600">Kontak WhatsApp</a></li>
                     </ul>
                 </div>
 
                 <div>
-                    <h4 class="font-bold text-lg mb-4 text-white">Follow NASA</h4>
+                    <h4 class="font-bold text-gray-900 mb-6 uppercase text-sm border-b-2 border-amber-500 inline-block">Social Media</h4>
                     <div class="flex gap-4">
-                        <a href="https://www.instagram.com/nasa/" target="_blank" aria-label="NASA Instagram"
-                            class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-nasa-red transition-all duration-300 transform hover:-translate-y-1">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                            </svg>
+                        <a href="https://www.instagram.com/pemuda.advent.dsku" target="_blank" class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md hover:-translate-y-1 transition-all">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" class="w-5 h-5">
                         </a>
-                        <a href="https://www.youtube.com/nasa" target="_blank" aria-label="NASA YouTube"
-                            class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-nasa-red transition-all duration-300 transform hover:-translate-y-1">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
-                            </svg>
+                        <a href="https://www.facebook.com/people/Komunikasi-Dsku" target="_blank" class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md hover:-translate-y-1 transition-all">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" class="w-5 h-5">
                         </a>
-                        <a href="https://www.facebook.com/NASA/" target="_blank" aria-label="NASA Facebook"
-                            class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-nasa-red transition-all duration-300 transform hover:-translate-y-1">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
-                            </svg>
+                        <a href="https://www.youtube.com/@BeritaHariIni-TerbarudariDSKU" target="_blank" class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md hover:-translate-y-1 transition-all">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" class="w-5 h-5">
+                        </a>
+                        <a href="https://wa.me/message/NELI6QVUTSFEP1" target="_blank" class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md hover:-translate-y-1 transition-all">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="w-5 h-5">
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div
-                class="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
-                <p>&copy; 2025 Final Project Web 1. Student NIM: 2481040.</p>
-                <div class="flex gap-4 mt-4 md:mt-0">
-                    <a href="#" class="hover:text-white">Privacy Policy</a>
-                    <a href="#" class="hover:text-white">Image Credits: NASA</a>
-                </div>
+            <div class="mt-16 pt-8 border-t border-gray-300 text-center text-gray-500 text-[10px] font-black uppercase tracking-widest">
+                &copy; Website Pathfinder Daerah Sumatra Kawasan Utara
             </div>
         </div>
     </footer>
@@ -487,11 +349,7 @@
     <script>
         const btn = document.getElementById('menu-btn');
         const menu = document.getElementById('mobile-menu');
-
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
+        btn.addEventListener('click', () => { menu.classList.toggle('hidden'); });
     </script>
 </body>
-
 </html>
