@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources Hub - Pathfinder DSKU</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        sans: ['DM Sans', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif']
+                    },
+                    colors: {
+                        pathfinder: {
+                            orange: '#f59e0b',
+                            red: '#e11d29',
+                            dark: '#1a1a1a',
+                            accent: '#fff7ed',
+                            blue: '#1e40af'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --blue-deep: #0f1f5c;
+            --blue-mid: #1e3a8a;
+            --blue-bright: #2563eb;
+            --blue-glow: #3b82f6;
+            --gold: #f59e0b;
+            --white: #ffffff;
+            --surface: #f0f4ff;
+        }
+
+        * { box-sizing: border-box; }
+
+        /* ─── SCROLLBAR ─── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f0f4ff; }
+        ::-webkit-scrollbar-thumb { background: var(--blue-bright); border-radius: 99px; }
+
+        /* ─── HERO 3D SCENE ─── */
+        .hero-scene {
+            background: linear-gradient(135deg, #060d2e 0%, #0f1f5c 40%, #1e3a8a 70%, #0e2155 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Stars */
+        .stars { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+        .star {
+            position: absolute;
+            border-radius: 50%;
+            background: white;
+            animation: twinkle var(--dur) ease-in-out infinite;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.4); }
+        }
+
+        /* 3D Floating orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            pointer-events: none;
+            animation: orbFloat var(--dur) ease-in-out infinite;
+        }
+        @keyframes orbFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.05); }
+        }
+
+        /* 3D Grid floor */
+        .grid-floor {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 300px;
+            background-image: 
+                linear-gradient(rgba(59, 130, 246, 0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.15) 1px, transparent 1px);
+            background-size: 60px 60px;
+            transform: perspective(500px) rotateX(65deg);
+            transform-origin: bottom center;
+            mask-image: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 100%);
+        }
+
+        /* Glowing ring */
+        .glow-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            animation: ringPulse 4s ease-in-out infinite;
+        }
+        @keyframes ringPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.7; }
+        }
+
+        /* ─── HERO BADGE ─── */
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            backdrop-filter: blur(12px);
+            border-radius: 99px;
+            padding: 8px 20px;
+            color: rgba(255,255,255,0.9);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+        .badge-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+            box-shadow: 0 0 8px var(--gold);
+            animation: dotPulse 2s ease-in-out infinite;
+        }
+        @keyframes dotPulse {
+            0%, 100% { box-shadow: 0 0 8px var(--gold); }
+            50% { box-shadow: 0 0 16px var(--gold), 0 0 30px var(--gold); }
+        }
+
+        /* ─── HERO TITLE ─── */
+        .hero-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: clamp(2.5rem, 6vw, 5.5rem);
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            color: white;
+        }
+        .title-gradient {
+            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ─── SEARCH BAR ─── */
+        .search-wrap {
+            position: relative;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+        .search-input {
+            width: 100%;
+            padding: 20px 80px 20px 28px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            color: white;
+            font-size: 15px;
+            font-family: 'DM Sans', sans-serif;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .search-input::placeholder { color: rgba(255,255,255,0.4); }
+        .search-input:focus {
+            border-color: rgba(99, 179, 237, 0.5);
+            background: rgba(255,255,255,0.1);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
+        .search-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border: none;
+            border-radius: 14px;
+            padding: 12px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .search-btn:hover { transform: translateY(-50%) scale(1.05); box-shadow: 0 8px 20px rgba(37,99,235,0.5); }
+
+        /* ─── 3D CARD QUICK VIEW ─── */
+        .card-3d-wrap { perspective: 1200px; }
+        .card-3d {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 28px;
+            padding: 40px 32px 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+        .card-3d::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(99,179,237,0.08) 0%, transparent 70%);
+            border-radius: inherit;
+        }
+        .card-3d:hover {
+            transform: translateY(-16px) rotateX(6deg);
+            border-color: rgba(255,255,255,0.25);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.1), inset 0 1px 0 rgba(255,255,255,0.15);
+        }
+        .card-3d-number {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 11px;
+            letter-spacing: 0.3em;
+            color: rgba(255,255,255,0.3);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        .card-3d-icon {
+            width: 64px; height: 64px;
+            border-radius: 18px;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 28px;
+            position: relative;
+            z-index: 1;
+        }
+        .card-3d-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 20px;
+            color: white;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+        }
+        .card-3d-desc {
+            color: rgba(255,255,255,0.5);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+        .card-3d-line {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 3px;
+            border-radius: 0 0 28px 28px;
+            transition: all 0.3s;
+        }
+
+        /* ─── STATS ─── */
+        .stat-card {
+            background: white;
+            border-radius: 24px;
+            padding: 28px 24px;
+            text-align: center;
+            border: 1px solid rgba(226,232,240,0.8);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #2563eb, #60a5fa);
+        }
+        .stat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(37,99,235,0.12); }
+        .stat-num {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 2.2rem;
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .stat-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        /* ─── ABOUT SECTION ─── */
+        .section-eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: #2563eb;
+        }
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            color: #0f172a;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+
+        .about-img-wrap {
+            position: relative;
+        }
+        .about-img {
+            border-radius: 32px;
+            width: 100%;
+            object-fit: cover;
+            box-shadow: 0 30px 80px rgba(15, 31, 92, 0.2);
+        }
+        .about-badge {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: white;
+            padding: 24px 28px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(37,99,235,0.35);
+            animation: badgeFloat 4s ease-in-out infinite;
+        }
+        @keyframes badgeFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .about-badge-num {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 2rem;
+            color: white;
+        }
+        .about-badge-label {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: rgba(255,255,255,0.6);
+            margin-top: 2px;
+        }
+
+        .feature-card {
+            background: white;
+            border: 1px solid rgba(226,232,240,0.8);
+            border-radius: 20px;
+            padding: 24px;
+            transition: all 0.3s;
+        }
+        .feature-card:hover {
+            border-color: #bfdbfe;
+            box-shadow: 0 8px 30px rgba(37,99,235,0.1);
+            transform: translateY(-2px);
+        }
+        .feature-card-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+
+        /* ─── TABLE ─── */
+        .pro-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        .pro-table thead tr th {
+            background: #f8faff;
+            color: #94a3b8;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            padding: 18px 32px;
+        }
+        .pro-table thead tr th:first-child { border-radius: 0; }
+        .pro-table tbody tr {
+            transition: all 0.2s;
+        }
+        .pro-table tbody tr:hover td {
+            background: #eff6ff;
+        }
+        .pro-table tbody tr td {
+            padding: 18px 32px;
+            border-bottom: 1px solid #f1f5f9;
+            transition: all 0.2s;
+        }
+        .table-age {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.1rem;
+            color: #2563eb;
+        }
+        .table-eng { font-style: italic; color: #64748b; }
+        .table-id { font-weight: 700; color: #0f172a; }
+
+        /* ─── BENEFITS ─── */
+        .benefits-section {
+            background: linear-gradient(135deg, #060d2e 0%, #0f1f5c 50%, #1a1f4e 100%);
+            border-radius: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        .benefits-section::before {
+            content: '';
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 400px; height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(37,99,235,0.2) 0%, transparent 70%);
+        }
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 18px 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s;
+        }
+        .benefit-item:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.12);
+            transform: translateX(4px);
+        }
+        .benefit-check {
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2563eb, #60a5fa);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            font-size: 10px;
+            color: white;
+            box-shadow: 0 4px 12px rgba(37,99,235,0.4);
+            margin-top: 2px;
+        }
+
+        /* ─── CURRICULUM CARDS ─── */
+        .curriculum-card {
+            background: white;
+            border-radius: 28px;
+            border: 1px solid rgba(226,232,240,0.8);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            position: relative;
+        }
+        .curriculum-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 28px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            box-shadow: 0 0 0 2px inset;
+        }
+        .curriculum-card:hover {
+            transform: translateY(-12px) scale(1.01);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+        }
+        .curriculum-card-body { padding: 32px; }
+        .curriculum-icon {
+            width: 64px; height: 64px;
+            margin-bottom: 24px;
+        }
+        .curriculum-name {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.4rem;
+            letter-spacing: -0.02em;
+            color: #0f172a;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        .curriculum-desc {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+        .curriculum-age {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            padding: 6px 14px;
+            border-radius: 99px;
+        }
+        .curriculum-bar {
+            height: 4px;
+        }
+
+        /* ─── DOCUMENT CENTER ─── */
+        .doc-panel {
+            background: white;
+            border-radius: 40px;
+            overflow: hidden;
+            border: 1px solid rgba(226,232,240,0.8);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+        }
+        .doc-sidebar {
+            background: linear-gradient(160deg, #0f1f5c 0%, #1e3a8a 100%);
+            padding: 56px 48px;
+            position: relative;
+            overflow: hidden;
+        }
+        .doc-sidebar::after {
+            content: '';
+            position: absolute;
+            bottom: -60px; right: -60px;
+            width: 200px; height: 200px;
+            border-radius: 50%;
+            border: 40px solid rgba(255,255,255,0.05);
+        }
+        .doc-sidebar-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 2rem;
+            color: white;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .doc-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            background: #f8faff;
+            border: 1px solid rgba(226,232,240,0.8);
+            border-radius: 18px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .doc-item:hover {
+            background: #eff6ff;
+            border-color: #bfdbfe;
+            transform: translateX(4px);
+            box-shadow: 0 8px 24px rgba(37,99,235,0.08);
+        }
+        .doc-icon {
+            padding: 12px;
+            background: #dbeafe;
+            color: #1d4ed8;
+            border-radius: 14px;
+        }
+        .doc-name {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: #0f172a;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+        }
+        .doc-type {
+            font-size: 10px;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 3px;
+            font-style: italic;
+        }
+        .doc-dl-btn {
+            padding: 8px;
+            border-radius: 10px;
+            color: #2563eb;
+            transition: all 0.3s;
+        }
+        .doc-item:hover .doc-dl-btn { transform: translateY(2px); }
+
+        /* ─── NAVBAR ─── */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(226,232,240,0.6);
+            transition: all 0.3s;
+        }
+        .navbar.scrolled {
+            box-shadow: 0 4px 30px rgba(0,0,0,0.06);
+        }
+        .nav-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-logo-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 17px;
+            letter-spacing: -0.02em;
+            color: #0f172a;
+            text-transform: uppercase;
+        }
+        .nav-logo-title span { color: #2563eb; }
+        .nav-logo-sub {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            color: #94a3b8;
+        }
+        .nav-link {
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+            text-decoration: none;
+            transition: all 0.2s;
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px; left: 0; right: 0;
+            height: 2px;
+            background: #2563eb;
+            border-radius: 99px;
+            transform: scaleX(0);
+            transition: transform 0.2s;
+        }
+        .nav-link:hover { color: #1d4ed8; }
+        .nav-link:hover::after { transform: scaleX(1); }
+        .nav-cta {
+            background: linear-gradient(135deg, #1d4ed8, #2563eb);
+            color: white;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 10px 24px;
+            border-radius: 99px;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 16px rgba(37,99,235,0.3);
+        }
+        .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,99,235,0.4); }
+
+        /* ─── FOOTER ─── */
+        .footer {
+            background: #f8faff;
+            border-top: 1px solid rgba(226,232,240,0.8);
+            padding: 48px 32px;
+            text-align: center;
+        }
+        .footer-copy {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: #94a3b8;
+            margin-top: 16px;
+        }
+
+        /* ─── ANIMATIONS ─── */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-in {
+            animation: fadeInUp 0.7s cubic-bezier(0.23, 1, 0.32, 1) both;
+        }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+
+        /* ─── NO RESULTS ─── */
+        #noResults {
+            background: white;
+            border-radius: 32px;
+            padding: 80px 40px;
+            border: 1px solid rgba(226,232,240,0.8);
+        }
+        #noResults p {
+            color: #94a3b8;
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* 3D Floating animation for hero cards */
+        @keyframes heroCardFloat {
+            0%, 100% { transform: translateY(0px) rotateX(6deg); }
+            50% { transform: translateY(-12px) rotateX(4deg); }
+        }
+        .hero-card-float {
+            animation: heroCardFloat 5s ease-in-out infinite;
+        }
+        .hero-card-float:nth-child(2) { animation-delay: 1.2s; }
+        .hero-card-float:nth-child(3) { animation-delay: 2.4s; }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body style="background:#f0f4ff; color:#0f172a; font-family:'DM Sans',sans-serif;" class="antialiased">
+
+    <!-- ══ NAVBAR ══ -->
+    <header class="navbar" id="navbar">
+        <nav class="nav-inner">
+            <a href="index.html" style="display:flex;align-items:center;gap:14px;text-decoration:none;">
+                <img src="images/DSKU-removebg-preview.png" alt="Logo" style="width:44px;height:44px;">
+                <div>
+                    <div class="nav-logo-title">PATHFINDER <span>DSKU</span></div>
+                    <div class="nav-logo-sub">Resources Hub</div>
+                </div>
+            </a>
+            <ul style="display:none;" class="lg:flex" id="desktopNav">
+                <!-- desktop nav rendered below in plain html -->
+            </ul>
+            <div style="display:flex;align-items:center;gap:32px;">
+                <div class="hidden lg:flex" style="align-items:center;gap:28px;">
+                    <a href="index.html" class="nav-link">Beranda</a>
+                    <a href="#mengenal" class="nav-link">Tentang</a>
+                    <a href="#materi" class="nav-link">Materi</a>
+                    <a href="#download" class="nav-link">Dokumen</a>
+                </div>
+                <a href="Pendaftaran.html" class="nav-cta">Gabung Sekarang</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ══ HERO SECTION ══ -->
+    <section class="hero-scene" style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:140px 32px 100px;">
+
+        <!-- Stars background -->
+        <div class="stars" id="stars"></div>
+
+        <!-- Glowing orbs -->
+        <div class="orb" style="width:500px;height:500px;background:radial-gradient(circle,rgba(37,99,235,0.3),transparent 70%);top:-100px;right:-100px;--dur:8s;"></div>
+        <div class="orb" style="width:400px;height:400px;background:radial-gradient(circle,rgba(124,58,237,0.2),transparent 70%);bottom:0;left:-80px;--dur:12s;animation-delay:-4s;"></div>
+        <div class="orb" style="width:300px;height:300px;background:radial-gradient(circle,rgba(245,158,11,0.12),transparent 70%);top:30%;left:40%;--dur:10s;animation-delay:-6s;"></div>
+
+        <!-- Glow rings -->
+        <div class="glow-ring" style="width:600px;height:600px;top:50%;left:50%;"></div>
+        <div class="glow-ring" style="width:900px;height:900px;top:50%;left:50%;animation-delay:-2s;"></div>
+
+        <!-- Grid floor -->
+        <div class="grid-floor"></div>
+
+        <div style="position:relative;z-index:10;max-width:1100px;margin:0 auto;width:100%;text-align:center;">
+
+            <!-- Badge -->
+            <div class="animate-in" style="display:flex;justify-content:center;margin-bottom:32px;">
+                <div class="hero-badge">
+                    <div class="badge-dot"></div>
+                    Pusat Belajar & Pendalaman Alkitab
+                </div>
+            </div>
+
+            <!-- Title -->
+            <h1 class="hero-title animate-in delay-1" style="margin-bottom:28px;">
+                Segala Persiapan untuk<br>
+                <span class="title-gradient">Pemimpin Masa Depan</span>
+            </h1>
+
+            <!-- Subtitle -->
+            <p class="animate-in delay-2" style="color:rgba(255,255,255,0.6);font-size:17px;max-width:560px;margin:0 auto 48px;line-height:1.7;font-weight:400;">
+                Akses materi kelas kemajuan, panduan kurikulum, hingga arsip administrasi resmi dalam satu pintu.
+            </p>
+
+            <!-- SEARCH BAR -->
+            <div class="search-wrap animate-in delay-3" style="margin-bottom:72px;">
+                <input type="text" id="materiSearch" placeholder="Cari materi — Janji, Mars, Peraturan..." class="search-input">
+                <button class="search-btn">
+                    <svg style="width:20px;height:20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- 3D QUICK VIEW CARDS -->
+            <div id="materiContainer" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;perspective:1200px;">
+
+                <!-- CARD 1: JANJI -->
+                <div class="searchable-item card-3d hero-card-float animate-in delay-3">
+                    <div class="card-3d-number">01 / 03</div>
+                    <div class="card-3d-icon" style="background:linear-gradient(135deg,rgba(245,158,11,0.2),rgba(245,158,11,0.05));border:1px solid rgba(245,158,11,0.2);">
+                        🤝
+                    </div>
+                    <div class="card-3d-title">Janji Pathfinder</div>
+                    <div class="card-3d-desc">"Oleh rahmat Allah, saya berjanji untuk menjadi murni, baik, dan setia..."</div>
+                    <div class="card-3d-line" style="background:linear-gradient(90deg,#f59e0b,#fbbf24);"></div>
+                </div>
+
+                <!-- CARD 2: MARS -->
+                <div class="searchable-item card-3d hero-card-float animate-in delay-4">
+                    <div class="card-3d-number">02 / 03</div>
+                    <div class="card-3d-icon" style="background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(239,68,68,0.05));border:1px solid rgba(239,68,68,0.2);">
+                        🎖️
+                    </div>
+                    <div class="card-3d-title">Mars Pathfinder</div>
+                    <div class="card-3d-desc">"Kami adalah Pathfinder, laskar yang sangat kuat..."</div>
+                    <div class="card-3d-line" style="background:linear-gradient(90deg,#e11d29,#f87171);"></div>
+                </div>
+
+                <!-- CARD 3: PERATURAN -->
+                <div class="searchable-item card-3d hero-card-float animate-in delay-5">
+                    <div class="card-3d-number">03 / 03</div>
+                    <div class="card-3d-icon" style="background:linear-gradient(135deg,rgba(37,99,235,0.2),rgba(37,99,235,0.05));border:1px solid rgba(37,99,235,0.2);">
+                        📋
+                    </div>
+                    <div class="card-3d-title">Peraturan Pathfinder</div>
+                    <div class="card-3d-desc">Selalu menjaga ketertiban dalam setiap kegiatan perkemahan...</div>
+                    <div class="card-3d-line" style="background:linear-gradient(90deg,#2563eb,#60a5fa);"></div>
+                </div>
+
+            </div>
+
+            <!-- No Results -->
+            <div id="noResults" class="hidden" style="margin-top:24px;">
+                <p>Materi tidak ditemukan. Coba kata kunci lain!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ STATS ══ -->
+    <section style="padding:0 32px;margin-top:-40px;position:relative;z-index:20;">
+        <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:16px;" class="md:grid-cols-4">
+            <div class="stat-card reveal">
+                <div class="stat-num">6</div>
+                <div class="stat-label">Kelas Kemajuan</div>
+            </div>
+            <div class="stat-card reveal" style="transition-delay:0.1s">
+                <div class="stat-num">450+</div>
+                <div class="stat-label">Spesialisasi</div>
+            </div>
+            <div class="stat-card reveal" style="transition-delay:0.2s">
+                <div class="stat-num">24/7</div>
+                <div class="stat-label">Akses Belajar</div>
+            </div>
+            <div class="stat-card reveal" style="transition-delay:0.3s">
+                <div class="stat-num">PDF</div>
+                <div class="stat-label">E-Book Gratis</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ ABOUT ══ -->
+    <section id="mengenal" style="padding:120px 32px;background:#f0f4ff;overflow:hidden;">
+        <div style="max-width:1100px;margin:0 auto;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;" class="reveal">
+
+                <div class="about-img-wrap">
+                    <img src="images/Pathfinder DSKU.jpg" alt="Kegiatan Pathfinder" class="about-img">
+                    <div class="about-badge hidden md:block">
+                        <div class="about-badge-num">2 Juta+</div>
+                        <div class="about-badge-label">Anggota Sedunia</div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="section-eyebrow" style="margin-bottom:12px;">Overview</div>
+                    <h2 class="section-title" style="margin-bottom:28px;">APA ITU KLUB<br>PATHFINDER?</h2>
+                    <p style="color:#475569;line-height:1.8;margin-bottom:20px;font-size:15px;">
+                        Bagi mereka yang sudah mengenalnya, <strong style="color:#0f172a;">Klub Pathfinder</strong> akan identik dengan kegiatan tentang baris berbaris, berkemah, hobi-hobi yang penuh rasa ingin tahu atau belajar tentang serangga dan kelelawar.
+                    </p>
+                    <p style="color:#475569;line-height:1.8;margin-bottom:36px;font-size:15px;">
+                        Namun tujuan utama dari klub ini adalah untuk memperluas pandangan mereka terhadap dunia dan membangun hubungan dengan Tuhan, melalui kegiatan yang dirancang untuk anak-anak usia <strong style="color:#0f172a;">10 – 15 tahun.</strong> Klub yang disponsori Gereja Masehi Advent Hari Ketujuh ini menerima setiap remaja yang berjanji untuk mematuhi Perjanjian dan Peraturan Pathfinder terlepas dari asal gereja dan keyakinan mereka.
+                    </p>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                        <div class="feature-card">
+                            <div class="feature-card-title" style="color:#2563eb;">Kepemimpinan</div>
+                            <p style="font-size:12px;color:#64748b;line-height:1.7;">Relawan terampil yang percaya pada Yesus dan menjadikan klub sebagai laboratorium pertumbuhan yang menyenangkan.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-card-title" style="color:#dc2626;">Kegiatan</div>
+                            <p style="font-size:12px;color:#64748b;line-height:1.7;">Proyek pelayanan masyarakat, konservasi alam, hingga petualangan alam terbuka yang menantang bakat unik.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABLE -->
+            <div style="margin-top:100px;" class="reveal">
+                <div style="text-align:center;margin-bottom:48px;">
+                    <div class="section-eyebrow" style="margin-bottom:12px;">Struktur Program</div>
+                    <h3 class="section-title">Jenjang Usia Kelas Pathfinder</h3>
+                    <div style="width:48px;height:4px;background:linear-gradient(90deg,#1e3a8a,#60a5fa);border-radius:99px;margin:20px auto 0;"></div>
+                </div>
+                <div style="background:white;border-radius:28px;border:1px solid rgba(226,232,240,0.8);overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.06);">
+                    <table class="pro-table">
+                        <thead>
+                            <tr>
+                                <th style="text-align:left;">Usia (Tahun)</th>
+                                <th style="text-align:left;">Urutan Kelas (English)</th>
+                                <th style="text-align:left;">Urutan Kelas (Indonesia)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="table-age">10</td><td class="table-eng">Friend</td><td class="table-id">Sahabat</td></tr>
+                            <tr><td class="table-age">11</td><td class="table-eng">Companion</td><td class="table-id">Teman</td></tr>
+                            <tr><td class="table-age">12</td><td class="table-eng">Explorer</td><td class="table-id">Penyelidik</td></tr>
+                            <tr><td class="table-age">13</td><td class="table-eng">Ranger</td><td class="table-id">Perintis</td></tr>
+                            <tr><td class="table-age">14</td><td class="table-eng">Voyager</td><td class="table-id">Penjelajah</td></tr>
+                            <tr><td class="table-age" style="border-bottom:none;">15</td><td class="table-eng" style="border-bottom:none;">Guide</td><td class="table-id" style="border-bottom:none;">Pemimpin</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- BENEFITS -->
+            <div class="benefits-section" style="margin-top:80px;padding:64px;reveal">
+                <div class="reveal" style="text-align:center;margin-bottom:48px;position:relative;z-index:1;">
+                    <h3 class="section-title" style="color:white;margin-bottom:12px;">Kesempatan Pengembangan Diri</h3>
+                    <p style="color:rgba(255,255,255,0.5);font-size:14px;">Program kami memberikan ruang untuk pertumbuhan holistik anggota</p>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;position:relative;z-index:1;" class="reveal">
+                    <div class="benefit-item">
+                        <div class="benefit-check">✓</div>
+                        <p style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.6;font-weight:500;">Mengembangkan harga diri dalam lingkungan yang menyenangkan dan aman.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-check">✓</div>
+                        <p style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.6;font-weight:500;">Mengembangkan apresiasi terhadap spiritualitas Kristiani.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-check">✓</div>
+                        <p style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.6;font-weight:500;">Kepemimpinan, kerja sama tim, dan pemecahan masalah.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-check">✓</div>
+                        <p style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.6;font-weight:500;">Fokus pada alam terbuka (hiking, berkemah, konservasi).</p>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-check">✓</div>
+                        <p style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.6;font-weight:500;">Pembelajaran kerajinan tangan, seni, dan keterampilan praktis.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-check">✓</div>
+                        <p style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.6;font-weight:500;">Kesadaran akan sukacita melayani kebutuhan masyarakat.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-check">✓</div>
+                        <p style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.6;font-weight:500;">Gaya hidup sehat yang menolak narkoba.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ CURRICULUM ══ -->
+    <section id="materi" style="padding:120px 32px;background:white;">
+        <div style="max-width:1100px;margin:0 auto;">
+            <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:64px;" class="reveal">
+                <div>
+                    <div class="section-eyebrow" style="margin-bottom:12px;">Program Berjenjang</div>
+                    <h2 class="section-title" style="max-width:480px;">Kurikulum Kelas Kemajuan</h2>
+                    <p style="color:#64748b;font-size:15px;margin-top:16px;max-width:440px;line-height:1.7;">Dari usia 10 hingga 15 tahun, ikuti perjalanan pertumbuhan karakter dan keterampilan mental serta spiritual.</p>
+                </div>
+                <a href="https://pathfinder.pemudaadvent.id/wp-content/uploads/2024/01/PA_UIKB_Pathfinder_Kepahaman-Wajib_v1.0.2.pdf" 
+                   style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border:2px solid #2563eb;color:#2563eb;font-weight:700;font-size:13px;border-radius:14px;text-decoration:none;font-family:'Outfit',sans-serif;letter-spacing:-0.01em;transition:all 0.3s;text-transform:uppercase;">
+                    Lihat Seluruh Kepahaman
+                    <svg style="width:16px;height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;">
+
+                <!-- SAHABAT -->
+                <div class="searchable-item curriculum-card reveal">
+                    <div class="curriculum-bar" style="background:#1e40af;"></div>
+                    <div class="curriculum-card-body">
+                        <img src="images/Pa biaru.png" alt="Sahabat" class="curriculum-icon">
+                        <div class="curriculum-name">SAHABAT</div>
+                        <div class="curriculum-desc">Kurikulum dasar untuk usia 10 tahun. Fokus pada pengenalan alam, hafalan ayat, dan kerjasama tim.</div>
+                        <div class="curriculum-age" style="background:#eff6ff;color:#1d4ed8;">
+                            <span style="width:6px;height:6px;border-radius:50%;background:#1d4ed8;display:inline-block;"></span>
+                            Usia 10 Tahun
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TEMAN -->
+                <div class="searchable-item curriculum-card reveal" style="transition-delay:0.1s">
+                    <div class="curriculum-bar" style="background:#dc2626;"></div>
+                    <div class="curriculum-card-body">
+                        <img src="images/Pa Merah.png" alt="Teman" class="curriculum-icon">
+                        <div class="curriculum-name">TEMAN</div>
+                        <div class="curriculum-desc">Untuk usia 11 tahun. Mempelajari lebih dalam tentang sejarah gereja dan keterampilan berkemah.</div>
+                        <div class="curriculum-age" style="background:#fef2f2;color:#dc2626;">
+                            <span style="width:6px;height:6px;border-radius:50%;background:#dc2626;display:inline-block;"></span>
+                            Usia 11 Tahun
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PENYELIDIK -->
+                <div class="searchable-item curriculum-card reveal" style="transition-delay:0.2s">
+                    <div class="curriculum-bar" style="background:#059669;"></div>
+                    <div class="curriculum-card-body">
+                        <img src="images/PA.HIjau.png" alt="Penyelidik" class="curriculum-icon">
+                        <div class="curriculum-name">PENYELIDIK</div>
+                        <div class="curriculum-desc">Usia 12 tahun. Menekankan pada pertolongan pertama dasar dan etika Kristen di lingkungan sosial.</div>
+                        <div class="curriculum-age" style="background:#ecfdf5;color:#059669;">
+                            <span style="width:6px;height:6px;border-radius:50%;background:#059669;display:inline-block;"></span>
+                            Usia 12 Tahun
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PERINTIS -->
+                <div class="searchable-item curriculum-card reveal">
+                    <div class="curriculum-bar" style="background:#475569;"></div>
+                    <div class="curriculum-card-body">
+                        <img src="images/Pa.Abuabu.png" alt="Perintis" class="curriculum-icon">
+                        <div class="curriculum-name">PERINTIS</div>
+                        <div class="curriculum-desc">Usia 13 tahun. Fokus pada pengembangan kepemimpinan tingkat lanjut dan navigasi alam bebas.</div>
+                        <div class="curriculum-age" style="background:#f8fafc;color:#475569;">
+                            <span style="width:6px;height:6px;border-radius:50%;background:#475569;display:inline-block;"></span>
+                            Usia 13 Tahun
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PENJELAJAH -->
+                <div class="searchable-item curriculum-card reveal" style="transition-delay:0.1s">
+                    <div class="curriculum-bar" style="background:#7c3aed;"></div>
+                    <div class="curriculum-card-body">
+                        <img src="images/Pa.Coklat.png" alt="Penjelajah" class="curriculum-icon">
+                        <div class="curriculum-name">PENJELAJAH</div>
+                        <div class="curriculum-desc">Usia 14 tahun. Eksplorasi mendalam mengenai kelangsungan hidup di alam dan pelayanan masyarakat.</div>
+                        <div class="curriculum-age" style="background:#f5f3ff;color:#7c3aed;">
+                            <span style="width:6px;height:6px;border-radius:50%;background:#7c3aed;display:inline-block;"></span>
+                            Usia 14 Tahun
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PEMIMPIN -->
+                <div class="searchable-item curriculum-card reveal" style="transition-delay:0.2s">
+                    <div class="curriculum-bar" style="background:#d97706;"></div>
+                    <div class="curriculum-card-body">
+                        <img src="images/Pa.kuning.png" alt="Pemimpin" class="curriculum-icon">
+                        <div class="curriculum-name">PEMIMPIN</div>
+                        <div class="curriculum-desc">Usia 15 tahun. Persiapan menjadi pembina dengan tanggung jawab penuh pada unit.</div>
+                        <div class="curriculum-age" style="background:#fffbeb;color:#d97706;">
+                            <span style="width:6px;height:6px;border-radius:50%;background:#d97706;display:inline-block;"></span>
+                            Usia 15 Tahun
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ DOCUMENT CENTER ══ -->
+    <section id="download" style="padding:120px 32px;background:#f0f4ff;">
+        <div style="max-width:1100px;margin:0 auto;" class="reveal">
+            <div class="doc-panel" style="display:grid;grid-template-columns:1fr 2fr;">
+
+                <div class="doc-sidebar">
+                    <div style="position:relative;z-index:1;">
+                        <div class="section-eyebrow" style="color:rgba(255,255,255,0.5);margin-bottom:16px;">Unduh Sekarang</div>
+                        <div class="doc-sidebar-title">Pusat Dokumen &<br>Unduhan</div>
+                        <p style="color:rgba(255,255,255,0.6);font-size:13px;line-height:1.8;">
+                            Pastikan klub Anda memiliki administrasi yang rapi. Unduh semua formulir dan buku panduan resmi di sini.
+                        </p>
+                    </div>
+                </div>
+
+                <div style="padding:48px;">
+                    <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.25em;color:#94a3b8;margin-bottom:24px;">Peraturan & Perjanjian</div>
+                    <div style="display:flex;flex-direction:column;gap:12px;">
+                        <a href="downloads/Formulir_Laporan_Bulanan.xlsx" download class="doc-item">
+                            <div style="display:flex;align-items:center;gap:16px;">
+                                <div class="doc-icon">
+                                    <svg style="width:22px;height:22px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="doc-name">Materi Pembelajaran Pathfinders</div>
+                                    <div class="doc-type">pdf (.pdf)</div>
+                                </div>
+                            </div>
+                            <div class="doc-dl-btn">
+                                <svg style="width:18px;height:18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                </svg>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ FOOTER ══ -->
+    <footer class="footer">
+        <img src="images/DSKU-removebg-preview.png" alt="Logo" style="width:48px;height:48px;margin:0 auto 16px;display:block;opacity:0.25;filter:grayscale(1);">
+        <div class="footer-copy">&copy; 2024 Learning Center Pathfinder DSKU.</div>
+    </footer>
+
+    <!-- ══ JAVASCRIPT ══ -->
+    <script>
+        // ── Generate stars ──
+        const starsEl = document.getElementById('stars');
+        for (let i = 0; i < 120; i++) {
+            const s = document.createElement('div');
+            s.className = 'star';
+            const size = Math.random() * 2.5 + 0.5;
+            s.style.cssText = `
+                width:${size}px; height:${size}px;
+                left:${Math.random()*100}%;
+                top:${Math.random()*100}%;
+                --dur:${2 + Math.random()*4}s;
+                animation-delay:${Math.random()*4}s;
+            `;
+            starsEl.appendChild(s);
+        }
+
+        // ── Navbar scroll ──
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 30);
+        });
+
+        // ── Scroll reveal ──
+        const revealEls = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) {
+                    setTimeout(() => e.target.classList.add('visible'), i * 80);
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        revealEls.forEach(el => observer.observe(el));
+
+        // ── 3D card tilt on mouse move ──
+        document.querySelectorAll('.card-3d').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+                card.style.transform = `translateY(-16px) rotateY(${x * 14}deg) rotateX(${-y * 10}deg)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+
+        // ── Search ──
+        document.getElementById('materiSearch').addEventListener('input', function() {
+            let filter = this.value.toLowerCase();
+            let items = document.querySelectorAll('.searchable-item');
+            let hasResults = false;
+
+            items.forEach(item => {
+                let textContent = item.innerText.toLowerCase();
+                if (textContent.includes(filter)) {
+                    item.style.display = "";
+                    hasResults = true;
+                } else {
+                    item.style.display = "none";
+                }
+            });
+
+            const noResults = document.getElementById('noResults');
+            if (!hasResults && filter !== "") {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

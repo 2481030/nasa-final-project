@@ -1,273 +1,296 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join The Campoore DSKU - Daftar Sekarang</title>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-
     <style>
-        /* CSS UNTUK BACKGROUND GAMBAR */
+        :root {
+            --dsku-red: #e11d29;
+            --nasa-red: #e11d29; /* Menambahkan ini agar class nasa-red berfungsi */
+            --dsku-red-glow: rgba(225, 29, 41, 0.5);
+            --glass-bg: rgba(10, 15, 30, 0.7);
+        }
+
         body {
-            /* GANTI 'background.jpg' dengan nama file gambar di folder Anda */
-            background-image: url('https://yt3.googleusercontent.com/ytc/AIdro_kG2xzusHXkOvkjtVwSTvZURp94B2Vbfhova8k207CGRsY=s900-c-k-c0x00ffffff-no-rj'); 
+            background-color: #02040a;
+            color: #c9a919;
+            overflow-x: hidden;
+            perspective: 2000px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .bg-layer-1 {
+            position: fixed;
+            top: -10%; left: -10%; width: 120%; height: 120%;
+            z-index: -3;
+            background-image: url('https://yt3.googleusercontent.com/ytc/AIdro_kG2xzusHXkOvkjtVwSTvZURp94B2Vbfhova8k207CGRsY=s900-c-k-c0x00ffffff-no-rj');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            position: relative;
+            filter: brightness(0.25) contrast(1.2) blur(1px);
         }
 
-        /* Overlay gelap agar form lebih menonjol dan teks mudah dibaca */
-        body::before {
-            content: "";
+        .aurora {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7); /* Kegelapan 70% */
-            z-index: -1;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw; height: 80vh;
+            background: radial-gradient(circle, var(--dsku-red-glow) 0%, transparent 70%);
+            z-index: -2;
+            opacity: 0.4;
+            filter: blur(100px);
+            animation: pulse-aurora 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse-aurora {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+            100% { transform: translate(-45%, -55%) scale(1.2); opacity: 0.6; }
+        }
+
+        .stars {
+            position: fixed;
+            inset: 0; z-index: -2;
+            background: transparent url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/123163/stars.png') repeat;
+            opacity: 0.4;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px) saturate(150%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.8);
+            border-radius: 2.5rem;
+        }
+
+        .input-pro {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border-radius: 1.25rem;
+        }
+
+        .input-pro:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--nasa-red);
+            box-shadow: 0 0 25px rgba(235, 6, 22, 0.4);
+        }
+
+        select option { background-color: #0f172a; color: white; }
+        optgroup { background-color: #1a1a1a; color: var(--nasa-red); font-weight: bold; }
+
+        .btn-premium {
+            background: linear-gradient(135deg, var(--nasa-red) 0%, #b91c1c 100%);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn-premium:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 20px 40px -5px rgba(249, 0, 17, 0.6);
         }
     </style>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        nasa: {
-                            red: '#e11d29',
-                            dark: '#0b3d91',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
 </head>
+<body class="antialiased flex flex-col min-h-screen">
 
-<body class="text-white font-sans antialiased flex flex-col min-h-screen">
+    <div class="bg-layer-1" id="parallax-bg"></div>
+    <div class="stars"></div>
+    <div class="aurora"></div>
 
-    <header class="fixed top-0 inset-x-0 z-50 bg-black/90 backdrop-blur-sm border-b border-white/10">
-        <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-4">
-                <a href="index.html" class="flex items-center gap-3">
-                    <img src="images/Pathfinder DSKU.jpg" alt="Logo" class="w-10 h-10 block">
-                    <div class="leading-tight font-bold text-sm tracking-widest text-gray-300">
-                        Pathfinder DSKU<br>REGISTRATION
+  <!-- TOMBOL KEMBALI - OPTION 2 -->
+<a href="index.html" class="relative group flex items-center gap-4 overflow-hidden">
+    <!-- Garis Dekoratif Kiri -->
+    <span class="absolute left-0 top-0 h-full w-[2px] bg-red-600 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></span>
+    
+    <div class="pl-2">
+        <div class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-red-500 transform group-hover:-translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+            </svg>
+            <div class="flex flex-col">
+                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-white">Back</span>
+                <span class="text-[8px] font-medium uppercase tracking-[0.1em] text-gray-500 group-hover:text-red-400 transition-colors">Kembali Ke Halaman Utama</span>
+            </div>
+        </div>
+    </div>
+</a>
+
+    <main class="flex-grow container mx-auto px-4 pt-48 pb-24 flex flex-col items-center">
+        <div class="w-full max-w-4xl">
+            
+            <div class="text-center mb-16">
+                <h1 class="text-6xl md:text-8xl font-extrabold mb-8 tracking-tighter text-white uppercase leading-none">
+                    Join The<br>Mission
+                </h1>
+                <p class="text-gray-400 max-w-xl mx-auto text-lg">
+                    Isi data diri dan amankan tempatmu di Campore Pathfinder DSKU 2026. Mari Berpartisipasi bersama dalam petualangan rohani yang tak terlupakan!
+                </p>
+            </div>
+
+            <div class="glass-card p-8 md:p-16">
+                <form id="registrationForm" class="space-y-10">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
+                        
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">Full Name</label>
+                            <input type="text" id="fullName" required placeholder="Nama Lengkap" class="input-pro w-full px-6 py-5 text-white outline-none">
+                        </div>
+
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">Club (Jemaat)</label>
+                            <input type="text" id="clubManual" required placeholder="Club Anda" class="input-pro w-full px-6 py-5 text-white outline-none">
+                        </div>
+
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">Email Address</label>
+                            <input type="email" id="email" required placeholder="email@contoh.com" class="input-pro w-full px-6 py-5 text-white outline-none">
+                        </div>
+
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">Phone Number</label>
+                            <input type="text" id="phone" required placeholder="+62..." class="input-pro w-full px-6 py-5 text-white outline-none">
+                        </div>
+
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">Wilayah Koordinasi</label>
+                            <div class="relative">
+                                <select id="wilayahSelect" required class="input-pro w-full px-6 py-5 text-white outline-none appearance-none cursor-pointer">
+                                    <option value="" disabled selected>Select District</option>
+                                    <optgroup label="Bakor PA Wilayah I">
+                                        <option value="Distrik Binjai">Distrik Binjai</option>
+                                        <option value="Distrik Langkat Hulu">Distrik Langkat Hulu</option>
+                                        <option value="Distrik Langkat Hilir">Distrik Langkat Hilir</option>
+                                    </optgroup>
+                                    <optgroup label="Bakor PA Wilayah II">
+                                        <option value="Distrik Karo Timur">Distrik Karo Timur</option>
+                                        <option value="Distrik Karo Utara">Distrik Karo Utara</option>
+                                        <option value="Distrik Karo Pusat">Distrik Karo Pusat</option>
+                                        <option value="Distrik Karo Selatan">Distrik Karo Selatan</option>
+                                        <option value="Distrik Karo Barat A">Distrik Karo Barat A</option>
+                                        <option value="Distrik Karo Barat B">Distrik Karo Barat B</option>
+                                        <option value="Aceh Tenggara">Aceh Tenggara</option>
+                                    </optgroup>
+                                    <optgroup label="Bakor PA Wilayah III">
+                                        <option value="Distrik Siantar Kota">Distrik Siantar Kota</option>
+                                        <option value="Distrik Siantar">Distrik Siantar</option>
+                                        <option value="SLA-UASN">SLA-UASN</option>
+                                        <option value="Distrik Tanjung Kasau">Distrik Tanjung Kasau</option>
+                                        <option value="Distrik Perdagangan">Distrik Perdagangan</option>
+                                        <option value="Distrik Huta Bayu Raja">Distrik Huta Bayu Raja</option>
+                                        <option value="Distrik Tanah Jawa">Distrik Tanah Jawa</option>
+                                        <option value="Distrik Simalungun Selatan I">Distrik Simalungun Selatan I</option>
+                                        <option value="Distrik Simalungun Selatan II">Distrik Simalungun Selatan II</option>
+                                        <option value="Distrik Simalungun Barat">Distrik Simalungun Barat</option>
+                                        <option value="Distrik Simalungun Utara">Distrik Simalungun Utara</option>
+                                    </optgroup>
+                                    <optgroup label="Bakor PA Wilayah IV">
+                                        <option value="Distrik Dairi Selatan">Distrik Dairi Selatan</option>
+                                        <option value="Distrik Dairi Pusat">Distrik Dairi Pusat</option>
+                                        <option value="Distrik Dairi Timur">Distrik Dairi Timur</option>
+                                        <option value="Distrik Dairi Barat">Distrik Dairi Barat</option>
+                                        <option value="Distrik Parongil">Distrik Parongil</option>
+                                        <option value="Distrik Pakpak Barat">Distrik Pakpak Barat</option>
+                                    </optgroup>
+                                    <optgroup label="Bakor PA Wilayah V">
+                                        <option value="Distrik Samosir Timur">Distrik Samosir Timur</option>
+                                        <option value="Distrik Samosir Barat">Distrik Samosir Barat</option>
+                                        <option value="Distrik Samosir Selatan">Distrik Samosir Selatan</option>
+                                    </optgroup>
+                                    <optgroup label="Bakor PA Wilayah VI">
+                                        <option value="Distrik Toba Timur">Distrik Toba Timur</option>
+                                        <option value="Distrik Toba Barat">Distrik Toba Barat</option>
+                                        <option value="Distrik Toba Pusat">Distrik Toba Pusat</option>
+                                        <option value="Distrik Habinsaran">Distrik Habinsaran</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">Date of Birth</label>
+                            <input type="date" id="dob" required class="input-pro w-full px-6 py-5 text-white outline-none [color-scheme:dark]">
+                        </div>
                     </div>
-                </a>
-            </div>
 
-            <ul class="hidden md:flex items-center gap-8 font-semibold text-sm">
-                <li><a href="index.html" class="text-gray-300 hover:text-white transition-colors">Home</a></li>
-                <li><a href="biodata.html" class="text-gray-300 hover:text-white transition-colors">Biodata</a></li>
-                <li><a href="Pendaftaran.html" class="text-white border-b-2 border-nasa-red py-1">Pendaftaran</a></li>
-                <li><a href="posts.html" class="text-gray-300 hover:text-white transition-colors">Posts</a></li>
-                <li><a href="Informasi.html" class="text-gray-300 hover:text-white transition-colors">Informasi</a></li>
-            </ul>
-
-            <button id="menu-btn" class="md:hidden text-white focus:outline-none">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                </svg>
-            </button>
-        </nav>
-    </header>
-
-    <main class="flex-grow container mx-auto px-4 pt-32 pb-16 flex justify-center items-center">
-        <div class="w-full max-w-3xl">
-            <div class="text-center mb-10">
-                <h1 class="text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-lg">Join the Pathfinder DSKU</h1>
-                <p class="text-gray-200">Submit your details to register for the upcoming Campoore program.</p>
-            </div>
-
-            <div id="success-alert" class="hidden mb-6 bg-green-900/50 border border-green-500 text-green-100 px-6 py-4 rounded-lg flex items-center gap-3 backdrop-blur-md">
-                <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <div>
-                    <strong class="font-bold">Registration Successful!</strong>
-                    <span class="block text-sm">Your data and payment proof have been received.</span>
-                </div>
-            </div>
-
-            <div class="bg-gray-900/60 border border-white/20 rounded-2xl p-6 md:p-10 shadow-2xl backdrop-blur-md">
-                <form id="registrationForm" enctype="multipart/form-data" novalidate>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <!-- Full Name -->
-                        <div>
-                            <label for="fullName" class="block text-sm font-bold text-gray-300 mb-2">Full Name</label>
-                            <input type="text" id="fullName" name="fullName" placeholder="Your full name...." class="w-full bg-gray-800/80 border border-gray-600 text-white rounded-lg px-4 py-3 focus:border-nasa-red transition-all">
-                            <p class="error-msg text-red-500 text-xs mt-1 hidden">Please enter your full name</p>
-                        </div>
-
-                        <!-- Club -->
-                        <div>
-                            <label for="nim" class="block text-sm font-bold text-gray-300 mb-2">Club (Jemaat)</label>
-                            <input type="text" id="nim" name="nim" placeholder="Type your club name" class="w-full bg-gray-800/80 border border-gray-600 text-white rounded-lg px-4 py-3 focus:border-nasa-red transition-all">
-                            <p class="error-msg text-red-500 text-xs mt-1 hidden">Please enter your club</p>
-                        </div>
-
-                        <!-- Email -->
-                        <div>
-                            <label for="email" class="block text-sm font-bold text-gray-300 mb-2">Email Address</label>
-                            <input type="email" id="email" name="email" placeholder="example@gmail.com" class="w-full bg-gray-800/80 border border-gray-600 text-white rounded-lg px-4 py-3 focus:border-nasa-red">
-                            <p class="error-msg text-red-500 text-xs mt-1 hidden">Invalid email address</p>
-                        </div>
-
-                        <!-- Phone -->
-                        <div>
-                            <label for="phone" class="block text-sm font-bold text-gray-300 mb-2">Phone Number</label>
-                            <input type="text" id="phone" name="phone" placeholder="+62..." class="w-full bg-gray-800/80 border border-gray-600 text-white rounded-lg px-4 py-3 focus:border-nasa-red">
-                            <p class="error-msg text-red-500 text-xs mt-1 hidden">Min. 10 digits</p>
-                        </div>
-
-                        <!-- Jemaat Selection -->
-                        <div>
-                            <label for="faculty" class="block text-sm font-bold text-gray-300 mb-2">Select Jemaat/Club</label>
-                            <select id="faculty" name="faculty" class="w-full bg-gray-800/80 border border-gray-600 text-white rounded-lg px-4 py-3 focus:border-nasa-red appearance-none">
-                                <option value="" disabled selected>Select your Club</option>
-                                <option value="Siantar Kota">Siantar Kota</option>
-                                <option value="Siantar Martoba">Siantar Martoba</option>
-                                <option value="Simalungun">Simalungun</option>
-                                <option value="Tanah Karo">Tanah Karo</option>
-                                <option value="Tanah Jawa">Tanah Jawa</option>
-                                <option value="Samosir">Samosir</option>
-                            </select>
-                            <p class="error-msg text-red-500 text-xs mt-1 hidden">Please select a Club</p>
-                        </div>
-
-                        <!-- DOB -->
-                        <div>
-                            <label for="dob" class="block text-sm font-bold text-gray-300 mb-2">Date of Birth</label>
-                            <input type="date" id="dob" name="dob" class="w-full bg-gray-800/80 border border-gray-600 text-white rounded-lg px-4 py-3 focus:border-nasa-red [color-scheme:dark]">
-                            <p class="error-msg text-red-500 text-xs mt-1 hidden">Required field</p>
-                        </div>
-                    </div>
-
-                    <!-- Gender -->
-                    <div class="mb-6">
-                        <label class="block text-sm font-bold text-gray-300 mb-2">Gender</label>
-                        <div class="flex gap-6">
-                            <label class="flex items-center cursor-pointer group">
-                                <input type="radio" name="gender" value="Male" class="hidden peer">
-                                <div class="w-5 h-5 rounded-full border-2 border-gray-400 flex items-center justify-center peer-checked:border-nasa-red peer-checked:bg-nasa-red transition-all">
-                                    <div class="w-2 h-2 bg-white rounded-full opacity-0 peer-checked:opacity-100"></div>
+                    <!-- GENDER FIXED -->
+                    <div class="space-y-4">
+                        <label class="text-[10px] font-black uppercase tracking-widest text-gray-500 block">Gender</label>
+                        <div class="flex gap-4">
+                            
+                            <!-- Opsi Man -->
+                            <label class="flex-1 relative flex items-center justify-center gap-3 bg-white/5 border border-white/10 p-5 rounded-2xl cursor-pointer hover:bg-white/10 transition-all group">
+                                <input type="radio" name="gender" value="Man" required class="peer hidden">
+                                
+                                <!-- Bulatan luar -->
+                                <div class="w-6 h-6 rounded-full border-2 border-gray-600 peer-checked:border-[var(--nasa-red)] flex items-center justify-center transition-all">
+                                    <!-- Titik merah tengah -->
+                                    <div class="w-3 h-3 bg-[var(--nasa-red)] rounded-full scale-0 peer-checked:scale-100 transition-transform duration-300"></div>
                                 </div>
-                                <span class="ml-2 text-gray-300 peer-checked:text-white">MAN</span>
+                                
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400 peer-checked:text-white transition-colors">Man</span>
+                                <!-- Glow Border saat terpilih -->
+                                <div class="absolute inset-0 border-2 border-transparent peer-checked:border-[var(--nasa-red)]/30 rounded-2xl pointer-events-none"></div>
                             </label>
-                            <label class="flex items-center cursor-pointer group">
-                                <input type="radio" name="gender" value="Female" class="hidden peer">
-                                <div class="w-5 h-5 rounded-full border-2 border-gray-400 flex items-center justify-center peer-checked:border-nasa-red peer-checked:bg-nasa-red transition-all">
-                                    <div class="w-2 h-2 bg-white rounded-full opacity-0 peer-checked:opacity-100"></div>
+
+                            <!-- Opsi Girl -->
+                            <label class="flex-1 relative flex items-center justify-center gap-3 bg-white/5 border border-white/10 p-5 rounded-2xl cursor-pointer hover:bg-white/10 transition-all group">
+                                <input type="radio" name="gender" value="Girl" required class="peer hidden">
+                                
+                                <!-- Bulatan luar -->
+                                <div class="w-6 h-6 rounded-full border-2 border-gray-600 peer-checked:border-[var(--nasa-red)] flex items-center justify-center transition-all">
+                                    <!-- Titik merah tengah -->
+                                    <div class="w-3 h-3 bg-[var(--nasa-red)] rounded-full scale-0 peer-checked:scale-100 transition-transform duration-300"></div>
                                 </div>
-                                <span class="ml-2 text-gray-300 peer-checked:text-white">GIRLS</span>
+                                
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400 peer-checked:text-white transition-colors">Girl</span>
+                                <!-- Glow Border saat terpilih -->
+                                <div class="absolute inset-0 border-2 border-transparent peer-checked:border-[var(--nasa-red)]/30 rounded-2xl pointer-events-none"></div>
                             </label>
+
                         </div>
-                        <p id="gender-error" class="error-msg text-red-500 text-xs mt-1 hidden">Required field</p>
                     </div>
 
-                    <!-- Bukti Pembayaran (Baru Ditambahkan) -->
-                    <div class="mb-6">
-                        <label for="bukti_bayar" class="block text-sm font-bold text-gray-300 mb-2">Upload Bukti Pembayaran (JPG/PNG)</label>
-                        <input type="file" id="bukti_bayar" name="bukti_bayar" accept="image/*" class="w-full bg-gray-800/80 border border-gray-600 text-white rounded-lg px-4 py-2 focus:border-nasa-red">
-                        <p class="error-msg text-red-500 text-xs mt-1 hidden">Please upload your payment receipt</p>
+                    <div class="space-y-3">
+                        <label class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">Payment Proof (Receipt)</label>
+                        <div class="relative flex flex-col items-center justify-center border-2 border-dashed border-white/10 rounded-[2.5rem] p-12 bg-white/[0.01] hover:bg-white/[0.03] transition-colors">
+                            <input type="file" id="bukti_bayar" accept="image/*" required class="absolute inset-0 opacity-0 cursor-pointer z-10">
+                            <p class="text-sm text-gray-300 font-bold" id="file-label">Click to upload your receipt</p>
+                        </div>
                     </div>
 
-                    <!-- Address -->
-                    <div class="mb-8">
-                        <label for="address" class="block text-sm font-bold text-gray-300 mb-2">Current Address</label>
-                        <textarea id="address" name="address" rows="3" placeholder="Enter your full address here..." class="w-full bg-gray-800/80 border border-gray-600 text-white rounded-lg px-4 py-3 focus:border-nasa-red"></textarea>
-                        <p class="error-msg text-red-500 text-xs mt-1 hidden">Required field</p>
+                    <div class="space-y-3">
+                        <label class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">Motivation In Your Life</label>
+                        <textarea id="address" rows="3" required class="input-pro w-full px-6 py-5 text-white outline-none resize-none"></textarea>
                     </div>
 
-                    <button type="submit" class="w-full bg-nasa-red hover:bg-red-700 text-white font-bold py-4 rounded-lg transition-all transform hover:-translate-y-1 shadow-xl flex justify-center items-center gap-2">
-                        <span>SUBMIT Pendaftaran</span>
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
-                        </svg>
+                    <button type="submit" id="submitBtn" class="w-full btn-premium py-6 rounded-3xl text-[11px] font-black tracking-[0.5em] uppercase text-white shadow-xl">
+                        Daftar Sekarang
                     </button>
                 </form>
             </div>
         </div>
     </main>
 
-    <footer class="bg-black/80 py-6 border-t border-white/10">
-        <p class="text-center text-gray-500 text-sm">&copy; 2026 Pendaftaran Campoore DSKU</p>
-    </footer>
+    <!-- MODAL BERHASIL -->
+    <div id="successModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/60 backdrop-blur-sm">
+        <div id="modalContent" class="bg-white rounded-2xl p-8 w-[90%] max-w-sm text-center shadow-2xl transform transition-all scale-95 opacity-0">
+            <div class="flex justify-center mb-6">
+                <div class="w-20 h-20 border-[3px] border-green-100 rounded-full flex items-center justify-center">
+                    <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Berhasil!</h2>
+            <p class="text-gray-500 mb-8 text-sm">Data berhasil disimpan!</p>
+            <button onclick="closeSuccess()" class="w-full bg-[#7c3aed] hover:bg-[#6d28d9] text-white font-semibold py-3 rounded-xl transition-colors shadow-lg">
+                Oke
+            </button>
+        </div>
+    </div>
 
-    <script>
-        // Toggle menu mobile
-        document.getElementById('menu-btn').addEventListener('click', () => {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        });
-
-        const form = document.getElementById('registrationForm');
-
-        form.addEventListener('submit', function (e) {
-            e.preventDefault(); 
-            let isValid = true;
-
-            const showError = (input, show) => {
-                const errorMsg = input.parentElement.querySelector('.error-msg');
-                if (errorMsg) {
-                    if (show) {
-                        errorMsg.classList.remove('hidden');
-                        input.classList.add('border-red-500');
-                    } else {
-                        errorMsg.classList.add('hidden');
-                        input.classList.remove('border-red-500');
-                    }
-                }
-            };
-
-            // VALIDASI INPUT
-            const nameInput = document.getElementById('fullName');
-            if (nameInput.value.trim() === '') { showError(nameInput, true); isValid = false; } else { showError(nameInput, false); }
-
-            const nimInput = document.getElementById('nim');
-            if (nimInput.value.trim() === '') { showError(nimInput, true); isValid = false; } else { showError(nimInput, false); }
-
-            const emailInput = document.getElementById('email');
-            if (!emailInput.value.includes('@')) { showError(emailInput, true); isValid = false; } else { showError(emailInput, false); }
-
-            const buktiInput = document.getElementById('bukti_bayar');
-            if (buktiInput.files.length === 0) { showError(buktiInput, true); isValid = false; } else { showError(buktiInput, false); }
-
-            const addressInput = document.getElementById('address');
-            if (addressInput.value.trim() === '') { showError(addressInput, true); isValid = false; } else { showError(addressInput, false); }
-
-            // JIKA VALID, KIRIM DATA (Gunakan fetch ke file PHP Anda)
-            if (isValid) {
-                const formData = new FormData(form);
-                
-                // Ganti 'submit.php' dengan nama file pemroses data Anda
-                fetch('submit.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if(data.status === 'success') {
-                        document.getElementById('success-alert').classList.remove('hidden');
-                        form.reset();
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }
-                })
-                .catch(err => alert("Data terkirim (Simulasi). Pastikan file submit.php Anda sudah siap."));
-            }
-        });
-    </script>
+    <script src="Pendaftaran.js"></script>
 </body>
 </html>

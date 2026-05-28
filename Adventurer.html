@@ -59,25 +59,42 @@
         </nav>
     </header>
 
-    <!-- HERO WITH VIDEO BACKGROUND -->
-    <section class="relative h-screen flex items-center justify-center overflow-hidden bg-black">
-        <div class="video-docker">
-            <!-- Ganti VIDEO_ID dengan ID video YouTube anak-anak/Adventurer yang Anda inginkan -->
-            <iframe src="https://youtu.be/mui9rSF7KWM?si=5gBux_asfM6RenYe" frameborder="0" allow="autoplay; encrypted-media"></iframe>
-        </div>
-        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black"></div>
+<!-- HERO WITH IMAGE BACKGROUND -->
+<section class="relative h-screen flex items-center justify-center overflow-hidden bg-gray-900">
+    <!-- Background Image -->
+    <div class="absolute inset-0 z-0">
+        <img 
+            src="images/Foto PA JLSIM.png" 
+            alt="Adventurer Background" 
+            class="w-full h-full object-cover opacity-60"
+        >
+    </div>
+
+    <!-- Overlay Gradient agar teks lebih mudah dibaca -->
+    <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black z-10"></div>
+    
+    <div class="container mx-auto px-6 relative z-20 text-center">
+        <span class="inline-block px-6 py-2 bg-red-600 text-white text-[10px] font-black uppercase tracking-[0.4em] mb-8 animate-bounce">
+            Suffer little children to come unto Me
+        </span>
         
-        <div class="container mx-auto px-6 relative z-10 text-center">
-            <span class="inline-block px-6 py-2 bg-red-600 text-white text-[10px] font-black uppercase tracking-[0.4em] mb-8 animate-bounce">Suffer little children to come unto Me</span>
-            <h1 class="font-display text-7xl md:text-9xl text-white font-black leading-none tracking-tighter mb-8">
-                TUMBUH <br><span class="text-transparent" style="-webkit-text-stroke: 2px white;">DALAM</span> <br>KASIH.
-            </h1>
-            <p class="text-white/70 text-lg md:text-xl max-w-2xl mx-auto font-medium mb-12">Program pembentukan karakter Adventurer untuk anak-anak Indonesia yang berlandaskan nilai-nilai Alkitabiah.</p>
-            <a href="#curriculum" class="inline-block p-4 border-2 border-white rounded-full text-white animate-pulse">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 14l-7 7m0 0l-7-7m7 7V3" stroke-width="2"></path></svg>
-            </a>
-        </div>
-    </section>
+        <h1 class="font-display text-7xl md:text-9xl text-white font-black leading-none tracking-tighter mb-8">
+            TUMBUH <br>
+            <span class="text-transparent" style="-webkit-text-stroke: 2px white;">DALAM</span> <br>
+            KASIH.
+        </h1>
+        
+        <p class="text-white/80 text-lg md:text-xl max-w-2xl mx-auto font-medium mb-12">
+            Program pembentukan karakter Adventurer untuk anak-anak Indonesia yang berlandaskan nilai-nilai Alkitabiah.
+        </p>
+        
+        <a href="#curriculum" class="inline-block p-4 border-2 border-white rounded-full text-white hover:bg-white hover:text-black transition-all duration-300 animate-pulse">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M19 14l-7 7m0 0l-7-7m7 7V3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+        </a>
+    </div>
+</section>
 
     <!-- SECTION 1: VISI MISI (MERAH) -->
     <section class="py-32 gradient-red text-white">
@@ -92,7 +109,7 @@
             </div>
             <div class="reveal relative">
                 <div class="absolute -inset-4 border-2 border-white/20 rounded-[3rem] rotate-3"></div>
-                <img src="https://images.unsplash.com/photo-1484662020986-75935d2ebc66?auto=format&fit=crop&q=80&w=800" class="rounded-[3rem] shadow-2xl relative z-10 floating">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgrazCsPROsHDM8vfNn5lxDki4aa6sZ-B60Th_QGvSyu6wmnSpxgO0zO4Fd941j6P3TYTcDQlc18vD1jzD48v9rJa75fwBL_E12Uho-4R69vpYdFEYbEqMEIaNfRum1bmnFyXYLOUdfx-SF/s1600/Jesus-loves-children.jpg" class="rounded-[3rem] shadow-2xl relative z-10 floating">
             </div>
         </div>
     </section>
@@ -166,10 +183,10 @@
         <div class="flex gap-6 animate-scroll hover:pause-scroll">
             <!-- Gunakan JS atau CSS Marquee -->
             <div class="flex gap-6 animate-[scroll_40s_linear_infinite]">
-                <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=500" class="w-[400px] h-[300px] object-cover rounded-3xl grayscale hover:grayscale-0 transition duration-500">
-                <img src="https://images.unsplash.com/photo-1502086223501-7ea24e3d82f3?auto=format&fit=crop&q=80&w=500" class="w-[400px] h-[300px] object-cover rounded-3xl grayscale hover:grayscale-0 transition duration-500">
-                <img src="https://images.unsplash.com/photo-1526900906232-aa863211848a?auto=format&fit=crop&q=80&w=500" class="w-[400px] h-[300px] object-cover rounded-3xl grayscale hover:grayscale-0 transition duration-500">
-                <img src="https://images.unsplash.com/photo-1536337005238-94b997371b40?auto=format&fit=crop&q=80&w=500" class="w-[400px] h-[300px] object-cover rounded-3xl grayscale hover:grayscale-0 transition duration-500">
+                <img src="" class="w-[400px] h-[300px] object-cover rounded-3xl grayscale hover:grayscale-0 transition duration-500">
+                <img src="images/Foto Zyva.png" class="w-[400px] h-[300px] object-cover rounded-3xl grayscale hover:grayscale-0 transition duration-500">
+                <img src="images/Foto Odelia.png" class="w-[400px] h-[300px] object-cover rounded-3xl grayscale hover:grayscale-0 transition duration-500">
+                <img src="images/Fotocinta.png" class="w-[400px] h-[300px] object-cover rounded-3xl grayscale hover:grayscale-0 transition duration-500">
             </div>
         </div>
     </section>

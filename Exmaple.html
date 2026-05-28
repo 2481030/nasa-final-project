@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendataan Master Guide | Pemuda Advent DSKU</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .form-input:focus { border-color: #1e3a8a; ring-color: #1e3a8a; }
+        .gradient-bg { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- NAVIGATION BAR -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-blue-900 rounded-full flex items-center justify-center text-white font-bold">MG</div>
+                    <div>
+                        <h1 class="text-xl font-bold text-blue-900 leading-tight">Master Guide</h1>
+                        <p class="text-xs text-gray-500 uppercase tracking-widest">Pemuda Advent DSKU</p>
+                    </div>
+                </div>
+                <div class="hidden md:flex space-x-8 font-medium">
+                    <a href="#" class="text-blue-900 border-b-2 border-blue-900 pb-1">Beranda</a>
+                    <a href="#" class="text-gray-500 hover:text-blue-900 transition">Program</a>
+                    <a href="#" class="text-gray-500 hover:text-blue-900 transition">Tentang Kami</a>
+                    <a href="#" class="bg-blue-900 text-white px-4 py-2 rounded-lg hover:bg-blue-800 transition">Kontak</a>
+                </div>
+                <div class="md:hidden">
+                    <button class="text-gray-600 focus:outline-none"><i class="fa-solid fa-bars text-2xl"></i></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="gradient-bg py-16 px-4 text-center text-white">
+        <h2 class="text-3xl md:text-4xl font-extrabold mb-2">Formulir Pendataan Master Guide</h2>
+        <p class="text-blue-100 max-w-2xl mx-auto">Lengkapi data diri Anda untuk membantu pengorganisasian pelayanan kepemudaan di wilayah DSKU yang lebih baik.</p>
+    </header>
+
+    <!-- FORM SECTION -->
+    <main class="max-w-5xl mx-auto px-4 py-12 -mt-10">
+        <form action="#" method="POST" class="space-y-8">
+            
+            <!-- SECTION 1: INFORMASI PESERTA -->
+            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border-t-4 border-blue-900">
+                <div class="flex items-center space-x-3 mb-6">
+                    <i class="fa-solid fa-user-circle text-2xl text-blue-900"></i>
+                    <h3 class="text-xl font-bold text-gray-800">Informasi Peserta</h3>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-semibold mb-2">Nama Lengkap</label>
+                        <input type="text" placeholder="Masukkan nama sesuai KTP/Ijazah" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition" required>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Jenis Kelamin</label>
+                        <div class="flex space-x-4 mt-2">
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="radio" name="gender" class="w-4 h-4 text-blue-900">
+                                <span>Laki-laki</span>
+                            </label>
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="radio" name="gender" class="w-4 h-4 text-blue-900">
+                                <span>Perempuan</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Tempat, Tanggal Lahir</label>
+                        <input type="text" placeholder="Contoh: Jakarta, 01 Januari 1995" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-semibold mb-2">Alamat Tinggal Sekarang</label>
+                        <textarea rows="2" placeholder="Tuliskan alamat lengkap" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Nomor HP / WhatsApp</label>
+                        <input type="tel" placeholder="0812xxxx" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Email</label>
+                        <input type="email" placeholder="contoh@email.com" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Jemaat / Gereja Asal</label>
+                        <input type="text" placeholder="Nama Jemaat" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Distrik / Wilayah</label>
+                        <input type="text" placeholder="Nama Distrik" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-semibold mb-2">Jabatan Pelayanan Saat Ini</label>
+                        <input type="text" placeholder="Contoh: Direktur Pathfinder / Ketua Pemuda" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: INFORMASI MASTER GUIDE -->
+            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border-t-4 border-yellow-500">
+                <div class="flex items-center space-x-3 mb-6">
+                    <i class="fa-solid fa-medal text-2xl text-yellow-600"></i>
+                    <h3 class="text-xl font-bold text-gray-800">Informasi Master Guide</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-semibold mb-2">Status Master Guide</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 cursor-pointer transition">
+                                <input type="radio" name="status_mg" class="w-4 h-4 text-blue-900">
+                                <span class="ml-3">Sudah Investitur</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 cursor-pointer transition">
+                                <input type="radio" name="status_mg" class="w-4 h-4 text-blue-900">
+                                <span class="ml-3">Sedang Proses</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 cursor-pointer transition">
+                                <input type="radio" name="status_mg" class="w-4 h-4 text-blue-900">
+                                <span class="ml-3">Belum</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Tahun Investitur</label>
+                        <input type="number" placeholder="YYYY" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Tempat Investitur</label>
+                        <input type="text" placeholder="Lokasi Investitur" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-semibold mb-2">Nama Pembina / Direktur Pathfinder</label>
+                        <input type="text" placeholder="Nama Lengkap Pembina" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-semibold mb-3">Pernah Mengikuti Pelatihan Berikut:</label>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="w-4 h-4 rounded text-blue-900">
+                                <span class="text-sm">BST</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="w-4 h-4 rounded text-blue-900">
+                                <span class="text-sm">Leadership Training</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="w-4 h-4 rounded text-blue-900">
+                                <span class="text-sm">Camporee</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" class="w-4 h-4 rounded text-blue-900">
+                                <span class="text-sm">AYMT</span>
+                            </label>
+                        </div>
+                        <input type="text" placeholder="Lainnya..." class="mt-4 w-full px-4 py-2 border-b focus:border-blue-500 outline-none bg-transparent">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Bersedia Membantu Pelayanan DSKU?</label>
+                        <div class="flex space-x-6 mt-2">
+                            <label class="flex items-center space-x-2 cursor-pointer text-green-600 font-medium">
+                                <input type="radio" name="willing" class="w-4 h-4 text-green-600">
+                                <span>Ya, Saya Bersedia</span>
+                            </label>
+                            <label class="flex items-center space-x-2 cursor-pointer text-red-600 font-medium">
+                                <input type="radio" name="willing" class="w-4 h-4 text-red-600">
+                                <span>Tidak</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-semibold mb-2">Bidang Pelayanan yang Diminati</label>
+                        <input type="text" placeholder="Contoh: Outdoor, Kelas Kemajuan, Musik, dll." class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-semibold mb-2">Catatan Tambahan</label>
+                        <textarea rows="3" placeholder="Informasi tambahan yang ingin disampaikan..." class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VERIFIKASI -->
+            <div class="bg-blue-50 rounded-xl p-6 border border-blue-200">
+                <label class="flex items-start space-x-3 cursor-pointer">
+                    <input type="checkbox" class="mt-1 w-5 h-5 rounded text-blue-900" required>
+                    <span class="text-sm text-gray-700">
+                        Saya menyatakan bahwa data yang saya isi adalah benar dan dapat dipertanggungjawabkan. Saya bersedia mengikuti ketentuan pelayanan yang ada di Pemuda Advent DSKU.
+                    </span>
+                </label>
+                
+                <div class="mt-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
+                    <div class="w-full md:w-64">
+                        <p class="text-sm mb-2 text-gray-500 italic">Tanda Tangan Digital (Ketik Nama):</p>
+                        <input type="text" placeholder="Nama Jelas Anda" class="w-full bg-transparent border-b-2 border-gray-400 focus:border-blue-900 outline-none py-1 font-serif text-lg">
+                    </div>
+                    
+                    <div class="text-right">
+                        <p class="text-sm text-gray-500 mb-2">Tanggal Pengisian:</p>
+                        <p class="font-bold text-lg" id="currentDate"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BUTTON -->
+            <div class="flex justify-center pt-4">
+                <button type="submit" class="bg-blue-900 text-white px-12 py-4 rounded-full font-bold text-lg shadow-xl hover:bg-blue-800 transform hover:-translate-y-1 transition duration-300">
+                    KIRIM DATA SEKARANG
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-gray-400 py-12 mt-20">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="mb-4">© 2023 Pemuda Advent DSKU - Departemen Kepemudaan</p>
+            <div class="flex justify-center space-x-6">
+                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-instagram text-xl"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-facebook text-xl"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-youtube text-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Set tanggal otomatis
+        const d = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('currentDate').innerText = d.toLocaleDateString('id-ID', options);
+    </script>
+</body>
+</html>

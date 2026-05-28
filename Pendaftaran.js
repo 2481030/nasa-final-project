@@ -1,99 +1,116 @@
-// pendaftaran.js
+// GANTI DENGAN URL WEB APP HASIL DEPLOY GOOGLE SCRIPT ANDA
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzCFLCA__Q0wtKKn_EOt_DiBioDOcA9lWHuybTJbTqGa7nQslGlgJSJ21Hyg4HczdifJQ/exec";
 
-document.addEventListener('DOMContentLoaded', function () {
-    // 1. Logika Toggle Menu Mobile
-    const menuBtn = document.getElementById('menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
+const registrationForm = document.getElementById('registrationForm');
+const submitBtn = document.getElementById('submitBtn');
+const successModal = document.getElementById('successModal');
+const modalContent = document.getElementById('modalContent');
 
-    if (menuBtn && mobileMenu) {
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+/**
+ * HANDLER SUBMIT FORM
+ */
+registrationForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Loading State
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="animate-pulse">Sedang Memproses...</span>';
+
+    try {
+        const fileInput = document.getElementById('bukti_bayar');
+        const file = fileInput.files[0];
+        
+        // Konversi File ke Base64
+        const base64Data = await toBase64(file);
+        const base64String = base64Data.split(',')[1];
+        const contentType = base64Data.split(',')[0].split(':')[1].split(';')[0];
+
+        // Ambil data form
+        const formData = {
+            fullName: document.getElementById('fullName').value,
+            club: document.getElementById('clubManual').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            wilayah: document.getElementById('wilayahSelect').value,
+            dob: document.getElementById('dob').value,
+            gender: document.querySelector('input[name="gender"]:checked').value,
+            address: document.getElementById('address').value,
+            fileBase64: base64String,
+            fileType: contentType
+        };
+
+        // Kirim ke Google Script menggunakan POST JSON
+        const response = await fetch(SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify(formData)
         });
+
+        const result = await response.json();
+
+        if (result.result === 'success') {
+            showSuccessModal();
+            registrationForm.reset();
+            document.getElementById('file-label').textContent = "Click to upload your receipt";
+        } else {
+            throw new Error(result.error);
+        }
+
+    } catch (error) {
+        console.error('Error!', error);
+        alert("Gagal mengirim data: " + error.message);
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span class="relative z-10 text-[11px] font-black tracking-[0.5em] uppercase text-white">Daftar Sekarang</span>';
     }
+});
 
-    // 2. Logika Form Pendaftaran
-    const form = document.getElementById('registrationForm');
-    const successAlert = document.getElementById('success-alert');
+/**
+ * FUNGSI KONVERSI FILE KE BASE64
+ */
+const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+});
 
-    if (form) {
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            let isValid = true;
+/**
+ * TAMPILKAN MODAL SUKSES (Identik dengan Gambar)
+ */
+function showSuccessModal() {
+    successModal.classList.remove('hidden');
+    setTimeout(() => {
+        modalContent.classList.remove('scale-95', 'opacity-0');
+        modalContent.classList.add('scale-100', 'opacity-100');
+    }, 50);
+}
 
-            // Fungsi untuk menampilkan pesan error
-            const showError = (input, show) => {
-                const parent = input.closest('div') || input.parentElement;
-                const errorMsg = parent.querySelector('.error-msg');
-                if (errorMsg) {
-                    if (show) {
-                        errorMsg.classList.remove('hidden');
-                        input.classList.add('border-red-500');
-                    } else {
-                        errorMsg.classList.add('hidden');
-                        input.classList.remove('border-red-500');
-                    }
-                }
-            };
+/**
+ * TUTUP MODAL
+ */
+function closeSuccess() {
+    modalContent.classList.add('scale-95', 'opacity-0');
+    setTimeout(() => {
+        successModal.classList.add('hidden');
+    }, 300);
+}
 
-            // --- VALIDASI INPUT ---
+/**
+ * UPDATE NAMA FILE SAAT UPLOAD
+ */
+document.getElementById('bukti_bayar').addEventListener('change', function(e) {
+    const fileName = e.target.files[0]?.name || "Click to upload your receipt";
+    document.getElementById('file-label').textContent = fileName;
+});
 
-            // Full Name
-            const nameInput = document.getElementById('fullName');
-            if (nameInput.value.trim() === '') { showError(nameInput, true); isValid = false; } else { showError(nameInput, false); }
-
-            // Club (NIM)
-            const nimInput = document.getElementById('nim');
-            if (nimInput.value.trim() === '') { showError(nimInput, true); isValid = false; } else { showError(nimInput, false); }
-
-            // Email
-            const emailInput = document.getElementById('email');
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailPattern.test(emailInput.value)) { showError(emailInput, true); isValid = false; } else { showError(emailInput, false); }
-
-            // Phone
-            const phoneInput = document.getElementById('phone');
-            if (phoneInput.value.length < 10) { showError(phoneInput, true); isValid = false; } else { showError(phoneInput, false); }
-
-            // Faculty/Jemaat (Select)
-            const facultyInput = document.getElementById('faculty');
-            if (facultyInput.value === "") { showError(facultyInput, true); isValid = false; } else { showError(facultyInput, false); }
-
-            // Date of Birth
-            const dobInput = document.getElementById('dob');
-            if (dobInput.value === "") { showError(dobInput, true); isValid = false; } else { showError(dobInput, false); }
-
-            // Gender (Radio)
-            const genderMale = document.querySelector('input[name="gender"][value="Male"]');
-            const genderFemale = document.querySelector('input[name="gender"][value="Female"]');
-            const genderError = document.getElementById('gender-error');
-            if (!genderMale.checked && !genderFemale.checked) {
-                genderError.classList.remove('hidden');
-                isValid = false;
-            } else {
-                genderError.classList.add('hidden');
-            }
-
-            // Bukti Bayar (File)
-            const buktiInput = document.getElementById('bukti_bayar');
-            if (buktiInput.files.length === 0) { showError(buktiInput, true); isValid = false; } else { showError(buktiInput, false); }
-
-            // Address
-            const addressInput = document.getElementById('address');
-            if (addressInput.value.trim() === '') { showError(addressInput, true); isValid = false; } else { showError(addressInput, false); }
-
-            // --- PENGIRIMAN DATA ---
-            if (isValid) {
-                const formData = new FormData(form);
-                const submitBtn = form.querySelector('button[type="submit"]');
-                
-                // Ubah tombol saat loading
-                const originalBtnText = submitBtn.innerHTML;
-                submitBtn.innerHTML = "Processing...";
-                submitBtn.disabled = true;
-
-                fetch('submit.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    if (!response.ok) 
+/**
+ * EFEK PARALLAX BACKGROUND
+ */
+window.addEventListener('mousemove', (e) => {
+    const bg = document.getElementById('parallax-bg');
+    if(bg) {
+        const x = (window.innerWidth / 2 - e.clientX) / 50;
+        const y = (window.innerHeight / 2 - e.clientY) / 50;
+        bg.style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
+    }
+});

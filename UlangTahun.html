@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Pendataan Master Guide - DSKU</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #02040a;
+            color: #e2e8f0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-image: radial-gradient(circle at top right, rgba(225, 29, 41, 0.15), transparent),
+                              radial-gradient(circle at bottom left, rgba(225, 29, 41, 0.05), transparent);
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .input-field {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .input-field:focus {
+            border-color: #e11d29;
+            box-shadow: 0 0 10px rgba(225, 29, 41, 0.3);
+            outline: none;
+        }
+        .accent-red { color: #e11d29; }
+        .bg-red-dsku { background-color: #e11d29; }
+    </style>
+</head>
+<body class="py-12 px-4">
+
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-3xl md:text-5xl font-extrabold tracking-tighter uppercase mb-2">Form Pendataan <span class="accent-red">Master Guide</span></h1>
+            <p class="text-gray-400 tracking-widest font-semibold uppercase text-sm">Pemuda Advent DSKU</p>
+            <div class="h-1 w-24 bg-red-dsku mx-auto mt-4"></div>
+        </div>
+
+        <form id="mgForm" class="glass-card rounded-[2rem] p-8 md:p-12 shadow-2xl">
+            
+            <!-- SEKSI 1: INFORMASI PESERTA -->
+            <div class="mb-12">
+                <h2 class="text-red-500 font-bold uppercase tracking-widest text-sm mb-6 border-l-4 border-red-600 pl-4">I. Informasi Peserta</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase text-gray-500">Nama Lengkap</label>
+                        <input type="text" name="nama_lengkap" required class="input-field w-full px-4 py-3 rounded-xl">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase text-gray-500">Jenis Kelamin</label>
+                        <div class="flex gap-4">
+                            <label class="flex-1 border border-white/10 p-3 rounded-xl cursor-pointer hover:bg-white/5 transition flex items-center gap-2">
+                                <input type="radio" name="jenis_kelamin" value="Laki-laki" required> Laki-laki
+                            </label>
+                            <label class="flex-1 border border-white/10 p-3 rounded-xl cursor-pointer hover:bg-white/5 transition flex items-center gap-2">
+                                <input type="radio" name="jenis_kelamin" value="Perempuan" required> Perempuan
+                            </label>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase text-gray-500">Tempat, Tanggal Lahir</label>
+                        <input type="text" name="ttl" placeholder="Contoh: Medan, 12 Mei 1995" class="input-field w-full px-4 py-3 rounded-xl">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase text-gray-500">Nomor HP / WhatsApp</label>
+                        <input type="text" name="no_hp" required class="input-field w-full px-4 py-3 rounded-xl">
+                    </div>
+                    <div class="md:col-span-2 space-y-2">
+                        <label class="text-xs font-bold uppercase text-gray-500">Alamat Lengkap</label>
+                        <textarea name="alamat" rows="2" class="input-field w-full px-4 py-3 rounded-xl resize-none"></textarea>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase text-gray-500">Email</label>
+                        <input type="email" name="email" class="input-field w-full px-4 py-3 rounded-xl">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase text-gray-500">Jemaat / Gereja Asal</label>
+                        <input type="text" name="jemaat" class="input-field w-full px-4 py-3 rounded-xl">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase text-gray-500">Distrik / Wilayah</label>
+                        <input type="text" name="distrik" class="input-field w-full px-4 py-3 rounded-xl">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase text-gray-500">Jabatan Pelayanan Saat Ini</label>
+                        <input type="text" name="jabatan" class="input-field w-full px-4 py-3 rounded-xl">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEKSI 2: INFORMASI MASTER GUIDE -->
+            <div class="mb-12">
+                <h2 class="text-red-500 font-bold uppercase tracking-widest text-sm mb-6 border-l-4 border-red-600 pl-4">II. Informasi Master Guide</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="md:col-span-2 space-y-2">
+                        <label class="text-xs font-bold uppercase text-gray-500 block mb-2">Status Master Guide</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-lg cursor-pointer"><input type="radio" name="status_mg" value="Sudah Investitur"> Sudah Investitur</label>
+                            <label class="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-lg cursor-pointer"><input type="radio" name="status_mg" value="Sedang Proses"> Sedang Proses</label>
+                            <label class="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-lg cursor-pointer"><input type="radio" name="status_mg" value="Belum"> Belum</label>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase text-gray-500">Tahun Investitur</label>
+                        <input type="text" name="tahun_investitur" class="input-field w-full px-4 py-3 rounded-xl">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase text-gray-500">Tempat Investitur</label>
+                        <input type="text" name="tempat_investitur" class="input-field w-full px-4 py-3 rounded-xl">
+                    </div>
+                    <div class="md:col-span-2 space-y-2">
+                        <label class="text-xs font-bold uppercase text-gray-500">Nama Pembina / Direktur Pathfinder</label>
+                        <input type="text" name="nama_pembina" class="input-field w-full px-4 py-3 rounded-xl">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEKSI 3: PELATIHAN & MINAT -->
+            <div class="mb-12">
+                <h2 class="text-red-500 font-bold uppercase tracking-widest text-sm mb-6 border-l-4 border-red-600 pl-4">III. Pelatihan & Minat</h2>
+                <div class="space-y-6">
+                    <div class="space-y-3">
+                        <label class="text-xs font-bold uppercase text-gray-500">Pernah Mengikuti Pelatihan:</label>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                            <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="pelatihan[]" value="BST"> BST</label>
+                            <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="pelatihan[]" value="Leadership Training"> Leadership Training</label>
+                            <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="pelatihan[]" value="Camporee"> Camporee</label>
+                            <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="pelatihan[]" value="AYMT"> AYMT</label>
+                        </div>
+                        <input type="text" name="pelatihan_lainnya" placeholder="Lainnya..." class="input-field w-full px-4 py-2 mt-2 rounded-lg text-sm">
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase text-gray-500 block">Bersedia Membantu Pelayanan DSKU?</label>
+                        <div class="flex gap-6">
+                            <label class="flex items-center gap-2"><input type="radio" name="bersedia" value="Ya"> Ya</label>
+                            <label class="flex items-center gap-2"><input type="radio" name="bersedia" value="Tidak"> Tidak</label>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase text-gray-500">Bidang Pelayanan yang Diminati</label>
+                        <input type="text" name="bidang_diminati" class="input-field w-full px-4 py-3 rounded-xl">
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase text-gray-500">Catatan Tambahan</label>
+                        <textarea name="catatan" rows="3" class="input-field w-full px-4 py-3 rounded-xl resize-none"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VERIFIKASI -->
+            <div class="p-6 bg-red-600/10 border border-red-600/20 rounded-2xl mb-8">
+                <label class="flex items-start gap-3 cursor-pointer">
+                    <input type="checkbox" required class="mt-1">
+                    <span class="text-sm text-gray-300">Saya menyatakan bahwa data yang saya isi adalah benar dan dapat dipertanggungjawabkan.</span>
+                </label>
+            </div>
+
+            <button type="submit" class="w-full bg-red-dsku hover:bg-red-700 text-white font-bold py-4 rounded-xl uppercase tracking-[0.3em] transition-all shadow-lg hover:shadow-red-600/40">
+                Kirim Data Master Guide
+            </button>
+
+        </form>
+        
+        <p class="text-center text-gray-600 text-xs mt-8">© 2024 Pemuda Advent DSKU - Departemen Kepemudaan</p>
+    </div>
+
+    <!-- Script AJAX -->
+    <script>
+        document.getElementById('mgForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            fetch('submit.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.status === 'success') {
+                    alert('Berhasil! ' + data.message);
+                    this.reset();
+                } else {
+                    alert('Gagal! ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan pada server.');
+            });
+        });
+    </script>
+</body>
+</html>

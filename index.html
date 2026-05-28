@@ -4,12 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PATHFINDER DSKU</title>
+    <title>PEMUDA ADVENT DAERAH SUMATERA KAWASAN UTARA</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
 
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
@@ -17,18 +19,17 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Outfit', 'sans-serif'],
+                        display: ['Bebas Neue', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
                     },
                     colors: {
-                        nasa: {
+                        brand: {
                             red: '#e11d29',
-                            dark: '#000000',
-                            gray: '#1a1a1a',
-                            amber: '#f59e0b'
+                            amber: '#f59e0b',
+                            dark: '#0a0a0a',
+                            gold: '#d97706',
                         }
-                    },
-                    backgroundImage: {
-                        'gradient-header': 'linear-gradient(to bottom, rgba(245, 158, 11, 0.95), rgba(0,0,0,0))',
                     }
                 }
             }
@@ -36,219 +37,962 @@
     </script>
 
     <style>
-        /* Animasi Background Bergerak */
+        :root {
+            --red: #e11d29;
+            --amber: #f59e0b;
+            --gold: #d97706;
+            --dark: #0a0a0a;
+        }
+
+        /* ─── SCROLL PROGRESS ─── */
+        #scroll-progress {
+            position: fixed;
+            top: 0; left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--red), var(--amber), var(--gold));
+            z-index: 200;
+            width: 0%;
+            transition: width 0.08s linear;
+            box-shadow: 0 0 12px var(--amber);
+        }
+
+        /* ─── CUSTOM CURSOR ─── */
+        body { cursor: none; }
+        #cursor {
+            width: 12px; height: 12px;
+            background: var(--amber);
+            border-radius: 50%;
+            position: fixed;
+            top: 0; left: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.08s, width 0.2s, height 0.2s, background 0.2s;
+            mix-blend-mode: difference;
+        }
+        #cursor-ring {
+            width: 36px; height: 36px;
+            border: 2px solid rgba(245,158,11,0.5);
+            border-radius: 50%;
+            position: fixed;
+            top: 0; left: 0;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: left 0.12s ease-out, top 0.12s ease-out, transform 0.2s, width 0.2s, height 0.2s;
+        }
+        body:hover #cursor { opacity: 1; }
+
+        /* ─── NOISE GRAIN OVERLAY ─── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+            opacity: 0.025;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* ─── HERO ─── */
+        .hero-bg {
+            background: linear-gradient(135deg, #7c2d12 0%, #b45309 30%, #d97706 60%, #f59e0b 100%);
+            position: relative;
+        }
+        /* PERBAIKAN: Overlay gelap transparan di sisi kiri agar teks putih terbaca jelas */
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+            z-index: 1;
+        }
+
+        /* ─── MOVING GRID ─── */
+        .grid-bg {
+            background-image:
+                linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+        }
+        @keyframes gridMove {
+            from { background-position: 0 0; }
+            to { background-position: 60px 60px; }
+        }
+
+        /* ─── GLOWING TEXT ─── */
+        .glow-text {
+            text-shadow: 0 0 40px rgba(245,158,11,0.4), 0 0 80px rgba(245,158,11,0.15);
+        }
+
+        /* ─── MARQUEE ─── */
+        .marquee-track {
+            display: flex;
+            gap: 4rem;
+            animation: marquee 22s linear infinite;
+            white-space: nowrap;
+        }
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* ─── GLASS CARD ─── */
+        .glass {
+            background: rgba(255,255,255,0.12); /* Dipertebal agar kontras */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .glass-dark {
+            background: rgba(10,10,10,0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        /* ─── COUNTDOWN ─── */
+        .countdown-digit {
+            background: rgba(0,0,0,0.5); /* Lebih gelap agar angka terlihat jelas */
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 16px;
+            padding: 16px 20px;
+            min-width: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .countdown-digit::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 0; right: 0;
+            height: 1px;
+            background: rgba(255,255,255,0.08);
+        }
+
+        /* ─── STAT CARD ─── */
+        .stat-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 24px;
+            padding: 2rem;
+            background: #fff;
+            border: 1px solid #f3f4f6;
+            transition: all 0.4s cubic-bezier(0.23,1,0.32,1);
+        }
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 32px 64px rgba(0,0,0,0.08), 0 0 0 2px var(--amber);
+        }
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--red), var(--amber));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        .stat-card:hover::after { transform: scaleX(1); }
+
+        /* ─── PROGRAM CARD ─── */
+        .prog-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 28px;
+            padding: 2.5rem;
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            transition: all 0.4s cubic-bezier(0.23,1,0.32,1);
+        }
+        .prog-card:hover {
+            transform: translateY(-12px) scale(1.01);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.1);
+        }
+        .prog-card .card-shine {
+            position: absolute;
+            top: -100%; left: -100%;
+            width: 300%; height: 300%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(255,255,255,0.08) 60deg, transparent 120deg);
+            transition: top 0.6s, left 0.6s;
+        }
+        .prog-card:hover .card-shine { top: -50%; left: -50%; }
+
+        /* ─── MISSION LIST ─── */
+        .mission-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.25rem 1.5rem;
+            background: #fafafa;
+            border-radius: 16px;
+            border: 1px solid #f3f4f6;
+            transition: all 0.3s ease;
+        }
+        .mission-item:hover {
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            border-color: var(--amber);
+            transform: translateX(8px);
+        }
+        .mission-num {
+            background: linear-gradient(135deg, var(--amber), var(--gold));
+            color: #fff;
+            font-weight: 900;
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 8px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(245,158,11,0.3);
+        }
+        .mission-item:hover .mission-num {
+            background: linear-gradient(135deg, var(--red), #b91c1c);
+            box-shadow: 0 4px 12px rgba(225,29,41,0.3);
+        }
+
+        /* ─── QUOTE SECTION ─── */
+        .verse-section {
+            background: linear-gradient(135deg, #1a0a00 0%, #3b1a00 40%, #1a0a00 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .verse-section::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(ellipse, rgba(245,158,11,0.12) 0%, transparent 60%);
+        }
+
+        /* ─── NEWS CARD ─── */
+        .news-card {
+            border-radius: 24px;
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid #f3f4f6;
+            transition: all 0.4s cubic-bezier(0.23,1,0.32,1);
+        }
+        .news-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 32px 64px rgba(0,0,0,0.12);
+        }
+        .news-card .img-wrap {
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            position: relative;
+        }
+        .news-card .img-wrap img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+        }
+        .news-card:hover .img-wrap img { transform: scale(1.08); }
+
+        /* ─── CLUB CARD ─── */
+        .club-card {
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 3/4;
+            background: #111;
+            transition: transform 0.5s cubic-bezier(0.23,1,0.32,1);
+        }
+        .club-card:hover { transform: scale(1.04); }
+        .club-card img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+            transition: opacity 0.4s, transform 0.7s;
+        }
+        .club-card:hover img { opacity: 0.9; transform: scale(1.1); }
+        .club-card .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        /* ─── TESTIMONIAL ─── */
+        .testi-card {
+            background: #fff;
+            border-radius: 24px;
+            padding: 2.5rem;
+            border: 1px solid #f1f5f9;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+        .testi-card:hover {
+            box-shadow: 0 24px 48px rgba(0,0,0,0.07);
+            transform: translateY(-6px);
+        }
+        .testi-card .quote-mark {
+            font-size: 5rem;
+            line-height: 1;
+            font-family: 'Playfair Display', serif;
+            color: var(--amber);
+            opacity: 0.2;
+            position: absolute;
+            top: 1rem;
+            left: 1.5rem;
+        }
+
+        /* ─── FAQ ─── */
+        .faq-item {
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+            background: #fff;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .faq-item.open {
+            border-color: var(--amber);
+            box-shadow: 0 8px 32px rgba(245,158,11,0.12);
+        }
+        .faq-btn {
+            width: 100%;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 0.925rem;
+            text-align: left;
+            background: transparent;
+            cursor: none;
+            transition: background 0.2s;
+        }
+        .faq-btn:hover { background: #fffbeb; }
+        .faq-icon {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--amber), var(--gold));
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+        .faq-item.open .faq-icon { transform: rotate(45deg); background: linear-gradient(135deg, var(--red), #b91c1c); }
+        .faq-panel { display: none; padding: 1.25rem 1.5rem; background: #fffdf7; border-top: 1px solid #fef3c7; }
+        .faq-panel.show { display: block; }
+
+        /* ─── NAVBAR ─── */
+        #navbar {
+            background: rgba(120, 53, 15, 0.85); /* Navbar lebih transparan di awal */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+        #navbar.scrolled {
+            background: rgba(69, 26, 3, 0.98);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+        }
+        .nav-link {
+            color: rgba(255,255,255,0.8);
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.2s;
+            position: relative;
+        }
+        .nav-link:hover { color: #fff; background: rgba(255,255,255,0.12); }
+        .nav-link.active { color: #fff; background: rgba(255,255,255,0.15); }
+
+        /* ─── SAMBUTAN ─── */
+        .sambutan-section {
+            background: linear-gradient(160deg, #fffbeb 0%, #fef3c7 30%, #fff7ed 70%, #fffbeb 100%);
+            position: relative;
+        }
+        .sambutan-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(245,158,11,0.07) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(225,29,41,0.05) 0%, transparent 40%);
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            background: #0a0a0a;
+            color: #fff;
+        }
+
+        /* ─── FLOATING BTN ─── */
+        .wa-float {
+            position: fixed;
+            bottom: 28px; right: 28px;
+            z-index: 60;
+            width: 58px; height: 58px;
+            background: #22c55e;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 8px 32px rgba(34,197,94,0.45);
+            transition: all 0.3s cubic-bezier(0.23,1,0.32,1);
+        }
+        .wa-float:hover { transform: scale(1.15) rotate(-5deg); box-shadow: 0 16px 48px rgba(34,197,94,0.5); }
+
+        /* ─── SECTION LABELS ─── */
+        .section-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+        .section-eyebrow::before {
+            content: '';
+            width: 24px; height: 2px;
+            background: var(--amber);
+            border-radius: 2px;
+        }
+
+        /* ─── BG GERAK ─── */
         @keyframes jalanBg {
             0% { background-position: 0 0; }
             100% { background-position: 1000px 0; }
         }
-
         .bg-gerak {
             background-image: url('images/Foto Bener.webp');
             background-repeat: repeat-x;
             background-size: auto 100%;
-            animation: jalanBg 20s linear infinite;
+            animation: jalanBg 25s linear infinite;
         }
 
-        .bg-sambutan-gerak {
-            background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url('images/Foto Bener.webp');
-            background-size: cover;
-            animation: moveBg 30s linear infinite;
+        /* ─── HERO BADGE ─── */
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 100px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 1.5rem;
+        }
+        .hero-badge .dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--amber);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
         }
 
-        @keyframes moveBg {
-            from { background-position: 0 0; }
-            to { background-position: 100% 100%; }
+        /* ─── HERO TITLE ─── */
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3.5rem, 9vw, 8rem);
+            line-height: 0.95;
+            letter-spacing: 0.02em;
+            color: #fff;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.4); /* Tambahan shadow */
         }
+        .hero-title .accent {
+            -webkit-text-stroke: 1.5px rgba(255,255,255,0.7);
+            color: transparent;
+        }
+
+        /* ─── LIVE BTN ─── */
+        .live-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #e11d29;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            padding: 8px 18px;
+            border-radius: 100px;
+            transition: all 0.2s;
+            box-shadow: 0 4px 20px rgba(225,29,41,0.4);
+        }
+        .live-btn:hover { background: #b91c1c; transform: scale(1.05); }
+
+        /* ─── BIG NUMBER ─── */
+        .big-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            line-height: 1;
+            background: linear-gradient(135deg, var(--amber), var(--red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ─── DIVIDER ─── */
+        .fancy-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--amber), transparent);
+            margin: 0 auto;
+        }
+
+        /* page transition fade */
+        body { animation: pageFade 0.5s ease; }
+        @keyframes pageFade { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Image loading skeleton */
+        .img-skeleton {
+            background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+            background-size: 200% 100%;
+            animation: skeleton 1.5s infinite;
+        }
+        @keyframes skeleton {
+            from { background-position: 200% 0; }
+            to { background-position: -200% 0; }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: var(--amber); border-radius: 3px; }
     </style>
 </head>
 
-<body class="bg-amber-50 text-gray-900 font-sans antialiased selection:bg-nasa-red selection:text-white">
+<body class="text-gray-900 font-sans antialiased overflow-x-hidden selection:bg-brand-amber selection:text-white">
 
-    <!-- NAVBAR -->
-    <header class="fixed top-0 inset-x-0 z-50 bg-amber-600/90 backdrop-blur-md transition-all duration-300 shadow-md" id="navbar">
-        <nav class="container mx-auto px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center gap-4">
-                <a href="index.html" class="flex items-center gap-3 group">
-                    <img src="images/DSKU-removebg-preview.png" alt="DSKU Logo" class="w-10 h-10 group-hover:scale-105 transition-transform">
-                    <div class="hidden sm:block leading-tight font-bold text-xs tracking-widest text-white uppercase">
-                        Pathfinder DSKU
-                    </div>
-                </a>
-            </div>
+    <!-- CURSOR -->
+    <div id="cursor"></div>
+    <div id="cursor-ring"></div>
 
-            <ul class="hidden md:flex items-center gap-6 font-semibold text-sm">
-                <li><a href="index.html" class="text-white hover:text-amber-200 transition-colors border-b-2 border-white pb-1">Home</a></li>
-                <li><a href="Media Share DSKU.html" class="text-amber-100 hover:text-white transition-all">Media Share</a></li>
-                <li><a href="Pendaftaran.html" class="text-amber-100 hover:text-white transition-all">Pendaftaran</a></li>
-                <li><a href="posts.html" class="text-amber-100 hover:text-white transition-all">Posts</a></li>
-                <li><a href="Informasi.html" class="text-amber-100 hover:text-white transition-all">Informasi</a></li>
-                <li><a href="Adventurer.html" class="text-amber-100 hover:text-white transition-all">Adventurer</a></li>
-                <a href="https://www.youtube.com/@BeritaHariIni-TerbarudariDSKU/streams" target="_blank" rel="noopener noreferrer"
-                   class="flex items-center gap-2 px-3 py-1 rounded bg-red-600 hover:bg-red-700 transition text-white text-xs font-bold">
-                   <span>LIVE</span>
-                   <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
-                </a>
+    <!-- SCROLL PROGRESS -->
+    <div id="scroll-progress"></div>
+
+    <!-- ════ NAVBAR ════ -->
+    <header class="fixed top-0 inset-x-0 z-50" id="navbar">
+        <nav class="container mx-auto px-5 py-3.5 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <img src="images/Screenshot 2026-05-12 101300.png" alt="DSKU Logo" class="w-44 md:w-52 h-auto max-h-14 object-contain group-hover:brightness-110 transition duration-300">
+                <div class="hidden lg:block text-[9px] font-black tracking-[0.2em] text-white/70 uppercase max-w-[180px] leading-tight">
+                    PEMUDA ADVENT DAERAH SUMATERA KAWASAN UTARA
+                </div>
+            </a>
+
+            <ul class="hidden md:flex items-center gap-1 font-semibold text-sm">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="Dokumentasi.html" class="nav-link">Dokumentasi</a></li>
+                <li><a href="Pendaftaran.html" class="nav-link">Pendaftaran</a></li>
+                <li><a href="posts.html" class="nav-link">Posts</a></li>
+                <li><a href="Informasi.html" class="nav-link">Informasi</a></li>
+                <li><a href="Adventurer.html" class="nav-link">Adventurer</a></li>
+                <li class="ml-2">
+                    <a href="https://www.youtube.com/@BeritaHariIni-TerbarudariDSKU/streams" target="_blank" class="live-btn">
+                        <span>LIVE</span>
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                        </span>
+                    </a>
+                </li>
             </ul>
 
-            <button id="menu-btn" class="md:hidden text-white">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            <button id="menu-btn" class="md:hidden text-white p-2.5 rounded-xl hover:bg-white/10 transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
             </button>
         </nav>
 
-        <div id="mobile-menu" class="hidden md:hidden bg-amber-700 text-white absolute w-full shadow-xl">
-            <ul class="flex flex-col p-4 gap-3 font-semibold text-center">
-                <li><a href="index.html" class="block py-2">Home</a></li>
-                <li><a href="Media Share DSKU.html" class="block py-2">Media Share</a></li>
-                <li><a href="Pendaftaran.html" class="block py-2">Pendaftaran</a></li>
-                <li><a href="posts.html" class="block py-2">Posts</a></li>
-                <li><a href="Informasi.html" class="block py-2">Informasi</a></li>
-                <li><a href="Adventurer.html" class="block py-2">Adventurer</a></li>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden absolute w-full shadow-2xl" style="background:rgba(120,53,15,0.98);backdrop-filter:blur(20px)">
+            <ul class="flex flex-col p-5 gap-1 font-semibold text-white">
+                <li><a href="index.html" class="block py-3 px-4 rounded-xl bg-white/10">Home</a></li>
+                <li><a href="Dokumentasi.html" class="block py-3 px-4 rounded-xl hover:bg-white/8 transition">Dokumentasi</a></li>
+                <li><a href="Pendaftaran.html" class="block py-3 px-4 rounded-xl hover:bg-white/8 transition">Pendaftaran</a></li>
+                <li><a href="posts.html" class="block py-3 px-4 rounded-xl hover:bg-white/8 transition">Posts</a></li>
+                <li><a href="Informasi.html" class="block py-3 px-4 rounded-xl hover:bg-white/8 transition">Informasi</a></li>
+                <li><a href="Adventurer.html" class="block py-3 px-4 rounded-xl hover:bg-white/8 transition">Adventurer</a></li>
             </ul>
         </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <main class="relative min-h-screen flex items-center bg-amber-500 overflow-hidden pt-20">
-        <div class="absolute top-1/2 right-0 -translate-y-1/2 w-[80vw] md:w-[50vw] z-0 opacity-80">
-            <img src="images/Pathfinder DSKU.jpg" alt="Background" class="w-full h-auto object-contain">
-            <div class="absolute inset-0 bg-gradient-to-r from-amber-500 via-transparent to-transparent"></div>
+    <!-- ════ HERO ════ -->
+    <main class="hero-bg grid-bg relative min-h-screen flex items-center overflow-hidden pt-24 pb-36 md:pb-28">
+        <!-- Decorative orbs -->
+        <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-amber-400/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-1/4 left-1/4 w-64 h-64 bg-red-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <!-- PERBAIKAN: Asset gambar orange diletakkan paling belakang (z-0) dan ditransparankan agar teks terbaca -->
+        <div class="absolute top-1/2 right-[10%] -translate-y-1/2 w-[80vw] md:w-[170vw] z-0 opacity100 md:opacity100 pointer-events-none mix-blend-screen">
+            <img src="images/putih.logo.png" alt="" class="w-full h-auto object-contain">
+            <div class="absolute inset-0 bg-gradient-to-r from-amber-600 via-transparent to-transparent"></div>
         </div>
 
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="max-w-4xl">
-                <h1 class="text-6xl md:text-8xl lg:text-9xl font-black leading-none tracking-tighter text-white mb-6 drop-shadow-xl">
-                    Pathfinder<br>DSKU
+        <div class="container mx-auto px-5 relative z-10">
+            <div class="max-w-5xl" data-aos="fade-right" data-aos-duration="1000">
+                <div class="hero-badge mb-6">
+                    <span class="dot"></span>
+                    Pemuda Advet DSKU · Daerah Sumatera Kawasan Utara
+                </div>
+
+                <h1 class="hero-title mb-8">
+                    EMUDA ADVENT<br>
+                    DAERAH SUMATERA<br>
+                    <span class="accent">KAWASAN UTARA</span>
                 </h1>
-                <p class="text-lg md:text-xl text-amber-950 max-w-lg leading-relaxed mb-8 font-semibold bg-white/30 backdrop-blur-md p-4 rounded-xl shadow-lg">
-                    Punya kegiatan seru, kreatif, dan penuh kebersamaan di club Pathfinder kalian? Yuk bagikan dokumentasi terbaik berupa foto, video, atau cerita singkat kegiatan clubmu! 📸✨
-                    Setiap momen yang kalian kirim bisa menjadi inspirasi dan semangat bagi Pathfinder lainnya di seluruh Indonesia. Tunjukkan kekompakan, kreativitas, dan semangat pelayanan club kalian kepada semua orang! 📝🔥
+
+                <!-- PERBAIKAN: Warna teks diubah menjadi putih bersih agar kontras dengan background gelap -->
+                <p class="text-base md:text-lg text-white max-w-2xl leading-relaxed mb-10 font-medium" style="background:rgba(0,0,0,0.3);backdrop-filter:blur(15px);padding:1.75rem 2rem;border-radius:20px;border:1px solid rgba(255,255,255,0.2)">
+                    Punya kegiatan seru, kreatif, penuh semangat, dan kebersamaan yang luar biasa di club Pathfinder kalian? 🌟
+                    Yuk bagikan momen terbaik clubmu melalui foto, video, maupun cerita singkat kegiatan yang paling berkesan! 📸✨
+                    Mulai dari kegiatan rohani, camping, hiking, bakti sosial, perlombaan, latihan keterampilan, hingga momen kebersamaan yang penuh sukacita bersama teman-teman Pathfinder lainnya.
+                    Biarkan setiap pengalaman, petualangan, pelayanan, dan perjuangan yang kalian lakukan menjadi inspirasi bagi banyak Pathfinder di berbagai daerah. Tunjukkan semangat pelayanan, kreativitas, kekompakan, dan jiwa petualang club kalian kepada semua orang! 🚩
+                    Karena setiap kegiatan memiliki cerita, setiap momen memiliki kenangan, dan setiap Pathfinder memiliki cahaya untuk menginspirasi dunia. ❤️
+                    <span class="block mt-3 font-bold text-amber-300">Every moment you share inspires pathfinders across Indonesia. Show your team's synergy, creativity, and spirit! 📝🔥</span>
                 </p>
+
                 <div class="flex flex-wrap gap-4">
-                    <a href="https://drive.google.com/drive/folders/1oCRAMRaXiD2IztlxpRiEp9LYNCDrubSr?hl=ID" class="bg-red-600 hover:bg-red-700 text-white font-bold text-lg py-4 px-8 rounded-full transition-all transform hover:-translate-y-1 shadow-xl shadow-red-900/40">
-                        Yuk IsI Foto Dan Vidio Menarik Kalian
+                    <a href="https://drive.google.com/drive/folders/1oCRAMRaXiD2IztlxpRiEp9LYNCDrubSr?hl=ID"
+                       style="background:linear-gradient(135deg,#e11d29,#b91c1c);color:#fff;font-weight:800;padding:18px 36px;border-radius:100px;font-size:15px;display:inline-flex;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(225,29,41,0.4);transition:all 0.3s;text-decoration:none"
+                       onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 16px 48px rgba(225,29,41,0.5)'"
+                       onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 8px 32px rgba(225,29,41,0.4)'">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                        Yuk Isi Foto Dan Video Menarik
                     </a>
                 </div>
-                    </a>
+            </div>
+        </div>
+
+        <!-- COUNTDOWN -->
+            
+                <div class="text-white text-[10px] font-black uppercase tracking-[0.2em] opacity-60 mr-1 hidden sm:block">Countdown</div>
+                <div class="countdown-digit text-center">
+                    <div id="days" class="text-2xl md:text-3xl font-black text-white tracking-tight" style="font-family:'Bebas Neue',sans-serif">365</div>
+                    <div class="text-[8px] uppercase font-bold text-amber-300 tracking-widest mt-365">Days</div>
+                </div>
+                <div class="text-white/30 text-2xl font-light">:</div>
+                <div class="countdown-digit text-center">
+                    <div id="hours" class="text-2xl md:text-3xl font-black text-white tracking-tight" style="font-family:'Bebas Neue',sans-serif">24</div>
+                    <div class="text-[8px] uppercase font-bold text-amber-300 tracking-widest mt-24">Hours</div>
+                </div>
+                <div class="text-white/30 text-2xl font-light">:</div>
+                <div class="countdown-digit text-center">
+                    <div id="minutes" class="text-2xl md:text-3xl font-black text-white tracking-tight" style="font-family:'Bebas Neue',sans-serif">7</div>
+                    <div class="text-[8px] uppercase font-bold text-amber-300 tracking-widest mt-7">Mins</div>
+                </div>
+                <div class="text-white/30 text-2xl font-light">:</div>
+                <div class="countdown-digit text-center" style="border-color:rgba(225,29,41,0.5)">
+                    <div id="seconds" class="text-2xl md:text-3xl font-black text-red-500 tracking-tight" style="font-family:'Bebas Neue',sans-serif;animation:pulse 1s ease-in-out infinite">5</div>
+                    <div class="text-[8px] uppercase font-bold text-red-500 tracking-widest mt-5">Secs</div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- NEWS SECTION -->
-    <section class="bg-amber-50 py-20 border-t border-amber-200">
-        <div class="container mx-auto px-4">
-            <div class="flex justify-between items-end mb-12">
-                <h2 class="text-3xl md:text-5xl font-black text-gray-900">Pathfinder News</h2>
-                <a href="Pendaftaran.html" class="text-red-600 font-bold hover:underline">Join Kegiatan Pemuda DSKU →</a>
+    <!-- ════ MARQUEE ════ -->
+    <div class="bg-amber-500 py-4 overflow-hidden border-y border-amber-400/50" style="position:relative;z-index:10">
+        <div class="flex">
+            <div class="marquee-track">
+                <span class="text-white font-black text-sm uppercase tracking-widest opacity-90">Pathfinder DSKU</span>
+                <span class="text-amber-900/60">✦</span>
+                <span class="text-white font-black text-sm uppercase tracking-widest opacity-90">Adventurer</span>
+                <span class="text-amber-900/60">✦</span>
+                <span class="text-white font-black text-sm uppercase tracking-widest opacity-90">Master Guide</span>
+                <span class="text-amber-900/60">✦</span>
+                <span class="text-white font-black text-sm uppercase tracking-widest opacity-90">Campore 2025</span>
+                <span class="text-amber-900/60">✦</span>
+                <span class="text-white font-black text-sm uppercase tracking-widest opacity-90">Sumatera Kawasan Utara</span>
+                <span class="text-amber-900/60">✦</span>
+                <span class="text-white font-black text-sm uppercase tracking-widest opacity-90">Global Youth Day</span>
+                <span class="text-amber-900/60">✦</span>
+                <span class="text-white font-black text-sm uppercase tracking-widest opacity-90">Pathfinder DSKU</span>
+                <span class="text-amber-900/60">✦</span>
+                <span class="text-white font-black text-sm uppercase tracking-widest opacity-90">Adventurer</span>
+                <span class="text-amber-900/60">✦</span>
+                <span class="text-white font-black text-sm uppercase tracking-widest opacity-90">Master Guide</span>
+                <span class="text-amber-900/60">✦</span>
+                <span class="text-white font-black text-sm uppercase tracking-widest opacity-90">Campore 2025</span>
+                <span class="text-amber-900/60">✦</span>
+                <span class="text-white font-black text-sm uppercase tracking-widest opacity-90">Sumatera Kawasan Utara</span>
+                <span class="text-amber-900/60">✦</span>
+                <span class="text-white font-black text-sm uppercase tracking-widest opacity-90">Global Youth Day</span>
+                <span class="text-amber-900/60">✦</span>
             </div>
+        </div>
+    </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- News 1 -->
-                <article class="group relative lg:col-span-2 lg:row-span-2 rounded-2xl overflow-hidden shadow-2xl min-h-[400px]">
-                    <img src="images/Akwila,Foto.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                    <div class="absolute bottom-0 p-6">
-                        <span class="bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded mb-3 inline-block">AKWILA</span>
-                        <h3 class="text-2xl font-bold text-white leading-tight">Pelayanan Panti Jompo Campore 2025</h3>
-                    </div>
-                </article>
-                <!-- News 4 (Template News 1) -->
-                <article class="group relative lg:col-span-2 lg:row-span-2 rounded-2xl overflow-hidden shadow-2xl min-h-[400px]">
-                    <img src="images/Track n Trail.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                    <div class="absolute bottom-0 p-6">
-                        <span class="bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded mb-3 inline-block">KEGIATAN</span>
-                        <h3 class="text-2xl font-bold text-white leading-tight">Judul Berita Ke-4 Kamu Disini</h3>
-                    </div>
-                </article>
-
-                <!-- News 5 (Template News 1) -->
-                <article class="group relative lg:col-span-2 lg:row-span-2 rounded-2xl overflow-hidden shadow-2xl min-h-[400px]">
-                    <img src="images/PA SLA.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                    <div class="absolute bottom-0 p-6">
-                        <span class="bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded mb-3 inline-block">PATHFINDER</span>
-                        <h3 class="text-2xl font-bold text-white leading-tight">Judul Berita Ke-5 Kamu Disini</h3>
-                    </div>
-                </article>
-
-                <!-- News 6 (Template News 1) -->
-                <article class="group relative lg:col-span-2 lg:row-span-2 rounded-2xl overflow-hidden shadow-2xl min-h-[400px]">
-                    <img src="images/Foto Perkemahan Kelas Kemajuan Pathfinder SLA.JPG" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                    <div class="absolute bottom-0 p-6">
-                        <span class="bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded mb-3 inline-block">DSKU</span>
-                        <h3 class="text-2xl font-bold text-white leading-tight">Judul Berita Ke-6 Kamu Disini</h3>
-                    </div>
-                </article>
-
-                <!-- News 7 (Template News 1) -->
-                <article class="group relative lg:col-span-2 lg:row-span-2 rounded-2xl overflow-hidden shadow-2xl min-h-[400px]">
-                    <img src="images/gambar7.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                    <div class="absolute bottom-0 p-6">
-                        <span class="bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded mb-3 inline-block">CAMP</span>
-                        <h3 class="text-2xl font-bold text-white leading-tight">Judul Berita Ke-7 Kamu Disini</h3>
-                    </div>
-                </article>
-
-                                <!-- News 8 (Template News 1) -->
-                <article class="group relative lg:col-span-2 lg:row-span-2 rounded-2xl overflow-hidden shadow-2xl min-h-[400px]">
-                    <img src="images/gambar6.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                    <div class="absolute bottom-0 p-6">
-                        <span class="bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded mb-3 inline-block">DSKU</span>
-                        <h3 class="text-2xl font-bold text-white leading-tight">Judul Berita Ke-6 Kamu Disini</h3>
-                    </div>
-                </article>
+    <!-- ════ STATISTICS ════ -->
+    <section class="py-20 bg-white relative z-10">
+        <div class="container mx-auto px-5">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <div class="section-eyebrow mb-4">Tentang Kami</div>
+                <h2 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900">DSKU dalam Angka</h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+                <div class="stat-card text-center" data-aos="zoom-in">
+                    <div class="big-num mb-2">50+</div>
+                    <div class="text-gray-400 font-black text-[11px] uppercase tracking-[0.2em]">Clubs Pathfinder</div>
+                </div>
+                <div class="stat-card text-center" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="big-num mb-2">1200+</div>
+                    <div class="text-gray-400 font-black text-[11px] uppercase tracking-[0.2em]">Anggota Aktif</div>
+                </div>
+                <div class="stat-card text-center" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="big-num mb-2">200+</div>
+                    <div class="text-gray-400 font-black text-[11px] uppercase tracking-[0.2em]">Master Guides</div>
+                </div>
+                <div class="stat-card text-center" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="big-num mb-2">6</div>
+                    <div class="text-gray-400 font-black text-[11px] uppercase tracking-[0.2em]">Bakor PA Wilayah</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- RUNNING BG SECTION -->
-    <section class="relative py-5 bg-gerak bg-center">
-        <div class="absolute inset-0 bg-amber-900/60"></div>
-        <div class="container mx-auto px-4 relative z-10 text-center text-white">
-            <h2 class="text-4xl md:text-7xl font-black mb-6 uppercase leading-tight">Membangun Karakter<br>Pemuda Advent</h2>
-            <p class="text-lg md:text-xl max-w-2xl mx-auto font-medium opacity-90">Pemuda Advent harus menjadi fondasi yang kuat bagi gereja, karena melalui semangat, iman, dan pelayanan mereka, gereja dapat terus bertumbuh dan berkembang dengan baik. Pemuda bukan hanya penerus gereja di masa depan, tetapi juga bagian penting dalam pelayanan saat ini. Oleh sebab itu, setiap pemuda Advent perlu memiliki iman yang teguh, karakter yang baik, serta tetap setia kepada Tuhan agar tidak mudah goyah oleh tantangan, pergaulan, maupun perkembangan dunia yang semakin berubah. Dengan hati yang melayani dan kehidupan yang menjadi teladan, pemuda Advent dapat membawa pengaruh positif bagi gereja, keluarga, dan lingkungan sekitarnya.</p>
+    <div class="fancy-divider opacity-30"></div>
+
+    <!-- ════ PROGRAM & KEGIATAN ════ -->
+    <section class="py-24 bg-white">
+        <div class="container mx-auto px-5">
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <div class="section-eyebrow mb-4" data-aos="fade-up">Program Utama</div>
+                <h2 class="text-3xl md:text-5xl font-black tracking-tight text-gray-900 leading-tight" data-aos="fade-up" data-aos-delay="100">PROGRAM &<br>PELAYANAN KAMI</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                <!-- Adventurer -->
+                <div class="prog-card" data-aos="fade-up" style="border-bottom: 4px solid #f59e0b">
+                    <div class="card-shine"></div>
+                    <div class="w-16 h-16 rounded-2xl mb-6 flex items-center justify-center text-amber-600" style="background:linear-gradient(135deg,#fef3c7,#fde68a)">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3.005 3.005 0 013.75-2.906z"></path></svg>
+                    </div>
+                    <div class="text-[10px] font-black uppercase tracking-widest text-amber-500 mb-2">Usia 6–9 Tahun</div>
+                    <h3 class="text-2xl font-black mb-3 text-gray-900 tracking-tight uppercase">Adventurer</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Pelayanan untuk anak-anak yang berfokus pada hubungan keluarga dan pengenalan akan Tuhan melalui kegiatan kreatif.</p>
+                </div>
+
+                <!-- Pathfinder -->
+                <div class="prog-card" data-aos="fade-up" data-aos-delay="100" style="border-bottom: 4px solid #e11d29; transform: translateY(-16px)">
+                    <div class="card-shine"></div>
+                    <div class="absolute top-5 right-5 text-[10px] font-black uppercase tracking-widest text-red-500 bg-red-50 px-3 py-1 rounded-full">Featured</div>
+                    <div class="w-16 h-16 rounded-2xl mb-6 flex items-center justify-center text-red-600" style="background:linear-gradient(135deg,#fee2e2,#fecaca)">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.4503-.36l-7 5a1 1 0 00-.395.803v3.131l4.573 2.287A1 1 0 009.47 13.43l3.524-2.35 1.612.806a1 1 0 001.386-.894V3.743a1 1 0 00-.595-.914l-2.502-1.276z" clip-rule="evenodd"></path></svg>
+                    </div>
+                    <div class="text-[10px] font-black uppercase tracking-widest text-red-500 mb-2">Usia 10–15 Tahun</div>
+                    <h3 class="text-2xl font-black mb-3 text-gray-900 tracking-tight uppercase">Pathfinder</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Mengembangkan keterampilan kepramukaan, disiplin, dan penguatan karakter rohani bagi remaja.</p>
+                </div>
+
+                <!-- Master Guide -->
+                <div class="prog-card" data-aos="fade-up" data-aos-delay="200" style="border-bottom: 4px solid #2563eb">
+                    <div class="card-shine"></div>
+                    <div class="w-16 h-16 rounded-2xl mb-6 flex items-center justify-center text-blue-600" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe)">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3z"></path></svg>
+                    </div>
+                    <div class="text-[10px] font-black uppercase tracking-widest text-blue-500 mb-2">Pemimpin & Pembina</div>
+                    <h3 class="text-2xl font-black mb-3 text-gray-900 tracking-tight uppercase">Master Guide</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Program kepemimpinan bagi mereka yang terpanggil menjadi pembina dan pemimpin klub.</p>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- KATA SAMBUTAN SECTION (PRO) -->
-    <section class="bg-sambutan-gerak py-16 md:py-24 border-b border-amber-200">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-                
-                <div class="lg:col-span-7 order-2 lg:order-1 space-y-6">
-                    <div class="flex items-center gap-3">
-                        <span class="w-10 h-[2px] bg-red-600"></span>
-                        <span class="font-bold text-red-800 uppercase text-xs tracking-widest">Kata Sambutan</span>
-                    </div>
-                    <h2 class="text-4xl md:text-5xl font-black text-gray-900">MG.Pdt Rudianjaya Purba.MFil</h2>
-                    <p class="text-gray-600 font-bold italic">Direktur Pemuda & Komunikasi DSKU</p>
-                    <div class="relative bg-white/50 p-6 rounded-2xl shadow-inner border border-white">
-                        <span class="absolute -top-4 -left-2 text-6xl text-amber-300 font-serif opacity-50">“</span>
-                        <p class="text-gray-700 leading-relaxed italic text-sm md:text-base">
-                            Syalom Pemuda dan Pemudi Pathfinder Daerah Sumatra Kawasan Utara.
-                            Salam semangat untuk seluruh adik-adik Pathfinder serta kakak-kakak pembina di setiap club yang ada di daerah kita. Mari terus melayani Tuhan dengan hati yang penuh sukacita, semangat, dan kasih. Jadikan setiap pelayanan sebagai kesempatan untuk bertumbuh dalam iman, membangun persaudaraan, serta menjadi terang dan teladan bagi banyak orang di mana pun kita berada.
-                            Walaupun dalam perjalanan pelayanan terkadang ada tantangan, kesibukan, maupun rasa lelah, tetaplah kuat dan setia dalam panggilan yang Tuhan percayakan. Kehadiran setiap pembina, pengurus, dan anggota Pathfinder sangat berarti dalam membentuk generasi muda yang takut akan Tuhan, disiplin, mandiri, dan memiliki karakter Kristus.
-                            Mari kita terus bekerja sama, saling mendukung, dan menjaga kekompakan di setiap club agar pelayanan Pathfinder di Daerah Sumatra Kawasan Utara semakin bertumbuh, aktif, dan menjadi berkat bagi gereja maupun masyarakat. Tetaplah membawa semangat “Maranatha”, terus maju dalam iman, dan lakukan setiap pelayanan dengan ketulusan hati untuk kemuliaan nama Tuhan.
-                            Tuhan memberkati seluruh Pemuda Pemudi Pathfinder Daerah Sumatra Kawasan Utara. Semangat melayani, semangat berkarya, dan tetap setia sampai akhir.
+    <!-- ════ VISI & MISI ════ -->
+    <section class="py-24 relative overflow-hidden" style="background:#fafafa">
+        <div class="absolute top-0 right-0 w-1/2 h-full" style="background:linear-gradient(135deg,#fff7ed,#fffbeb);clip-path:polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%)"></div>
+        <div class="container mx-auto px-5 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-start">
+
+                <!-- Visi -->
+                <div data-aos="fade-right">
+                    <div class="section-eyebrow mb-5">Visi</div>
+                    <h2 class="text-3xl md:text-4xl font-black text-gray-900 uppercase tracking-tight mb-8">Visi Pelayanan</h2>
+                    <div class="relative p-8 md:p-10 rounded-3xl overflow-hidden" style="background:linear-gradient(135deg,#fff7ed,#fef3c7);border:2px solid rgba(245,158,11,0.2)">
+                        <div class="absolute top-0 left-0 w-2 h-full rounded-l-3xl" style="background:linear-gradient(to bottom,#e11d29,#d97706)"></div>
+                        <div class="text-5xl font-serif text-amber-400/30 absolute top-4 left-6 leading-none select-none">"</div>
+                        <p class="text-base md:text-lg text-gray-700 leading-relaxed font-medium italic pl-6">
+                            Orang-orang muda yang sehat yang menikmati hubungan yang menyelamatkan dengan Kristus <strong class="text-red-600 not-italic">(Christ)</strong>, mencintai Kitab Suci sebagai standar hidup mereka untuk mencerminkan Karakter <strong class="text-red-600 not-italic">(Character)</strong> seperti Kristus, dengan penuh semangat melayani Gereja <strong class="text-red-600 not-italic">(Church)</strong>/Campus dan Komunitas <strong class="text-red-600 not-italic">(Community)</strong> menggunakan karunia-karunia rohani yang Tuhan berikan, dan dengan penuh semangat memenuhi Amanat Injil <strong class="text-red-600 not-italic">(Commission)</strong> dalam kuasa Roh Kudus.
                         </p>
+                        <div class="text-5xl font-serif text-amber-400/30 text-right leading-none select-none mt-2">"</div>
                     </div>
-                    <a href="https://wa.me/message/NELI6QVUTSFEP1" class="inline-flex items-center gap-3 bg-red-600 text-white px-6 py-3 rounded-full font-bold hover:bg-red-700 transition shadow-lg">
-                        Hubungi Admin Kami →
-                    </a>
                 </div>
 
-                <div class="lg:col-span-5 order-1 lg:order-2 flex justify-center">
-                    <div class="relative w-full max-w-[340px]">
-                        <div class="absolute -top-4 -right-4 w-full h-full border-4 border-amber-400 rounded-3xl -z-10"></div>
-                        <div class="rounded-3xl overflow-hidden shadow-2xl bg-white border-4 border-white">
-                            <img src="images/Dir.new.png" alt="Director" class="w-full h-auto">
+                <!-- Misi -->
+                <div data-aos="fade-left">
+                    <div class="section-eyebrow mb-5">Misi</div>
+                    <h2 class="text-3xl md:text-4xl font-black text-gray-900 uppercase tracking-tight mb-3">Misi Pelayanan</h2>
+                    <p class="text-gray-400 font-bold text-xs tracking-widest uppercase mb-6">Pelayanan Pemuda Advent DSKU hadir untuk:</p>
+                    <div class="space-y-3">
+                        <div class="mission-item"><span class="mission-num">01</span><p class="text-gray-700 font-semibold text-sm leading-relaxed">Membawa semua orang muda memiliki hubungan yang sehat dan menyelamatkan dengan Kristus.</p></div>
+                        <div class="mission-item"><span class="mission-num">02</span><p class="text-gray-700 font-semibold text-sm leading-relaxed">Membangun orang muda dalam Firman-Nya untuk mencerminkan karakter seperti Kristus.</p></div>
+                        <div class="mission-item"><span class="mission-num">03</span><p class="text-gray-700 font-semibold text-sm leading-relaxed">Melatih orang muda bagaimana melayani gereja dan komunitas dalam menggunakan karunia rohani mereka.</p></div>
+                        <div class="mission-item"><span class="mission-num">04</span><p class="text-gray-700 font-semibold text-sm leading-relaxed">Meningkatkan Pemuda Dewasa menjadi penatalayanan yang setia.</p></div>
+                        <div class="mission-item"><span class="mission-num">05</span><p class="text-gray-700 font-semibold text-sm leading-relaxed">Dan mengutus orang muda untuk memenuhi amanat injil dalam kuasa Roh Kudus.</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════ DAILY BREAD ════ -->
+    <section class="verse-section py-24 text-center relative">
+        <div class="absolute inset-0 grid-bg opacity-30"></div>
+        <div class="container mx-auto px-5 relative z-10" data-aos="zoom-in" data-aos-duration="1000">
+            <div class="section-eyebrow text-amber-400 mb-6 justify-center">Daily Bread · Ayat Hari Ini</div>
+            <p class="font-serif text-xl md:text-3xl lg:text-4xl font-bold italic mb-8 max-w-4xl mx-auto leading-relaxed" style="color:rgba(255,255,255,0.92)">
+                "Janganlah seorangpun menganggap engkau rendah karena engkau muda. Jadilah teladan bagi orang-orang percaya, dalam perkataanmu, dalam tingkah lakumu, dalam kasihmu, dalam kesetiaanmu dan dalam kesucianmu."
+            </p>
+            <div class="fancy-divider max-w-xs mx-auto mb-6 opacity-20"></div>
+            <span class="text-amber-400 font-black tracking-[0.3em] text-xs uppercase">— 1 Timotius 4:12</span>
+        </div>
+    </section>
+
+    <!-- ════ NEWS ════ -->
+    <section class="py-24" style="background:#f8f8f8">
+        <div class="container mx-auto px-5">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 mb-14">
+                <div>
+                    <div class="section-eyebrow mb-3" data-aos="fade-right">Berita Terkini</div>
+                    <h2 class="text-3xl md:text-5xl font-black text-gray-900 tracking-tight uppercase" data-aos="fade-right" data-aos-delay="100">Pathfinder<br>News</h2>
+                </div>
+                <a href="Pendaftaran.html" class="text-red-600 font-bold hover:text-red-700 transition text-sm flex items-center gap-2 group">
+                    Join Kegiatan Pemuda DSKU
+                    <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+                <article class="news-card" data-aos="fade-up">
+                    <div class="img-wrap">
+                        <img src="images/Akwila,Foto.jpg" alt="Pelayanan Panti Jompo" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                        <span class="absolute top-4 left-4 text-[10px] font-black tracking-widest uppercase text-white px-3 py-1.5 rounded-lg" style="background:var(--red)">AKWILA</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-base font-bold text-gray-900 leading-snug hover:text-red-600 transition-colors">Pelayanan Panti Jompo Campore 2025</h3>
+                    </div>
+                </article>
+
+                <article class="news-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="img-wrap">
+                        <img src="images/Track n Trail.jpeg" alt="Kegiatan Jemaat Martoba" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                        <span class="absolute top-4 left-4 text-[10px] font-black tracking-widest uppercase text-white px-3 py-1.5 rounded-lg" style="background:var(--red)">KEGIATAN</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-base font-bold text-gray-900 leading-snug hover:text-red-600 transition-colors">Pemuda Advent Jemaat Martoba</h3>
+                    </div>
+                </article>
+
+                <article class="news-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="img-wrap">
+                        <img src="images/PA SLA.png" alt="Pertemuan Direktur Pemuda" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                        <span class="absolute top-4 left-4 text-[10px] font-black tracking-widest uppercase text-white px-3 py-1.5 rounded-lg" style="background:var(--red)">PATHFINDER</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-base font-bold text-gray-900 leading-snug hover:text-red-600 transition-colors">Direktur Pemuda DSKU dengan MG Harmon Dan Bapak Dosen</h3>
+                    </div>
+                </article>
+
+                <article class="news-card" data-aos="fade-up">
+                    <div class="img-wrap">
+                        <img src="images/Foto Perkemahan Kelas Kemajuan Pathfinder SLA.JPG" alt="Perkemahan SLA" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                        <span class="absolute top-4 left-4 text-[10px] font-black tracking-widest uppercase text-white px-3 py-1.5 rounded-lg" style="background:var(--red)">DSKU</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-base font-bold text-gray-900 leading-snug hover:text-red-600 transition-colors">Perkemahan Kelas Kemajuan Pathfinder SLA</h3>
+                    </div>
+                </article>
+
+                <article class="news-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="img-wrap">
+                        <img src="images/Wilayah 4 .png" alt="GYD" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                        <span class="absolute top-4 left-4 text-[10px] font-black tracking-widest uppercase text-white px-3 py-1.5 rounded-lg" style="background:var(--red)">CAMP</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-base font-bold text-gray-900 leading-snug hover:text-red-600 transition-colors">GLOBAL YOUTH DAY BAKOR PA WILAYAH VI</h3>
+                    </div>
+                </article>
+
+                <article class="news-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="img-wrap">
+                        <img src="images/Pelantika.JPG" alt="Pelantikan" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                        <span class="absolute top-4 left-4 text-[10px] font-black tracking-widest uppercase text-white px-3 py-1.5 rounded-lg" style="background:var(--red)">DSKU</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-base font-bold text-gray-900 leading-snug hover:text-red-600 transition-colors">Pelantikan SLA UASN</h3>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════ BANNER SECTION ════ -->
+    <section class="relative py-28 bg-gerak bg-center">
+        <div class="absolute inset-0" style="background:rgba(10,5,0,0.8);backdrop-filter:blur(2px)"></div>
+        <div class="container mx-auto px-5 relative z-10 text-center text-white" data-aos="fade-up">
+            <div class="section-eyebrow text-amber-400 justify-center mb-6">Misi Kami</div>
+            <h2 class="font-display text-5xl md:text-7xl lg:text-8xl mb-8 uppercase tracking-tight leading-none">
+                Membangun Karakter<br><span class="text-amber-400 glow-text">Pemuda Advent</span>
+            </h2>
+            <p class="text-sm md:text-base max-w-3xl mx-auto font-medium leading-relaxed text-gray-300">
+                Pemuda Advent harus menjadi fondasi yang kuat bagi gereja, karena melalui semangat, iman, dan pelayanan mereka, gereja dapat terus bertumbuh dan berkembang dengan baik. Pemuda bukan hanya penerus gereja di masa depan, tetapi juga bagian penting dalam pelayanan saat ini. Oleh sebab itu, setiap pemuda Advent perlu memiliki iman yang teguh, karakter yang baik, serta tetap setia kepada Tuhan agar tidak mudah goyah oleh tantangan, pergaulan, maupun perkembangan dunia yang semakin berubah. Dengan hati yang melayani dan kehidupan yang menjadi teladan, pemuda Advent dapat membawa pengaruh positif bagi gereja, keluarga, dan lingkungan sekitarnya.
+            </p>
+        </div>
+    </section>
+
+    <!-- ════ KATA SAMBUTAN ════ -->
+    <section class="sambutan-section py-24 md:py-32">
+        <div class="container mx-auto px-5 md:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-14 lg:gap-20 items-center">
+                <div class="lg:col-span-7 order-2 lg:order-1 space-y-6" data-aos="fade-right">
+                    <div class="section-eyebrow mb-2">Kata Sambutan</div>
+                    <h2 class="text-3xl md:text-4xl font-black text-gray-900 tracking-tight leading-tight">MG. Pdt. Rudianjaya Purba, M.Fil</h2>
+                    <p class="text-amber-700 font-bold tracking-widest uppercase text-[10px]">Direktur Pemuda & Komunikasi DSKU</p>
+
+                    <div class="relative rounded-3xl overflow-hidden" style="background:rgba(255,255,255,0.7);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.8);box-shadow:0 24px 64px rgba(0,0,0,0.06)">
+                        <div class="absolute top-0 left-0 w-1 h-full" style="background:linear-gradient(to bottom,var(--red),var(--amber))"></div>
+                        <div class="p-7 md:p-9">
+                            <div class="text-7xl font-serif text-amber-400/20 leading-none -mb-4 select-none">"</div>
+                            <div class="text-gray-700 leading-relaxed italic text-sm md:text-base space-y-4 max-h-72 overflow-y-auto pr-2 pl-2">
+                                <p>Syalom Pemuda dan Pemudi Pathfinder Daerah Sumatra Kawasan Utara.</p>
+                                <p>Salam semangat untuk seluruh adik-adik Pathfinder serta kakak-kakak pembina di setiap club yang ada di daerah kita. Mari terus melayani Tuhan dengan hati yang penuh sukacita, semangat, dan kasih.</p>
+                                <p>Walaupun dalam perjalanan pelayanan terkadang ada tantangan, kesibukan, maupun rasa lelah, tetaplah kuat dan setia dalam panggilan yang Tuhan percayakan.</p>
+                                <p>Mari kita terus bekerja sama, saling mendukung, dan menjaga kekompakan di setiap club agar pelayanan Pathfinder di Daerah Sumatra Kawasan Utara semakin bertumbuh, aktif, dan menjadi berkat bagi gereja maupun masyarakat.</p>
+                                <p>Tuhan memberkati seluruh Pemuda Pemudi Pathfinder Daerah Sumatra Kawasan Utara. Semangat melayani, semangat berkarya, dan tetap setia sampai akhir.</p>
+                            </div>
                         </div>
-                        <div class="mt-4 bg-amber-600 p-3 rounded-xl text-white text-center shadow-lg">
-                            <p class="text-xs font-black uppercase">Direktur Pemuda DSKU</p>
+                    </div>
+                    <div class="pt-2">
+                        <a href="https://wa.me/message/NELI6QVUTSFEP1"
+                           style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#e11d29,#b91c1c);color:#fff;padding:16px 32px;border-radius:100px;font-weight:800;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;box-shadow:0 8px 24px rgba(225,29,41,0.35);text-decoration:none;transition:all 0.3s"
+                           onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 12px 32px rgba(225,29,41,0.45)'"
+                           onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 8px 24px rgba(225,29,41,0.35)'">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd"></path></svg>
+                            Hubungi Admin Kami
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 order-1 lg:order-2 flex justify-center" data-aos="fade-left">
+                    <div class="relative w-full max-w-sm">
+                        <div class="absolute -top-5 -right-5 w-full h-full rounded-3xl" style="border:3px solid var(--amber);opacity:0.4"></div>
+                        <div class="absolute -bottom-5 -left-5 w-full h-full rounded-3xl" style="border:3px solid var(--red);opacity:0.2"></div>
+                        <div class="rounded-3xl overflow-hidden shadow-2xl" style="border:4px solid #fff">
+                            <img src="images/Dir.new.png" alt="Director" class="w-full h-auto object-cover">
+                        </div>
+                        <div class="mt-5 text-center text-white font-black text-[10px] uppercase tracking-widest py-3 px-4 rounded-xl shadow-lg" style="background:linear-gradient(135deg,var(--amber),var(--gold))">
+                            Direktur Pemuda DSKU
                         </div>
                     </div>
                 </div>
@@ -256,100 +1000,378 @@
         </div>
     </section>
 
-    <!-- CLUBS SECTION -->
-    <section class="bg-amber-500 py-20">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-black text-white mb-12 border-l-8 border-white pl-6 uppercase">Club Club Pathfinder DSKU</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <!-- Club Loop -->
-                <div class="group relative h-64 rounded-xl overflow-hidden shadow-lg bg-gray-900">
-                    <img src="images/gambar8.webp" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black p-4 flex flex-col justify-end">
-                        <span class="text-white font-bold text-sm uppercase">Dahkota Akwila</span>
+    <!-- ════ TESTIMONIAL ════ -->
+    <section class="py-24 bg-white">
+        <div class="container mx-auto px-5">
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <div class="section-eyebrow justify-center mb-4" data-aos="fade-up">Suara Mereka</div>
+                <h2 class="text-3xl md:text-5xl font-black tracking-tight text-gray-900" data-aos="fade-up" data-aos-delay="100">SEMANGAT PATHFINDER</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="testi-card" data-aos="fade-up">
+                    <div class="quote-mark">"</div>
+                    <div class="w-10 h-10 rounded-2xl flex items-center justify-center mb-6 text-white shadow-md" style="background:linear-gradient(135deg,#e11d29,#b91c1c)">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2z"></path></svg>
+                    </div>
+                    <p class="italic text-gray-600 text-sm leading-relaxed mb-6">"Menjadi Pathfinder adalah pengalaman terbaik dalam hidup saya. Saya belajar disiplin dan lebih dekat dengan Tuhan."</p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-gray-100">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center font-black text-white text-xs" style="background:var(--amber)">A</div>
+                        <p class="font-black text-xs text-gray-400 uppercase tracking-wide">Anggota Pathfinder Wilayah I</p>
                     </div>
                 </div>
-                <div class="group relative h-64 rounded-xl overflow-hidden shadow-lg bg-gray-900">
-                    <img src="images/gambar9.webp" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black p-4 flex flex-col justify-end">
-                        <span class="text-white font-bold text-sm uppercase">Tanah Karo</span>
+                <div class="testi-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="quote-mark">"</div>
+                    <div class="w-10 h-10 rounded-2xl flex items-center justify-center mb-6 text-white shadow-md" style="background:linear-gradient(135deg,#d97706,#b45309)">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2z"></path></svg>
+                    </div>
+                    <p class="italic text-gray-600 text-sm leading-relaxed mb-6">"Kegiatan Campore selalu ditunggu-tunggu. Sangat seru bisa bertemu teman-teman baru dari distrik lain."</p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-gray-100">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center font-black text-white text-xs" style="background:var(--gold)">P</div>
+                        <p class="font-black text-xs text-gray-400 uppercase tracking-wide">Pembina Pathfinder Wilayah III</p>
                     </div>
                 </div>
-                <div class="group relative h-64 rounded-xl overflow-hidden shadow-lg bg-gray-900">
-                    <img src="images/gambar10.jpg" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black p-4 flex flex-col justify-end">
-                        <span class="text-white font-bold text-sm uppercase">Siantar</span>
+                <div class="testi-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="quote-mark">"</div>
+                    <div class="w-10 h-10 rounded-2xl flex items-center justify-center mb-6 text-white shadow-md" style="background:linear-gradient(135deg,#e11d29,#b91c1c)">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2z"></path></svg>
                     </div>
-                </div>
-                <div class="group relative h-64 rounded-xl overflow-hidden shadow-lg bg-gray-900">
-                    <img src="images/gambar11.webp" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black p-4 flex flex-col justify-end">
-                        <span class="text-white font-bold text-sm uppercase">SLA PTASN</span>
+                    <p class="italic text-gray-600 text-sm leading-relaxed mb-6">"Pelayanan pemuda di DSKU sungguh luar biasa dalam membina karakter kepemimpinan kami."</p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-gray-100">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center font-black text-white text-xs" style="background:var(--red)">M</div>
+                        <p class="font-black text-xs text-gray-400 uppercase tracking-wide">Master Guide DSKU</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER (ABU-ABU MODERN) -->
-    <footer class="bg-gray-200 pt-16 pb-8 border-t border-gray-300">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
-                <div class="space-y-6">
-                    <img src="images/DSKU-removebg-preview.png" alt="DSKU" class="w-16">
-                    <h3 class="text-xl font-bold text-gray-900">Pathfinder DSKU</h3>
-                    <p class="text-gray-600 text-sm">Melayani untuk kemanusiaan, membangun karakter yang kuat di dalam Kristus.</p>
+    <!-- ════ FAQ ════ -->
+    <section class="py-24" style="background:#f8f8f8">
+        <div class="container mx-auto px-5 max-w-3xl">
+            <div class="text-center mb-16">
+                <div class="section-eyebrow justify-center mb-4" data-aos="fade-up">FAQ</div>
+                <h2 class="text-3xl md:text-5xl font-black tracking-tight text-gray-900" data-aos="fade-up" data-aos-delay="100">TANYA JAWAB</h2>
+            </div>
+            <div class="space-y-4">
+                <div class="faq-item" data-aos="fade-up">
+                    <button class="faq-btn" onclick="toggleFaq(this)">
+                        <span class="text-gray-800">Bagaimana cara mendaftar Campore?</span>
+                        <div class="faq-icon"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"></path></svg></div>
+                    </button>
+                    <div class="faq-panel">Klik menu "Pendaftaran" di atas dan isi formulir yang tersedia beserta bukti pembayaran.</div>
                 </div>
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+                    <button class="faq-btn" onclick="toggleFaq(this)">
+                        <span class="text-gray-800">Dimana saya bisa mengunduh modul Pathfinder?</span>
+                        <div class="faq-icon"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"></path></svg></div>
+                    </button>
+                    <div class="faq-panel">Modul dapat diakses melalui link Google Drive di bagian footer website ini.</div>
+                </div>
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+                    <button class="faq-btn" onclick="toggleFaq(this)">
+                        <span class="text-gray-800">Bagaimana cara mendaftarkan club baru ke DSKU?</span>
+                        <div class="faq-icon"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"></path></svg></div>
+                    </button>
+                    <div class="faq-panel">Anda dapat menghubungi admin Bakor PA Wilayah masing-masing atau klik tombol WhatsApp Admin untuk panduan pendaftaran resmi.</div>
+                </div>
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+                    <button class="faq-btn" onclick="toggleFaq(this)">
+                        <span class="text-gray-800">Berapa batasan usia untuk Pathfinder?</span>
+                        <div class="faq-icon"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"></path></svg></div>
+                    </button>
+                    <div class="faq-panel">Secara umum, anggota Pathfinder berusia antara 10 hingga 15 tahun (Kelas 5 SD sampai 3 SMP/9).</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                <div>
-                    <h4 class="font-bold text-gray-900 mb-6 uppercase text-sm border-b-2 border-amber-500 inline-block">Information</h4>
-                    <ul class="space-y-3 text-gray-600 text-sm font-semibold">
-                        <li><a href="index.html" class="hover:text-amber-600">Home</a></li>
-                        <li><a href="Media Share DSKU.html" class="hover:text-amber-600">Media Share</a></li>
-                        <li><a href="Pendaftaran.html" class="hover:text-amber-600">Pendaftaran</a></li>
-                        <li><a href="posts.html" class="hover:text-amber-600">Posts API</a></li>
-                        <li><a href="Adventurer.html" class="hover:text-amber-600">Adventurer</a></li>
-                        <li><a href="Informasi.html" class="hover:text-amber-600">Adventurer</a></li>
+<!-- ════ SECTION WILAYAH KOORDINASI 3D ════ -->
+<section style="background: radial-gradient(circle at center, #451a03, #000000);" class="py-24 overflow-hidden">
+    <div class="container mx-auto px-5">
+        
+        <!-- Header -->
+        <div class="text-center mb-16" data-aos="fade-up">
+            <h2 class="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-amber-200 to-amber-600 uppercase tracking-tighter italic">
+                Wilayah Koordinasi
+            </h2>
+            <p class="text-amber-500 font-bold tracking-[0.3em] uppercase text-sm mt-2">Pelayanan Pemuda DSKU</p>
+            <div class="w-24 h-1 bg-amber-600 mx-auto mt-4 rounded-full shadow-[0_0_15px_#d97706]"></div>
+        </div>
+
+        <!-- Grid Container -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            
+            <!-- WILAYAH I -->
+            <div class="group perspective-1000" data-aos="zoom-in-up">
+                <div class="relative transform-gpu transition-all duration-500 group-hover:rotate-y-12 group-hover:-translate-y-3 bg-gradient-to-br from-zinc-900 to-black p-8 rounded-3xl border border-amber-900/50 shadow-[0_20px_50px_rgba(0,0,0,0.5)] group-hover:shadow-[0_20px_60px_rgba(217,119,6,0.2)] h-full">
+                    <div class="absolute -top-4 -right-4 w-16 h-16 bg-amber-600 rounded-2xl flex items-center justify-center rotate-12 shadow-lg group-hover:rotate-0 transition-transform font-black text-2xl text-black">I</div>
+                    <h3 class="text-amber-500 font-black text-xl mb-6 flex items-center gap-2">
+                        <span class="w-2 h-8 bg-amber-600 rounded-full"></span> BAKOR PA WIL I
+                    </h3>
+                    <ul class="space-y-3 text-zinc-300 font-medium italic">
+                        <li class="hover:text-amber-400 transition-colors">• Distrik Binjai</li>
+                        <li class="hover:text-amber-400 transition-colors">• Distrik Langkat Hulu</li>
+                        <li class="hover:text-amber-400 transition-colors">• Distrik Langkat Hilir</li>
                     </ul>
                 </div>
+            </div>
 
-                <div>
-                    <h4 class="font-bold text-gray-900 mb-6 uppercase text-sm border-b-2 border-amber-500 inline-block">DSKU Links</h4>
-                    <ul class="space-y-3 text-gray-600 text-sm font-semibold">
-                        <li><a href="https://www.adventdsku.org/" target="_blank" class="hover:text-amber-600">Advent DSKU Org</a></li>
-                        <li><a href="https://drive.google.com/drive/folders/1oCRAMRaXiD2IztlxpRiEp9LYNCDrubSr?hl=ID" target="_blank" class="hover:text-amber-600">Google Drive Kegiatan</a></li>
-                        <li><a href="https://wa.me/message/NELI6QVUTSFEP1" class="hover:text-amber-600">Kontak WhatsApp</a></li>
+            <!-- WILAYAH II -->
+            <div class="group perspective-1000" data-aos="zoom-in-up" data-aos-delay="100">
+                <div class="relative transform-gpu transition-all duration-500 group-hover:rotate-y-12 group-hover:-translate-y-3 bg-gradient-to-br from-zinc-900 to-black p-8 rounded-3xl border border-amber-900/50 shadow-[0_20px_50px_rgba(0,0,0,0.5)] group-hover:shadow-[0_20px_60px_rgba(217,119,6,0.2)] h-full">
+                    <div class="absolute -top-4 -right-4 w-16 h-16 bg-amber-600 rounded-2xl flex items-center justify-center rotate-12 shadow-lg group-hover:rotate-0 transition-transform font-black text-2xl text-black">II</div>
+                    <h3 class="text-amber-500 font-black text-xl mb-6 flex items-center gap-2">
+                        <span class="w-2 h-8 bg-amber-600 rounded-full"></span> BAKOR PA WIL II
+                    </h3>
+                    <ul class="grid grid-cols-1 gap-2 text-zinc-300 text-sm font-medium">
+                        <li>• Distrik Karo Timur</li>
+                        <li>• Distrik Karo Utara</li>
+                        <li>• Distrik Karo Pusat</li>
+                        <li>• Distrik Karo Selatan</li>
+                        <li>• Distrik Karo Barat A</li>
+                        <li>• Distrik Karo Barat B</li>
                     </ul>
                 </div>
+            </div>
 
+            <!-- WILAYAH III (Hero Card - Lebar di Desktop) -->
+            <div class="group perspective-1000 lg:col-span-1" data-aos="zoom-in-up" data-aos-delay="200">
+                <div class="relative transform-gpu transition-all duration-500 group-hover:rotate-y-12 group-hover:-translate-y-3 bg-gradient-to-br from-zinc-800 to-zinc-950 p-8 rounded-3xl border-2 border-amber-500/30 shadow-[0_20px_50px_rgba(217,119,6,0.15)] h-full">
+                    <div class="absolute -top-4 -right-4 w-16 h-16 bg-white rounded-2xl flex items-center justify-center rotate-12 shadow-lg font-black text-2xl text-black">III</div>
+                    <h3 class="text-amber-400 font-black text-xl mb-4 flex items-center gap-2 italic">
+                        <span class="w-2 h-8 bg-white rounded-full"></span> BAKOR PA WIL III
+                    </h3>
+                    <div class="grid grid-cols-2 gap-x-4 text-zinc-300 text-[11px] leading-relaxed font-semibold uppercase tracking-wider">
+                        <ul class="space-y-1">
+                            <li>• Distrik Siantar Kota</li>
+                            <li>• Distrik Siantar</li>
+                            <li class="text-amber-400 underline italic">• SLA-UASN</li>
+                            <li>• Tanjung Kasau</li>
+                            <li>• Perdagangan</li>
+                            <li>• Huta bayu Raja</li>
+                        </ul>
+                        <ul class="space-y-1">
+                            <li>• Tanah Jawa</li>
+                            <li>• Sim. Selatan I</li>
+                            <li>• Sim. Selatan II</li>
+                            <li>• Sim. Barat</li>
+                            <li>• Sim. Utara</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WILAYAH IV -->
+            <div class="group perspective-1000" data-aos="zoom-in-up" data-aos-delay="300">
+                <div class="relative transform-gpu transition-all duration-500 group-hover:rotate-y-12 group-hover:-translate-y-3 bg-gradient-to-br from-zinc-900 to-black p-8 rounded-3xl border border-amber-900/50 shadow-[0_20px_50px_rgba(0,0,0,0.5)] group-hover:shadow-[0_20px_60px_rgba(217,119,6,0.2)] h-full">
+                    <div class="absolute -top-4 -right-4 w-16 h-16 bg-amber-600 rounded-2xl flex items-center justify-center rotate-12 shadow-lg font-black text-2xl text-black">IV</div>
+                    <h3 class="text-amber-500 font-black text-xl mb-6 flex items-center gap-2">
+                        <span class="w-2 h-8 bg-amber-600 rounded-full"></span> BAKOR PA WIL IV
+                    </h3>
+                    <ul class="space-y-2 text-zinc-300 text-sm font-medium italic uppercase">
+                        <li>• Distrik Dairi Selatan</li>
+                        <li>• Distrik Dairi Pusat</li>
+                        <li>• Distrik Dairi Timur</li>
+                        <li>• Distrik Dairi Barat</li>
+                        <li>• Distrik Parongil</li>
+                        <li>• Distrik Pakpak Barat</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- WILAYAH V -->
+            <div class="group perspective-1000" data-aos="zoom-in-up" data-aos-delay="400">
+                <div class="relative transform-gpu transition-all duration-500 group-hover:rotate-y-12 group-hover:-translate-y-3 bg-gradient-to-br from-zinc-900 to-black p-8 rounded-3xl border border-amber-900/50 shadow-[0_20px_50px_rgba(0,0,0,0.5)] group-hover:shadow-[0_20px_60px_rgba(217,119,6,0.2)] h-full">
+                    <div class="absolute -top-4 -right-4 w-16 h-16 bg-amber-600 rounded-2xl flex items-center justify-center rotate-12 shadow-lg font-black text-2xl text-black">V</div>
+                    <h3 class="text-amber-500 font-black text-xl mb-6 flex items-center gap-2">
+                        <span class="w-2 h-8 bg-amber-600 rounded-full"></span> BAKOR PA WIL V
+                    </h3>
+                    <ul class="space-y-4 text-zinc-300 font-bold italic tracking-widest text-sm">
+                        <li>• Distrik Samosir Timur</li>
+                        <li>• Distrik Samosir Barat</li>
+                        <li>• Distrik Samosir Selatan</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- WILAYAH VI -->
+            <div class="group perspective-1000" data-aos="zoom-in-up" data-aos-delay="500">
+                <div class="relative transform-gpu transition-all duration-500 group-hover:rotate-y-12 group-hover:-translate-y-3 bg-gradient-to-br from-zinc-900 to-black p-8 rounded-3xl border border-amber-900/50 shadow-[0_20px_50px_rgba(0,0,0,0.5)] group-hover:shadow-[0_20px_60px_rgba(217,119,6,0.2)] h-full">
+                    <div class="absolute -top-4 -right-4 w-16 h-16 bg-amber-600 rounded-2xl flex items-center justify-center rotate-12 shadow-lg font-black text-2xl text-black">VI</div>
+                    <h3 class="text-amber-500 font-black text-xl mb-6 flex items-center gap-2">
+                        <span class="w-2 h-8 bg-amber-600 rounded-full"></span> BAKOR PA WIL VI
+                    </h3>
+                    <ul class="space-y-3 text-zinc-300 font-medium italic">
+                        <li>• Distrik Toba Timur</li>
+                        <li>• Distrik Toba Barat</li>
+                        <li>• Distrik Toba Pusat</li>
+                        <li>• Distrik Habinsaran</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- CSS Pendukung untuk Efek 3D -->
+<style>
+    .perspective-1000 {
+        perspective: 1000px;
+    }
+    .rotate-y-12 {
+        transform: rotateY(12deg) rotateX(2deg);
+    }
+</style>
+
+    <!-- ════ FOOTER ════ -->
+    <footer class="pt-20 pb-10">
+        <div class="container mx-auto px-5">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+                <div class="space-y-5">
+                    <img src="images/black.png" alt="DSKU Logo" class="w-14 h-auto brightness-0 invert">
+                    <h3 class="text-base font-black text-white uppercase tracking-tight">PEMUDA ADVENT DSKU</h3>
+                    <p class="text-black-500 text-sm leading-relaxed">Melayani untuk kemanusiaan, membangun karakter yang kuat di dalam Kristus.</p>
+                </div>
                 <div>
-                    <h4 class="font-bold text-gray-900 mb-6 uppercase text-sm border-b-2 border-amber-500 inline-block">Social Media</h4>
-                    <div class="flex gap-4">
-                        <a href="https://www.instagram.com/pemuda.advent.dsku" target="_blank" class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md hover:-translate-y-1 transition-all">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" class="w-5 h-5">
+                    <h4 class="font-black text-white mb-6 uppercase text-[10px] tracking-[0.25em]">Information</h4>
+                    <ul class="space-y-3 text-sm font-medium text-gray-500">
+                        <li><a href="index.html" class="hover:text-amber-400 transition-colors">Home</a></li>
+                        <li><a href="Dokumentasi.html" class="hover:text-amber-400 transition-colors">Dokumentasi</a></li>
+                        <li><a href="Pendaftaran.html" class="hover:text-amber-400 transition-colors">Pendaftaran</a></li>
+                        <li><a href="posts.html" class="hover:text-amber-400 transition-colors">Posts API</a></li>
+                        <li><a href="Adventurer.html" class="hover:text-amber-400 transition-colors">Adventurer</a></li>
+                        <li><a href="Informasi.html" class="hover:text-amber-400 transition-colors">Informasi</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-black text-white mb-6 uppercase text-[10px] tracking-[0.25em]">DSKU Links</h4>
+                    <ul class="space-y-3 text-sm font-medium text-gray-500">
+                        <li><a href="https://www.adventdsku.org/" target="_blank" class="hover:text-amber-400 transition-colors">Advent DSKU Org</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1oCRAMRaXiD2IztlxpRiEp9LYNCDrubSr?hl=ID" target="_blank" class="hover:text-amber-400 transition-colors">Google Drive Kegiatan</a></li>
+                        <li><a href="https://wa.me/message/NELI6QVUTSFEP1" class="hover:text-amber-400 transition-colors">Kontak WhatsApp</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-black text-white mb-6 uppercase text-[10px] tracking-[0.25em]">Social Media</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <a href="https://www.instagram.com/pemuda.advent.dsku" target="_blank" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all hover:-translate-y-1" style="background:#1a1a1a;border:1px solid #2a2a2a">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" class="w-5 h-5" alt="Instagram">
                         </a>
-                        <a href="https://www.facebook.com/people/Komunikasi-Dsku" target="_blank" class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md hover:-translate-y-1 transition-all">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" class="w-5 h-5">
+                        <a href="https://facebook.com/NAMA_AKUN_ANDA" target="_blank" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all hover:-translate-y-1" style="background:#1a1a1a;border:1px solid #2a2a2a">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" class="w-5 h-5" alt="Facebook">
                         </a>
-                        <a href="https://www.youtube.com/@BeritaHariIni-TerbarudariDSKU" target="_blank" class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md hover:-translate-y-1 transition-all">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" class="w-5 h-5">
+                        <a href="https://github.com/NAMA_USER_ANDA" target="_blank" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all hover:-translate-y-1" style="background:#1a1a1a;border:1px solid #2a2a2a">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" class="w-5 h-5 invert" alt="GitHub">
                         </a>
-                        <a href="https://wa.me/message/NELI6QVUTSFEP1" target="_blank" class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md hover:-translate-y-1 transition-all">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="w-5 h-5">
+                        <a href="https://twitter.com/NAMA_AKUN_ANDA" target="_blank" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all hover:-translate-y-1" style="background:#1a1a1a;border:1px solid #2a2a2a">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/X_logo_2023.svg" class="w-5 h-5 invert" alt="Twitter X">
+                        </a>
+                        <a href="https://www.youtube.com/@BeritaHariIni-TerbarudariDSKU" target="_blank" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all hover:-translate-y-1" style="background:#1a1a1a;border:1px solid #2a2a2a">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" class="w-5 h-5" alt="YouTube">
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div class="mt-16 pt-8 border-t border-gray-300 text-center text-gray-500 text-[10px] font-black uppercase tracking-widest">
+            <div class="fancy-divider mt-16 mb-8 opacity-10"></div>
+
+            <div class="text-center text-gray-600 text-[10px] font-black uppercase tracking-[0.3em]">
                 &copy; Website Pathfinder Daerah Sumatra Kawasan Utara
             </div>
         </div>
     </footer>
 
+    <!-- FLOATING WA -->
+    <a href="https://wa.me/message/NELI6QVUTSFEP1" class="wa-float">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="w-6 h-6 invert" alt="WhatsApp Admin">
+    </a>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        const btn = document.getElementById('menu-btn');
-        const menu = document.getElementById('mobile-menu');
-        btn.addEventListener('click', () => { menu.classList.toggle('hidden'); });
+        // ─── AOS ───
+        AOS.init({ duration: 800, once: true, easing: 'ease-out-cubic' });
+
+        // ─── MOBILE MENU ───
+        document.getElementById('menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // ─── CUSTOM CURSOR ───
+        const cursor = document.getElementById('cursor');
+        const ring = document.getElementById('cursor-ring');
+        let mouseX = 0, mouseY = 0;
+
+        document.addEventListener('mousemove', e => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+            ring.style.left = mouseX + 'px';
+            ring.style.top = mouseY + 'px';
+        });
+
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.width = '20px';
+                cursor.style.height = '20px';
+                ring.style.width = '56px';
+                ring.style.height = '56px';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.width = '12px';
+                cursor.style.height = '12px';
+                ring.style.width = '36px';
+                ring.style.height = '36px';
+            });
+        });
+
+        // ─── SCROLL PROGRESS & NAVBAR ───
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            document.getElementById('scroll-progress').style.width = (winScroll / height * 100) + '%';
+
+            const navbar = document.getElementById('navbar');
+            if (winScroll > 30) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ─── COUNTDOWN ───
+        const targetDate = new Date("Dec 31, 2025 00:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const dist = targetDate - now;
+            const d = dist > 0 ? Math.floor(dist / 86400000) : 0;
+            const h = dist > 0 ? Math.floor((dist % 86400000) / 3600000) : 0;
+            const m = dist > 0 ? Math.floor((dist % 3600000) / 60000) : 0;
+            const s = dist > 0 ? Math.floor((dist % 60000) / 1000) : 0;
+            document.getElementById("days").innerText = String(d).padStart(2, '0');
+            document.getElementById("hours").innerText = String(h).padStart(2, '0');
+            document.getElementById("minutes").innerText = String(m).padStart(2, '0');
+            document.getElementById("seconds").innerText = String(s).padStart(2, '0');
+        }, 1000);
+
+        // ─── FAQ ───
+        function toggleFaq(btn) {
+            const item = btn.parentElement;
+            const panel = btn.nextElementSibling;
+            const isOpen = item.classList.contains('open');
+
+            // Close all
+            document.querySelectorAll('.faq-item').forEach(f => {
+                f.classList.remove('open');
+                f.querySelector('.faq-panel').classList.remove('show');
+            });
+
+            if (!isOpen) {
+                item.classList.add('open');
+                panel.classList.add('show');
+            }
+        }
     </script>
 </body>
 </html>
